@@ -1,7 +1,8 @@
-package com.a.papermaxx
+package com.a.papermaxx.general
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.a.papermaxx.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
