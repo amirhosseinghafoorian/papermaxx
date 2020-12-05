@@ -82,11 +82,11 @@ class ChatFragment : Fragment() {
                     if (adminFirst) {
                         val message = MessageModel(
                             "",
-                            chat_type_et.editText?.text.toString(),
+                            "Welcome to PaperMaxx",
                             MessageType.SENT
                         )
 
-                        chatViewModel.sendMessage(message, chatId, messageSender)
+                        chatViewModel.sendMessage(message, chatId, messageReceiver)
                     }
 
                     if (!isInDirect) {

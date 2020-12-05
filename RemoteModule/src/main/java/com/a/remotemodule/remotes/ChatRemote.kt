@@ -26,5 +26,6 @@ class ChatRemote @Inject constructor(
             .child(chatId)
             .child(message.id)
             .child("message").setValue(message.text + ":" + senderId)
+        val a = ""
     }
 }
