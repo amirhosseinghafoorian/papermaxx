@@ -15,7 +15,7 @@ class HomeRemote
 
     fun logout() = auth.signOut()
 
-    fun getUserInfo(uid : String): DatabaseReference {
+    fun getUserInfo(uid: String): DatabaseReference {
         return rootReference
             .child("Users")
             .child(uid)
@@ -27,26 +27,32 @@ class HomeRemote
             .child("Users")
     }
 
-    fun usernameFromUid(uid : String) : DatabaseReference {
+    fun usernameFromUid(uid: String): DatabaseReference {
         return rootReference
             .child("Users")
             .child(uid)
             .child("Username")
     }
 
-    fun userDirect(uid : String) : DatabaseReference{
+    fun userDirect(uid: String): DatabaseReference {
         return rootReference
             .child("Users")
             .child(uid)
             .child("Directs")
     }
 
-    fun putChatInDirect(base : String , target : String){
+    fun putChatInDirect(base: String, target: String) {
         rootReference
             .child("Users")
             .child(base)
             .child("Directs")
             .child(target).setValue("")
+    }
+
+    fun getAdminId(): DatabaseReference {
+        return rootReference
+            .child("Dynamic")
+            .child("adminId")
     }
 
 }

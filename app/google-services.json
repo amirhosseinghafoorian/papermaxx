@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "331624651842",
-    "project_id": "papermaxx-485af",
-    "storage_bucket": "papermaxx-485af.appspot.com"
+    "project_number": "683167813818",
+    "firebase_url": "https://papermaxx-2effb-default-rtdb.firebaseio.com",
+    "project_id": "papermaxx-2effb",
+    "storage_bucket": "papermaxx-2effb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:331624651842:android:dd729d2581ffb99144e1db",
+        "mobilesdk_app_id": "1:683167813818:android:cc33b366d81911d2b6f283",
         "android_client_info": {
           "package_name": "com.a.papermaxx"
         }
       },
       "oauth_client": [
         {
-          "client_id": "331624651842-10hup2i16pdu04tncdb0man1nfr691ii.apps.googleusercontent.com",
+          "client_id": "683167813818-f0t5o87ebrr61p4sgamkfoqv4a7o24q8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA4ggHULociUIkuA_D1Y-pViz_CF_9Ctts"
+          "current_key": "AIzaSyAsuJEZhAH0qOowkvzP5hfRKbSoGehwGnc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "331624651842-10hup2i16pdu04tncdb0man1nfr691ii.apps.googleusercontent.com",
+              "client_id": "683167813818-f0t5o87ebrr61p4sgamkfoqv4a7o24q8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -19,6 +19,7 @@ class HomeViewModel
 
     var usersList = MutableLiveData<MutableList<UserModel>>()
     var chatsList = MutableLiveData<MutableList<UserModel>>()
+    var adminId = MutableLiveData<String>()
 
     init {
         usersList.value = mutableListOf()
@@ -85,6 +86,17 @@ class HomeViewModel
                         } else counter++
                     }
 
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+    }
+
+    fun getAdminId(){
+        allUsersUseCase.getAdminId()
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    adminId.postValue(dataSnapshot.value.toString())
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {}

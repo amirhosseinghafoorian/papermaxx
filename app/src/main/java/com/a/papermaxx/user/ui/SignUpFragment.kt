@@ -1,6 +1,7 @@
 package com.a.papermaxx.user.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class SignUpFragment : Fragment() {
                     "Failed : ${result.exception?.message}",
                     Toast.LENGTH_SHORT
                 ).show()
+                Log.i("baby" , result.exception?.message.toString())
             } else {
                 signUpViewModel.setUserInfo(
                     signUp_et_4.editText?.text.toString(),

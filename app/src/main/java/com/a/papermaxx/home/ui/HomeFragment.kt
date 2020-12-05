@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.a.papermaxx.R
-import com.a.papermaxx.general.GeneralStrings
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,13 +44,18 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (base == "signUp") {
-            // it should take the admin id dynamic
-            findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToChatFragment(
-                    GeneralStrings.adminId
-                )
-            )
+            homeViewModel.getAdminId()
         }
+
+        homeViewModel.adminId.observe(viewLifecycleOwner, { id ->
+            if (id != null) {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToChatFragment(
+                        id
+                    )
+                )
+            }
+        })
 
         btn_logout.setOnClickListener {
             showLogoutDialog()
