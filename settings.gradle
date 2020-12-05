@@ -1,2 +1,4 @@
+include ':RemoteModule'
+include ':DomainModule'
 include ':app'
 rootProject.name = "papermaxx"

@@ -3,9 +3,9 @@ package com.a.papermaxx.home.ui
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.a.ayc.model.UserModel
 import com.a.domainmodule.domain.AllUsersUseCase
 import com.a.domainmodule.domain.SignUpUseCase
+import com.a.papermaxx.model.UserModel
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,6 +19,7 @@ class HomeViewModel
 
     var usersList = MutableLiveData<MutableList<UserModel>>()
     var chatsList = MutableLiveData<MutableList<UserModel>>()
+    var adminId = MutableLiveData<String>()
 
     init {
         usersList.value = mutableListOf()
@@ -85,6 +86,17 @@ class HomeViewModel
                         } else counter++
                     }
 
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+    }
+
+    fun getAdminId(){
+        allUsersUseCase.getAdminId()
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    adminId.postValue(dataSnapshot.value.toString())
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {}

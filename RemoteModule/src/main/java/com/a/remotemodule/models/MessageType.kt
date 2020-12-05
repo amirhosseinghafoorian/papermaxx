@@ -1,4 +1,4 @@
-package com.a.papermaxx.general
+package com.a.remotemodule.models
 
 enum class MessageType {
     SENT,
