@@ -51,7 +51,8 @@ class HomeFragment : Fragment() {
             if (id != null) {
                 findNavController().navigate(
                     HomeFragmentDirections.actionHomeFragmentToChatFragment(
-                        id
+                        id,
+                        true
                     )
                 )
             }

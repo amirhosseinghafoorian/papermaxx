@@ -22,7 +22,8 @@ class ChatListAdapter(
                 try {
                     it.findNavController().navigate(
                         HomeFragmentDirections.actionHomeFragmentToChatFragment(
-                            list[position].id
+                            list[position].id,
+                            false
                         )
                     )
                 } catch (e: Exception) {

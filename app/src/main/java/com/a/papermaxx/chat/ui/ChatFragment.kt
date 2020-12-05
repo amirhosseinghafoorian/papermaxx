@@ -27,6 +27,7 @@ class ChatFragment : Fragment() {
     private lateinit var messageSender: String
     private lateinit var myAdapter: ChatAdapter
     private lateinit var chatId: String
+    private var adminFirst: Boolean = false
 
     private val chatViewModel: ChatViewModel by viewModels()
 
@@ -35,6 +36,9 @@ class ChatFragment : Fragment() {
 
         messageReceiver =
             arguments?.let { ChatFragmentArgs.fromBundle(it).messageReceiver }.toString()
+
+        adminFirst =
+            arguments.let { ChatFragmentArgs.fromBundle(it!!).adminFirst }
 
         messageSender = chatViewModel.currentUser()?.uid.toString()
 
@@ -74,6 +78,17 @@ class ChatFragment : Fragment() {
             chatViewModel.isInDirect.observe(viewLifecycleOwner, { isInDirect ->
                 if (isInDirect != null) {
                     chatId = chatViewModel.chatIdDecide(messageReceiver)
+
+                    if (adminFirst) {
+                        val message = MessageModel(
+                            "",
+                            chat_type_et.editText?.text.toString(),
+                            MessageType.SENT
+                        )
+
+                        chatViewModel.sendMessage(message, chatId, messageSender)
+                    }
+
                     if (!isInDirect) {
                         chatViewModel.createChatRoom(chatId)
                         chatViewModel.putChatInDirect(messageReceiver, messageSender)
