@@ -1,6 +1,7 @@
 package com.a.papermaxx.hiltModules
 
 import com.a.domainmodule.inputValidation.ChatIdDecider
+import com.a.domainmodule.inputValidation.GetCurrentTime
 import com.a.domainmodule.inputValidation.ValidateInput
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -14,6 +15,12 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 @Module
 object MyModule {
+
+    @Singleton
+    @Provides
+    fun provideCurrentTime(): GetCurrentTime {
+        return GetCurrentTime()
+    }
 
     @Singleton
     @Provides
