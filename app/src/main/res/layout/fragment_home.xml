@@ -48,15 +48,15 @@
         android:id="@+id/home_page_TL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/blue_500"
         app:layout_constraintTop_toBottomOf="@id/tool_bar_home"
         app:tabContentStart="0dp"
         app:tabIndicator="@drawable/tab_indicator"
-        app:tabIndicatorColor="@android:color/white"
-        app:tabTextColor="@android:color/white"
+        app:tabIndicatorColor="@color/white"
+        app:tabTextColor="@color/white"
         app:tabIndicatorGravity="stretch"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/black">
+        app:tabSelectedTextColor="@color/blue_500">
 
     </com.google.android.material.tabs.TabLayout>
 

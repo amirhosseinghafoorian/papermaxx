@@ -35,7 +35,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/received_gl"
             app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@android:color/black">
+            app:rippleColor="@color/blue_500">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                     android:layout_margin="4dp"
                     android:gravity="center"
                     android:text="@{data.text}"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/blue_500"
                     android:textSize="20sp"
                     android:textStyle="normal"
                     app:layout_constraintTop_toTopOf="parent" />
