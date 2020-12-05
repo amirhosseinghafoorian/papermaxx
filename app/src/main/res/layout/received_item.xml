@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="com.a.ayc.model.MessageModel" />
+            type="com.a.remotemodule.models.MessageModel" />
 
     </data>
 

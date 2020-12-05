@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.a.ayc.R
-import com.a.ayc.databinding.ChatsListItemBinding
-import com.a.ayc.model.UserModel
+import com.a.papermaxx.R
+import com.a.papermaxx.databinding.ChatsListItemBinding
+import com.a.papermaxx.model.UserModel
 
 class ChatListAdapter(
     var list: MutableList<UserModel>

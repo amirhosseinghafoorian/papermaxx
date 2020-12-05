@@ -1,10 +1,15 @@
-package com.a.papermaxx.general
+package com.a.papermaxx.chat.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.a.papermaxx.R
+import com.a.papermaxx.databinding.ReceivedItemBinding
+import com.a.papermaxx.databinding.SentItemBinding
+import com.a.papermaxx.general.GeneralStrings
+import com.a.remotemodule.models.MessageModel
+import com.a.remotemodule.models.MessageType
 
 
 class ChatAdapter(

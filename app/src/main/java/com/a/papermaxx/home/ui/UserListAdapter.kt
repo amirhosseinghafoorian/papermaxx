@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.a.ayc.R
-import com.a.ayc.databinding.UsersListItemBinding
-import com.a.ayc.model.UserModel
+import com.a.papermaxx.R
+import com.a.papermaxx.databinding.UsersListItemBinding
+import com.a.papermaxx.model.UserModel
 
 class UserListAdapter(
     var list: MutableList<UserModel>

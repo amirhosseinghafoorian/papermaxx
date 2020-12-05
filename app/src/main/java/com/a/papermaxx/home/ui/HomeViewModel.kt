@@ -3,9 +3,9 @@ package com.a.papermaxx.home.ui
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.a.ayc.model.UserModel
 import com.a.domainmodule.domain.AllUsersUseCase
 import com.a.domainmodule.domain.SignUpUseCase
+import com.a.papermaxx.model.UserModel
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

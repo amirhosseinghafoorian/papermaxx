@@ -4,57 +4,131 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
+import com.a.papermaxx.databinding.FragmentChatBinding
+import com.a.papermaxx.general.GeneralStrings
+import com.a.remotemodule.models.MessageModel
+import com.a.remotemodule.models.MessageType
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_chat.*
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ChatFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class ChatFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var binding: FragmentChatBinding
+    private lateinit var messageReceiver: String
+    private lateinit var messageSender: String
+    private lateinit var myAdapter: ChatAdapter
+    private lateinit var chatId: String
+
+    private val chatViewModel: ChatViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        messageReceiver =
+            arguments?.let { ChatFragmentArgs.fromBundle(it).messageReceiver }.toString()
+
+        messageSender = chatViewModel.currentUser()?.uid.toString()
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(
+                        ChatFragmentDirections.actionChatFragmentToHomeFragment(
+                            GeneralStrings.keyChat
+                        )
+                    )
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false)
+    ): View {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ChatFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChatFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch {
+
+            chatViewModel.receiverUsername.observe(viewLifecycleOwner, { name ->
+                if (name != null) {
+                    binding.username = name
+                }
+            })
+
+            chatViewModel.isInDirect.observe(viewLifecycleOwner, { isInDirect ->
+                if (isInDirect != null) {
+                    chatId = chatViewModel.chatIdDecide(messageReceiver)
+                    if (!isInDirect) {
+                        chatViewModel.createChatRoom(chatId)
+                        chatViewModel.putChatInDirect(messageReceiver, messageSender)
+                        chatViewModel.putChatInDirect(messageSender, messageReceiver)
+                    }
+                    chatViewModel.openChat(chatId)
+                }
+            })
+
+            chatViewModel.usernameFromUid(messageReceiver)
+            chatViewModel.isUserInDirect(
+                chatViewModel.currentUser()?.uid.toString(),
+                messageReceiver
+            )
+
+            myAdapter = chatViewModel.chatMessages.value?.let { ChatAdapter(it) }!!
+
+            chat_recycler.apply {
+                adapter = myAdapter
+            }
+
+            chatViewModel.chatMessages.observe(viewLifecycleOwner, { list ->
+                if (list != null) {
+                    myAdapter.list = list
+                    myAdapter.notifyDataSetChanged()
+                    chat_recycler.scrollToPosition(list.size - 1)
+                }
+            })
+
+            send_cv.setOnClickListener {
+
+                if (chat_type_et.editText?.text?.isNotBlank() == true) {
+
+                    val message = MessageModel(
+                        "",
+                        chat_type_et.editText?.text.toString(),
+                        MessageType.SENT
+                    )
+
+                    chatViewModel.sendMessage(message, chatId, messageSender)
+
+                    // here it should check that if it is a sent message gone the seen icon
+                    // and if it is a received message visible the icon
+
+                    chat_type_et.editText?.setText("")
+
                 }
             }
+
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // disable seen icon
     }
 }

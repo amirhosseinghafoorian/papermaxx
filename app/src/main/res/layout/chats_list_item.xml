@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="com.a.ayc.model.UserModel" />
+            type="com.a.papermaxx.model.UserModel" />
 
     </data>
 
