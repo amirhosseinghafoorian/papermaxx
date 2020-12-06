@@ -26,10 +26,12 @@ class ChatUseCase @Inject constructor(
         chatRemote.sendMessage(message, chatId, senderId)
     }
 
-    fun createOnlineStatus(uid: String , chatId: String) = chatRemote.createOnlineStatus(uid , chatId)
+    fun createOnlineStatus(uid: String, chatId: String) = chatRemote.createOnlineStatus(uid, chatId)
 
-    fun setOnline(uid: String , chatId: String) = chatRemote.setOnline(uid , chatId)
+    fun setOnline(uid: String, chatId: String) = chatRemote.setOnline(uid, chatId)
 
-    fun setOffline(uid: String , chatId: String) = chatRemote.setOffline(uid , chatId)
+    fun setOffline(uid: String, chatId: String) = chatRemote.setOffline(uid, chatId)
+
+    fun checkSeen(uid: String, chatId: String) = chatRemote.checkSeen(uid, chatId)
 
 }

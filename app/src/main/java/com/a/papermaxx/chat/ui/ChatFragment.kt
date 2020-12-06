@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -118,6 +119,7 @@ class ChatFragment : Fragment() {
                     myAdapter.list = list
                     myAdapter.notifyDataSetChanged()
                     chat_recycler.scrollToPosition(list.size - 1)
+                    Toast.makeText(requireContext(), list[list.size-1].text, Toast.LENGTH_SHORT).show()
                 }
             })
 
@@ -130,8 +132,9 @@ class ChatFragment : Fragment() {
                         MessageType.SENT
                     )
 
+//                    seen_icon.visibility = View.GONE
                     chatViewModel.sendMessage(message, chatId, messageSender)
-
+//                    chatViewModel.checkSeen(messageReceiver, chatId)
                     // here it should check that if it is a sent message gone the seen icon
                     // and if it is a received message visible the icon
 

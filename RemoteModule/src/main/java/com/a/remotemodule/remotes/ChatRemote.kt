@@ -49,4 +49,11 @@ class ChatRemote @Inject constructor(
             .child("online:$uid").setValue("offline")
     }
 
+    fun checkSeen(uid: String, chatId: String): DatabaseReference {
+        return rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("online:$uid")
+    }
+
 }

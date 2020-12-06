@@ -119,4 +119,7 @@ class ChatViewModel @ViewModelInject constructor(
 
     fun setOffline(uid: String, chatId: String) = chatUseCase.setOffline(uid, chatId)
 
+//    fun checkSeen(uid: String, chatId: String) {
+//        chatRemote.checkSeen(uid, chatId)
+//    }
 }
