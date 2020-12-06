@@ -127,10 +127,10 @@ class ChatFragment : Fragment() {
 
             chatViewModel.chatMessages.observe(viewLifecycleOwner, { list ->
                 if (list != null) {
-                    myAdapter.list = list
-                    myAdapter.notifyDataSetChanged()
-                    chat_recycler.scrollToPosition(list.size - 1)
                     if (list.size > 0) {
+                        myAdapter.list = list
+                        myAdapter.notifyItemInserted(list.size - 1)
+                        chat_recycler.scrollToPosition(list.size - 1)
                         lastMessage = list[list.size - 1]
                         if (lastMessage.type == MessageType.RECEIVED) {
                             seen_icon.visibility = View.GONE
