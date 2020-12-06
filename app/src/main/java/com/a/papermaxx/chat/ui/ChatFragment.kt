@@ -26,8 +26,9 @@ class ChatFragment : Fragment() {
     private lateinit var messageReceiver: String
     private lateinit var messageSender: String
     private lateinit var myAdapter: ChatAdapter
-    private lateinit var chatId: String
+    private var chatId: String = ""
     private var adminFirst: Boolean = false
+    private var lastMessage = MessageModel("not", "", MessageType.RECEIVED)
 
     private val chatViewModel: ChatViewModel by viewModels()
 
@@ -75,26 +76,40 @@ class ChatFragment : Fragment() {
                 }
             })
 
+            chatViewModel.onlineStatus.observe(viewLifecycleOwner, { isOnline ->
+                if (isOnline != null && lastMessage.id != "not") {
+                    if (isOnline) {
+                        if (lastMessage.type == MessageType.SENT) {
+                            seen_icon.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            })
+
             chatViewModel.isInDirect.observe(viewLifecycleOwner, { isInDirect ->
                 if (isInDirect != null) {
                     chatId = chatViewModel.chatIdDecide(messageReceiver)
 
+                    if (!isInDirect) {
+                        chatViewModel.createChatRoom(chatId)
+                        chatViewModel.putChatInDirect(messageReceiver, messageSender)
+                        chatViewModel.putChatInDirect(messageSender, messageReceiver)
+                        chatViewModel.createOnlineStatus(messageSender, chatId)
+                    }
+
                     if (adminFirst) {
                         val message = MessageModel(
                             "",
-                            "Welcome to PaperMaxx",
+                            GeneralStrings.welcomeMessage,
                             MessageType.SENT
                         )
 
                         chatViewModel.sendMessage(message, chatId, messageReceiver)
                     }
 
-                    if (!isInDirect) {
-                        chatViewModel.createChatRoom(chatId)
-                        chatViewModel.putChatInDirect(messageReceiver, messageSender)
-                        chatViewModel.putChatInDirect(messageSender, messageReceiver)
-                    }
+                    chatViewModel.setOnline(messageSender, chatId)
                     chatViewModel.openChat(chatId)
+                    chatViewModel.monitorOnlineStatus(messageReceiver, chatId)
                 }
             })
 
@@ -112,14 +127,21 @@ class ChatFragment : Fragment() {
 
             chatViewModel.chatMessages.observe(viewLifecycleOwner, { list ->
                 if (list != null) {
-                    myAdapter.list = list
-                    myAdapter.notifyDataSetChanged()
-                    chat_recycler.scrollToPosition(list.size - 1)
+                    if (list.size > 0) {
+                        myAdapter.list = list
+                        myAdapter.notifyItemInserted(list.size - 1)
+                        chat_recycler.scrollToPosition(list.size - 1)
+                        lastMessage = list[list.size - 1]
+                        if (lastMessage.type == MessageType.RECEIVED) {
+                            seen_icon.visibility = View.GONE
+                        } else if (chatViewModel.onlineStatus.value == true) {
+                            seen_icon.visibility = View.VISIBLE
+                        }
+                    }
                 }
             })
 
             send_cv.setOnClickListener {
-
                 if (chat_type_et.editText?.text?.isNotBlank() == true) {
 
                     val message = MessageModel(
@@ -128,10 +150,8 @@ class ChatFragment : Fragment() {
                         MessageType.SENT
                     )
 
+                    seen_icon.visibility = View.GONE
                     chatViewModel.sendMessage(message, chatId, messageSender)
-
-                    // here it should check that if it is a sent message gone the seen icon
-                    // and if it is a received message visible the icon
 
                     chat_type_et.editText?.setText("")
 
@@ -142,8 +162,15 @@ class ChatFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (chatId != "") {
+            chatViewModel.setOnline(messageSender, chatId)
+        }
+    }
+
     override fun onPause() {
         super.onPause()
-        // disable seen icon
+        chatViewModel.setOffline(messageSender, chatId)
     }
 }

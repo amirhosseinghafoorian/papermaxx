@@ -39,7 +39,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@android:color/darker_gray"
+            android:background="@android:color/white"
             app:layout_constraintBottom_toTopOf="@id/send_cv"
             app:layout_constraintTop_toBottomOf="@id/tool_bar_chat">
 
@@ -67,7 +67,7 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:tint="@color/blue_500" />
+                app:tint="@color/black" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

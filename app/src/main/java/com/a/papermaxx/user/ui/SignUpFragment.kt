@@ -37,7 +37,7 @@ class SignUpFragment : Fragment() {
                     "Failed : ${result.exception?.message}",
                     Toast.LENGTH_SHORT
                 ).show()
-                Log.i("baby" , result.exception?.message.toString())
+                Log.i("baby", result.exception?.message.toString())
             } else {
                 signUpViewModel.setUserInfo(
                     signUp_et_4.editText?.text.toString(),
@@ -67,10 +67,35 @@ class SignUpFragment : Fragment() {
         password: String,
         repeatPassword: String,
         name: String
-    ) = signUpViewModel.validateName(name) &&
-            signUpViewModel.validateEmail(email) &&
-            signUpViewModel.validatePassword(password) &&
-            signUpViewModel.validateTheSamePassword(password, repeatPassword)
-
+    ): Boolean {
+        signUp_et_1.editText?.clearFocus()
+        signUp_et_2.editText?.clearFocus()
+        signUp_et_3.editText?.clearFocus()
+        signUp_et_4.editText?.clearFocus()
+        when {
+            signUpViewModel.validateName(name) != "" -> {
+                signUp_et_4.editText?.error = signUpViewModel.validateName(name)
+                signUp_et_4.editText?.requestFocus()
+                return false
+            }
+            signUpViewModel.validateEmail(email) != "" -> {
+                signUp_et_1.editText?.error = signUpViewModel.validateEmail(email)
+                signUp_et_1.editText?.requestFocus()
+                return false
+            }
+            signUpViewModel.validatePassword(password) != "" -> {
+                signUp_et_2.editText?.error = signUpViewModel.validatePassword(password)
+                signUp_et_2.editText?.requestFocus()
+                return false
+            }
+            signUpViewModel.validateTheSamePassword(password, repeatPassword) != "" -> {
+                signUp_et_3.editText?.error =
+                    signUpViewModel.validateTheSamePassword(password, repeatPassword)
+                signUp_et_3.editText?.requestFocus()
+                return false
+            }
+        }
+        return true
+    }
 
 }

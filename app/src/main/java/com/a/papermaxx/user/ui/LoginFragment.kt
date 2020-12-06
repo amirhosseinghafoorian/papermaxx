@@ -58,7 +58,21 @@ class LoginFragment : Fragment() {
     private fun validateInputs(
         email: String,
         password: String
-    ) = signUpViewModel.validateEmail(email) &&
-            signUpViewModel.validatePassword(password)
-
+    ): Boolean {
+        login_et_1.editText?.clearFocus()
+        login_et_2.editText?.clearFocus()
+        when {
+            signUpViewModel.validateEmail(email) != "" -> {
+                login_et_1.editText?.error = signUpViewModel.validateEmail(email)
+                login_et_1.editText?.requestFocus()
+                return false
+            }
+            signUpViewModel.validatePassword(password) != "" -> {
+                login_et_2.editText?.error = signUpViewModel.validatePassword(password)
+                login_et_2.editText?.requestFocus()
+                return false
+            }
+        }
+        return true
+    }
 }

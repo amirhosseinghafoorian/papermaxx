@@ -1,13 +1,10 @@
 package com.a.domainmodule.inputValidation
 
-import android.util.Log
-
 class ValidateInput {
 
-    fun checkEmailValidation(email: String): Boolean {
+    fun checkEmailValidation(email: String): String {
         if (email.isEmpty()) {
-            Log.i("baby", "Username can not be empty")
-            return false
+            return "Username can not be empty"
         } else if (email.contains('@') ||
             email.contains('*') ||
             email.contains('/') ||
@@ -32,45 +29,36 @@ class ValidateInput {
             email.contains('?') ||
             email.contains(',')
         ) {
-            Log.i("baby", "Username is invalid")
-            return false
+            return "Username is invalid"
         } else if (email.length > 20) {
-            Log.i("baby", "Username should be maximum 20 characters")
-            return false
+            return "Username should be maximum 20 characters"
         }
-        Log.i("baby", "Username Confirmed")
-        return true
+        return ""
     }
 
-    fun checkPasswordValidation(password: String): Boolean {
+    fun checkPasswordValidation(password: String): String {
         if (password.isEmpty()) {
-            Log.i("baby", "Password can not be empty")
-            return false
+            return "Password can not be empty"
         } else if (password.length < 6) {
-            Log.i("baby", "Enter a password with at least 6 characters")
-            return false
+            return "Enter a password with at least 6 characters"
         }
-        Log.i("baby", "password confirmed")
-        return true
+        return ""
     }
 
-    fun checkTheSamePassword(password: String, repeatPassword: String): Boolean {
-        return if (password == repeatPassword) true
+    fun checkTheSamePassword(password: String, repeatPassword: String): String {
+        return if (password == repeatPassword) ""
         else {
-            Log.i("baby", "passwords don't match")
-            false
+            "passwords don't match"
         }
     }
 
-    fun checkNameValidation(name: String): Boolean {
+    fun checkNameValidation(name: String): String {
         if (name.isEmpty()) {
-            Log.i("baby", "Name can not be empty")
-            return false
+            return "Name can not be empty"
         } else if (name.length < 4) {
-            Log.i("baby", "Enter a name with at least 4 characters")
-            return false
+            return "Enter a name with at least 4 characters"
         }
-        return true
+        return ""
     }
 
 }
