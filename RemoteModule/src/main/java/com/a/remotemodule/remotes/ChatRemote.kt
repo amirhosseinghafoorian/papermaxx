@@ -26,6 +26,27 @@ class ChatRemote @Inject constructor(
             .child(chatId)
             .child(message.id)
             .child("message").setValue(message.text + ":" + senderId)
-        val a = ""
     }
+
+    fun createOnlineStatus(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("online:$uid").setValue("")
+    }
+
+    fun setOnline(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("online:$uid").setValue("online")
+    }
+
+    fun setOffline(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("online:$uid").setValue("offline")
+    }
+
 }

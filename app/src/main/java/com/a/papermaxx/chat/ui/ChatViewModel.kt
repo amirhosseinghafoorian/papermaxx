@@ -70,24 +70,27 @@ class ChatViewModel @ViewModelInject constructor(
         val chat = chatUseCase.getChatRoom(chatId)
         chat.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val message = snapshot.child("message").value.toString()
-                val messageSenderId = message.substringAfterLast(':')
-                val messageText = message.substringBeforeLast(':')
-                val type: MessageType =
-                    if (messageSenderId == currentUser()?.uid) {
-                        MessageType.SENT
-                    } else {
-                        MessageType.RECEIVED
-                    }
+                val skipOnlineMessage = snapshot.key.toString()
+                if (!skipOnlineMessage.startsWith("online")) {
+                    val message = snapshot.child("message").value.toString()
+                    val messageSenderId = message.substringAfterLast(':')
+                    val messageText = message.substringBeforeLast(':')
+                    val type: MessageType =
+                        if (messageSenderId == currentUser()?.uid) {
+                            MessageType.SENT
+                        } else {
+                            MessageType.RECEIVED
+                        }
 
-                chatMessages.value?.add(
-                    MessageModel(
-                        snapshot.key.toString(),
-                        messageText,
-                        type
+                    chatMessages.value?.add(
+                        MessageModel(
+                            snapshot.key.toString(),
+                            messageText,
+                            type
+                        )
                     )
-                )
-                chatMessages.postValue(chatMessages.value)
+                    chatMessages.postValue(chatMessages.value)
+                }
 
             }
 
@@ -108,5 +111,12 @@ class ChatViewModel @ViewModelInject constructor(
 
     fun sendMessage(message: MessageModel, chatId: String, senderId: String) =
         chatUseCase.sendMessage(message, chatId, senderId)
+
+    fun createOnlineStatus(uid: String, chatId: String) =
+        chatUseCase.createOnlineStatus(uid, chatId)
+
+    fun setOnline(uid: String, chatId: String) = chatUseCase.setOnline(uid, chatId)
+
+    fun setOffline(uid: String, chatId: String) = chatUseCase.setOffline(uid, chatId)
 
 }

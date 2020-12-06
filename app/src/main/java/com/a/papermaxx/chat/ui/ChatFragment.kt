@@ -26,7 +26,7 @@ class ChatFragment : Fragment() {
     private lateinit var messageReceiver: String
     private lateinit var messageSender: String
     private lateinit var myAdapter: ChatAdapter
-    private lateinit var chatId: String
+    private var chatId: String = ""
     private var adminFirst: Boolean = false
 
     private val chatViewModel: ChatViewModel by viewModels()
@@ -79,21 +79,24 @@ class ChatFragment : Fragment() {
                 if (isInDirect != null) {
                     chatId = chatViewModel.chatIdDecide(messageReceiver)
 
+                    if (!isInDirect) {
+                        chatViewModel.createChatRoom(chatId)
+                        chatViewModel.putChatInDirect(messageReceiver, messageSender)
+                        chatViewModel.putChatInDirect(messageSender, messageReceiver)
+                        chatViewModel.createOnlineStatus(messageSender, chatId)
+                    }
+
                     if (adminFirst) {
                         val message = MessageModel(
                             "",
-                            "Welcome to PaperMaxx",
+                            GeneralStrings.welcomeMessage,
                             MessageType.SENT
                         )
 
                         chatViewModel.sendMessage(message, chatId, messageReceiver)
                     }
 
-                    if (!isInDirect) {
-                        chatViewModel.createChatRoom(chatId)
-                        chatViewModel.putChatInDirect(messageReceiver, messageSender)
-                        chatViewModel.putChatInDirect(messageSender, messageReceiver)
-                    }
+                    chatViewModel.setOnline(messageSender, chatId)
                     chatViewModel.openChat(chatId)
                 }
             })
@@ -119,7 +122,6 @@ class ChatFragment : Fragment() {
             })
 
             send_cv.setOnClickListener {
-
                 if (chat_type_et.editText?.text?.isNotBlank() == true) {
 
                     val message = MessageModel(
@@ -142,8 +144,15 @@ class ChatFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (chatId != "") {
+            chatViewModel.setOnline(messageSender, chatId)
+        }
+    }
+
     override fun onPause() {
         super.onPause()
-        // disable seen icon
+        chatViewModel.setOffline(messageSender, chatId)
     }
 }
