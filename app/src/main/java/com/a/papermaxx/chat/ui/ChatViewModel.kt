@@ -24,6 +24,7 @@ class ChatViewModel @ViewModelInject constructor(
     var receiverUsername = MutableLiveData<String>()
     var isInDirect = MutableLiveData<Boolean>()
     var chatMessages = MutableLiveData<MutableList<MessageModel>>()
+    var onlineStatus = MutableLiveData<Boolean>()
 
     init {
         chatMessages.value = mutableListOf()
@@ -119,7 +120,19 @@ class ChatViewModel @ViewModelInject constructor(
 
     fun setOffline(uid: String, chatId: String) = chatUseCase.setOffline(uid, chatId)
 
-//    fun checkSeen(uid: String, chatId: String) {
-//        chatRemote.checkSeen(uid, chatId)
-//    }
+    fun monitorOnlineStatus(uid: String, chatId: String) {
+        chatUseCase.checkSeen(uid, chatId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.value.toString() == "online") {
+                    onlineStatus.postValue(true)
+                } else if (snapshot.value.toString() == "offline") {
+                    onlineStatus.postValue(false)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+    }
+
 }

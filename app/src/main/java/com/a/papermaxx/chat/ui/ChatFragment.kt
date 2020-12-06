@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -29,6 +28,7 @@ class ChatFragment : Fragment() {
     private lateinit var myAdapter: ChatAdapter
     private var chatId: String = ""
     private var adminFirst: Boolean = false
+    private var lastMessage = MessageModel("not", "", MessageType.RECEIVED)
 
     private val chatViewModel: ChatViewModel by viewModels()
 
@@ -76,6 +76,16 @@ class ChatFragment : Fragment() {
                 }
             })
 
+            chatViewModel.onlineStatus.observe(viewLifecycleOwner, { isOnline ->
+                if (isOnline != null && lastMessage.id != "not") {
+                    if (isOnline) {
+                        if (lastMessage.type == MessageType.SENT) {
+                            seen_icon.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            })
+
             chatViewModel.isInDirect.observe(viewLifecycleOwner, { isInDirect ->
                 if (isInDirect != null) {
                     chatId = chatViewModel.chatIdDecide(messageReceiver)
@@ -99,6 +109,7 @@ class ChatFragment : Fragment() {
 
                     chatViewModel.setOnline(messageSender, chatId)
                     chatViewModel.openChat(chatId)
+                    chatViewModel.monitorOnlineStatus(messageReceiver, chatId)
                 }
             })
 
@@ -119,7 +130,14 @@ class ChatFragment : Fragment() {
                     myAdapter.list = list
                     myAdapter.notifyDataSetChanged()
                     chat_recycler.scrollToPosition(list.size - 1)
-                    Toast.makeText(requireContext(), list[list.size-1].text, Toast.LENGTH_SHORT).show()
+                    if (list.size > 0) {
+                        lastMessage = list[list.size - 1]
+                        if (lastMessage.type == MessageType.RECEIVED) {
+                            seen_icon.visibility = View.GONE
+                        } else if (chatViewModel.onlineStatus.value == true) {
+                            seen_icon.visibility = View.VISIBLE
+                        }
+                    }
                 }
             })
 
@@ -132,11 +150,8 @@ class ChatFragment : Fragment() {
                         MessageType.SENT
                     )
 
-//                    seen_icon.visibility = View.GONE
+                    seen_icon.visibility = View.GONE
                     chatViewModel.sendMessage(message, chatId, messageSender)
-//                    chatViewModel.checkSeen(messageReceiver, chatId)
-                    // here it should check that if it is a sent message gone the seen icon
-                    // and if it is a received message visible the icon
 
                     chat_type_et.editText?.setText("")
 

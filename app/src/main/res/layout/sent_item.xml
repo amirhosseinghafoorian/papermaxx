@@ -49,7 +49,7 @@
                     android:layout_margin="4dp"
                     android:gravity="start"
                     android:text="@{data.text}"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:textSize="20sp"
                     android:textStyle="normal"
                     app:layout_constraintTop_toTopOf="parent" />

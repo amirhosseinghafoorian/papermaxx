@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:backgroundTint="@android:color/white"
+            android:backgroundTint="@color/green_500"
             android:checkable="true"
             android:clickable="true"
             android:focusable="true"
@@ -35,7 +35,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/received_gl"
             app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/blue_500">
+            app:rippleColor="@color/black">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -47,9 +47,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:text="@{data.text}"
-                    android:textColor="@color/blue_500"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="normal"
                     app:layout_constraintTop_toTopOf="parent" />
