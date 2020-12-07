@@ -76,6 +76,9 @@
         <action
             android:id="@+id/action_homeFragment_to_mediaUploadFragment"
             app:destination="@id/mediaUploadFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mediaUploadFragment2"
+            app:destination="@id/mediaUploadFragment2" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -104,4 +107,8 @@
         android:name="com.a.papermaxx.general.MediaUploadFragment"
         android:label="fragment_media_upload"
         tools:layout="@layout/fragment_media_upload" />
+    <fragment
+        android:id="@+id/mediaUploadFragment2"
+        android:name="com.a.papermaxx.general.MediaUploadFragment2"
+        android:label="MediaUploadFragment2" />
 </navigation>

@@ -64,7 +64,7 @@ class HomeFragment : Fragment() {
 
         btn_profile.setOnClickListener {
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToMediaUploadFragment()
+                HomeFragmentDirections.actionHomeFragmentToMediaUploadFragment2()
             )
         }
     }
