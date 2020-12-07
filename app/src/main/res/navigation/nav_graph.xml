@@ -73,6 +73,9 @@
             app:destination="@id/authentication"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_homeFragment_to_mediaUploadFragment"
+            app:destination="@id/mediaUploadFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -96,4 +99,9 @@
             app:popUpTo="@id/chatFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/mediaUploadFragment"
+        android:name="com.a.papermaxx.general.MediaUploadFragment"
+        android:label="fragment_media_upload"
+        tools:layout="@layout/fragment_media_upload" />
 </navigation>
