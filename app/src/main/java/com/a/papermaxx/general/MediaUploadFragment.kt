@@ -2,7 +2,6 @@ package com.a.papermaxx.general
 
 import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
-import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -110,14 +109,8 @@ class MediaUploadFragment : Fragment() {
     }
 
     private fun getFileExtension(uri: Uri): String? {
-        val contentResolver: ContentResolver = requireContext().contentResolver
-        val mimeTypeMap = MimeTypeMap.getSingleton()
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
-    }
-
-    class UploadInfo(name: String?, url: String?) {
-        var imageName: String? = name
-        var imageURL: String? = url
+        return MimeTypeMap.getSingleton()
+            .getExtensionFromMimeType(requireContext().contentResolver.getType(uri))
     }
 
     data class UploadInfo2(
