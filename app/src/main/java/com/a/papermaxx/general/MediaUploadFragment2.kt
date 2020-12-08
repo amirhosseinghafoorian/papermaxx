@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.a.papermaxx.R
 import com.bumptech.glide.Glide
@@ -21,6 +22,7 @@ import java.io.IOException
 
 class MediaUploadFragment2 : Fragment() {
 
+    lateinit var storage: FirebaseStorage
     private lateinit var storageReference: StorageReference
     private lateinit var databaseReference: DatabaseReference
     private var imageRequestCode = 7
@@ -45,6 +47,9 @@ class MediaUploadFragment2 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        storage = FirebaseStorage.getInstance()
+        val ref = storage.reference
+
         btnbrowse.setOnClickListener {
             val intent = Intent()
             intent.type = "image/*"
@@ -53,6 +58,19 @@ class MediaUploadFragment2 : Fragment() {
                 Intent.createChooser(intent, "Select Image"),
                 imageRequestCode
             )
+        }
+
+        val islandRef = ref.child("Images").child("amirhossein.ghafourian.jpeg")
+//        val islandRef = storageReference.child("")
+
+        btnupload.setOnClickListener {
+            val oneMegaByte: Long = 1024 * 1024
+            islandRef.getBytes(oneMegaByte).addOnSuccessListener {
+                Toast.makeText(requireContext(), "Action Compeleted", Toast.LENGTH_SHORT).show()
+                Glide.with(requireContext()).load(it).into(image_view)
+            }.addOnFailureListener {
+                Toast.makeText(requireContext(), "Action Failed", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
