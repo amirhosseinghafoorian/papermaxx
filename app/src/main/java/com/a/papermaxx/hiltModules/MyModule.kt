@@ -3,6 +3,7 @@ package com.a.papermaxx.hiltModules
 import com.a.domainmodule.inputValidation.ChatIdDecider
 import com.a.domainmodule.inputValidation.GetCurrentTime
 import com.a.domainmodule.inputValidation.ValidateInput
+import com.a.papermaxx.general.FileExtension
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -22,6 +23,12 @@ object MyModule {
     @Provides
     fun provideCurrentTime(): GetCurrentTime {
         return GetCurrentTime()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFileExtention(): FileExtension {
+        return FileExtension()
     }
 
     @Singleton

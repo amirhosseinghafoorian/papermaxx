@@ -1,9 +1,11 @@
 package com.a.remotemodule.remotes
 
+import android.net.Uri
 import com.a.remotemodule.general.GeneralStrings
 import com.a.remotemodule.models.MessageModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import javax.inject.Inject
 
 class ChatRemote @Inject constructor(
@@ -31,7 +33,7 @@ class ChatRemote @Inject constructor(
             .child("message").setValue(GeneralStrings.keyText + ":" + message.text + ":" + senderId)
     }
 
-    fun sendPicture(message: MessageModel, chatId: String, senderId: String) {
+    fun sendPicture(message: MessageModel, chatId: String, senderId: String) { // check again
         rootReference
             .child("ChatRooms")
             .child(chatId)
@@ -67,7 +69,10 @@ class ChatRemote @Inject constructor(
             .child("online:$uid")
     }
 
-    fun uppoadImage(){
-
+    fun uploadImage(filePathUri: Uri, chatId: String, filename: String): UploadTask {
+        val storageReference2: StorageReference = storageReference.child(chatId).child(
+            filename
+        )
+        return storageReference2.putFile(filePathUri)
     }
 }

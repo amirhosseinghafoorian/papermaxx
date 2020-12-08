@@ -2,10 +2,8 @@ package com.a.papermaxx.chat.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +20,6 @@ import com.a.remotemodule.models.MessageModel
 import com.a.remotemodule.models.MessageType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
-import kotlinx.android.synthetic.main.fragment_media_upload.*
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -33,12 +30,11 @@ class ChatFragment : Fragment() {
     private lateinit var messageReceiver: String
     private lateinit var messageSender: String
     private lateinit var myAdapter: ChatAdapter
-    private lateinit var bitmap: Bitmap
     private var chatId: String = ""
     private var adminFirst: Boolean = false
     private var lastMessage = MessageModel("not", "", MessageType.RECEIVED_TEXT)
     private var readyMessage = MessageModel("not", "", MessageType.SENT_PIC)
-    private lateinit var filePathUri : Uri
+    private var filePathUri: Uri? = null
 
     private val chatViewModel: ChatViewModel by viewModels()
 
@@ -165,8 +161,10 @@ class ChatFragment : Fragment() {
                     if (readyMessage.id == "not") {
                         chatViewModel.sendMessage(message, chatId, messageSender)
                     } else if (readyMessage.id == "yep") {
+                        readyMessage.text = chat_type_et.editText?.text.toString()
                         uploadImage()
                     }
+                    filePathUri = null
                     readyMessage.id = "not"
                 }
             }
@@ -186,8 +184,7 @@ class ChatFragment : Fragment() {
     }
 
     private fun uploadImage() {
-
-        chatViewModel.sendMessage(readyMessage, chatId, messageSender)
+        chatViewModel.uploadImage(filePathUri!!, chatId, readyMessage, messageSender)
     }
 
     override fun onResume() {
