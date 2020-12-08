@@ -1,5 +1,8 @@
 package com.a.papermaxx.chat.ui
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +21,7 @@ import com.a.remotemodule.models.MessageType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 @AndroidEntryPoint
 class ChatFragment : Fragment() {
@@ -28,7 +32,9 @@ class ChatFragment : Fragment() {
     private lateinit var myAdapter: ChatAdapter
     private var chatId: String = ""
     private var adminFirst: Boolean = false
-    private var lastMessage = MessageModel("not", "", MessageType.RECEIVED)
+    private var lastMessage = MessageModel("not", "", MessageType.RECEIVED_TEXT)
+    private var readyMessage = MessageModel("not", "", MessageType.SENT_PIC)
+    private var filePathUri: Uri? = null
 
     private val chatViewModel: ChatViewModel by viewModels()
 
@@ -79,7 +85,7 @@ class ChatFragment : Fragment() {
             chatViewModel.onlineStatus.observe(viewLifecycleOwner, { isOnline ->
                 if (isOnline != null && lastMessage.id != "not") {
                     if (isOnline) {
-                        if (lastMessage.type == MessageType.SENT) {
+                        if (lastMessage.type == MessageType.SENT_TEXT) {
                             seen_icon.visibility = View.VISIBLE
                         }
                     }
@@ -101,7 +107,7 @@ class ChatFragment : Fragment() {
                         val message = MessageModel(
                             "",
                             GeneralStrings.welcomeMessage,
-                            MessageType.SENT
+                            MessageType.SENT_TEXT
                         )
 
                         chatViewModel.sendMessage(message, chatId, messageReceiver)
@@ -132,7 +138,7 @@ class ChatFragment : Fragment() {
                         myAdapter.notifyItemInserted(list.size - 1)
                         chat_recycler.scrollToPosition(list.size - 1)
                         lastMessage = list[list.size - 1]
-                        if (lastMessage.type == MessageType.RECEIVED) {
+                        if (lastMessage.type == MessageType.RECEIVED_TEXT) {
                             seen_icon.visibility = View.GONE
                         } else if (chatViewModel.onlineStatus.value == true) {
                             seen_icon.visibility = View.VISIBLE
@@ -147,19 +153,38 @@ class ChatFragment : Fragment() {
                     val message = MessageModel(
                         "",
                         chat_type_et.editText?.text.toString(),
-                        MessageType.SENT
+                        MessageType.SENT_TEXT
                     )
 
                     seen_icon.visibility = View.GONE
-                    chatViewModel.sendMessage(message, chatId, messageSender)
-
                     chat_type_et.editText?.setText("")
-
+                    if (readyMessage.id == "not") {
+                        chatViewModel.sendMessage(message, chatId, messageSender)
+                    } else if (readyMessage.id == "yep") {
+                        readyMessage.text = chat_type_et.editText?.text.toString()
+                        uploadImage()
+                    }
+                    filePathUri = null
+                    readyMessage.id = "not"
                 }
+            }
+
+            image_cv.setOnClickListener {
+                val intent = Intent()
+                intent.type = "image/*"
+                intent.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(
+                    Intent.createChooser(intent, "Select Image"),
+                    GeneralStrings.imageRequestCode
+                )
             }
 
         }
 
+    }
+
+    private fun uploadImage() {
+        chatViewModel.uploadImage(filePathUri!!, chatId, readyMessage, messageSender)
     }
 
     override fun onResume() {
@@ -172,5 +197,19 @@ class ChatFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         chatViewModel.setOffline(messageSender, chatId)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == GeneralStrings.imageRequestCode && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            filePathUri = data.data!!
+            try {
+                readyMessage.id = "yep"
+                chat_type_et.editText?.setText(GeneralStrings.newImage)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 }
