@@ -17,6 +17,11 @@ class ChatUseCase @Inject constructor(
         chatRemote.sendMessage(message, chatId, senderId)
     }
 
+    fun sendPicture(message: MessageModel, chatId: String, senderId: String) {
+        message.id = System.currentTimeMillis().toString()
+        chatRemote.sendPicture(message, chatId, senderId)
+    }
+
     fun createOnlineStatus(uid: String, chatId: String) = chatRemote.createOnlineStatus(uid, chatId)
 
     fun setOnline(uid: String, chatId: String) = chatRemote.setOnline(uid, chatId)

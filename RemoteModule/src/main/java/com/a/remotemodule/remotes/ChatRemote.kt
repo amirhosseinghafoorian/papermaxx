@@ -1,11 +1,14 @@
 package com.a.remotemodule.remotes
 
+import com.a.remotemodule.general.GeneralStrings
 import com.a.remotemodule.models.MessageModel
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.StorageReference
 import javax.inject.Inject
 
 class ChatRemote @Inject constructor(
-    private val rootReference: DatabaseReference
+    private val rootReference: DatabaseReference,
+    private val storageReference: StorageReference
 ) {
 
     fun createChatRoom(name: String) {
@@ -25,7 +28,15 @@ class ChatRemote @Inject constructor(
             .child("ChatRooms")
             .child(chatId)
             .child(message.id)
-            .child("message").setValue(message.text + ":" + senderId)
+            .child("message").setValue(GeneralStrings.keyText + ":" + message.text + ":" + senderId)
+    }
+
+    fun sendPicture(message: MessageModel, chatId: String, senderId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child(message.id)
+            .child("message").setValue(GeneralStrings.keyPic + ":" + message.text + ":" + senderId)
     }
 
     fun createOnlineStatus(uid: String, chatId: String) {
@@ -56,4 +67,7 @@ class ChatRemote @Inject constructor(
             .child("online:$uid")
     }
 
+    fun uppoadImage(){
+
+    }
 }

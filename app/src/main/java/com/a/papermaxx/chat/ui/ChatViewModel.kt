@@ -78,9 +78,9 @@ class ChatViewModel @ViewModelInject constructor(
                     val messageText = message.substringBeforeLast(':')
                     val type: MessageType =
                         if (messageSenderId == currentUser()?.uid) {
-                            MessageType.SENT
+                            MessageType.SENT_TEXT
                         } else {
-                            MessageType.RECEIVED
+                            MessageType.RECEIVED_TEXT
                         }
 
                     chatMessages.value?.add(
@@ -112,6 +112,9 @@ class ChatViewModel @ViewModelInject constructor(
 
     fun sendMessage(message: MessageModel, chatId: String, senderId: String) =
         chatUseCase.sendMessage(message, chatId, senderId)
+
+    fun sendPicture(message: MessageModel, chatId: String, senderId: String) =
+        chatUseCase.sendPicture(message, chatId, senderId)
 
     fun createOnlineStatus(uid: String, chatId: String) =
         chatUseCase.createOnlineStatus(uid, chatId)
