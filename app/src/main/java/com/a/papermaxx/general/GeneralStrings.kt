@@ -5,7 +5,11 @@ object GeneralStrings {
     const val keyLogin = "login"
     const val keySignUp = "signUp"
     const val keySplash = "splash"
-    const val adminId = "3QUek1hYRlhnLxerjXpXAhgR7eu2"
-    const val sentMessage = 111
-    const val receivedMessage = 222
+    const val newImage = "new image"
+    const val welcomeMessage = "Welcome to Paper Maxx"
+    const val sentTextMessage = 101
+    const val receivedTextMessage = 102
+    const val sentPicMessage = 103
+    const val receivedPicMessage = 104
+    const val imageRequestCode = 201
 }

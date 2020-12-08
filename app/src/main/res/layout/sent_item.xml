@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="com.a.ayc.model.MessageModel" />
+            type="com.a.remotemodule.models.MessageModel" />
 
     </data>
 
@@ -25,8 +25,9 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
             android:layout_marginTop="1dp"
-            android:backgroundTint="@android:color/black"
+            android:backgroundTint="@color/blue_500"
             android:checkable="true"
             android:clickable="true"
             android:focusable="true"
@@ -49,7 +50,7 @@
                     android:layout_margin="4dp"
                     android:gravity="start"
                     android:text="@{data.text}"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:textSize="20sp"
                     android:textStyle="normal"
                     app:layout_constraintTop_toTopOf="parent" />

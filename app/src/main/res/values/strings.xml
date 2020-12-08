@@ -1,5 +1,16 @@
 <resources>
-    <string name="app_name">papermaxx</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Paper Maxx</string>
+    <string name="hello_blank_fragment">Welcome </string>
+    <string name="todo">TODO</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="full_name">Full Name</string>
+    <string name="log_out">Log out</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="ay_chat">AY Chat</string>
+    <string name="search_users">search users</string>
+    <string name="time">time</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
