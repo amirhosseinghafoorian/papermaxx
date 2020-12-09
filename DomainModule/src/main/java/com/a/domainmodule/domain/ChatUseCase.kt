@@ -14,13 +14,14 @@ class ChatUseCase @Inject constructor(
     fun getChatRoom(chatId: String) = chatRemote.getChatRoom(chatId)
 
     fun sendMessage(message: MessageModel, chatId: String, senderId: String) {
-        message.id = System.currentTimeMillis().toString()
-        chatRemote.sendMessage(message, chatId, senderId)
+        val id = System.currentTimeMillis().toString()
+        message.id = senderId
+        chatRemote.sendMessage(id, message, chatId)
     }
 
-    fun sendPicture(message: MessageModel, chatId: String, senderId: String) {
-        message.id = System.currentTimeMillis().toString()
-        chatRemote.sendPicture(message, chatId, senderId)
+    fun sendPicture(messageId: String, message: MessageModel, chatId: String, senderId: String) {
+        message.id = senderId
+        chatRemote.sendPicture(messageId, message, chatId)
     }
 
     fun uploadImage(filePathUri: Uri, chatId: String, filename: String) =

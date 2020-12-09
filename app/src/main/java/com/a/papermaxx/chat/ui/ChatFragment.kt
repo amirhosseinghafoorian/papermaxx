@@ -157,13 +157,13 @@ class ChatFragment : Fragment() {
                     )
 
                     seen_icon.visibility = View.GONE
-                    chat_type_et.editText?.setText("")
                     if (readyMessage.id == "not") {
                         chatViewModel.sendMessage(message, chatId, messageSender)
                     } else if (readyMessage.id == "yep") {
                         readyMessage.text = chat_type_et.editText?.text.toString()
                         uploadImage()
                     }
+                    chat_type_et.editText?.setText("")
                     filePathUri = null
                     readyMessage.id = "not"
                 }

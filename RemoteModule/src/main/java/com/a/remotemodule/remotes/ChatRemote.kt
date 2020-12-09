@@ -1,7 +1,6 @@
 package com.a.remotemodule.remotes
 
 import android.net.Uri
-import com.a.remotemodule.general.GeneralStrings
 import com.a.remotemodule.models.MessageModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
@@ -25,20 +24,20 @@ class ChatRemote @Inject constructor(
             .child(chatId)
     }
 
-    fun sendMessage(message: MessageModel, chatId: String, senderId: String) {
+    fun sendMessage(messageId: String, message: MessageModel, chatId: String) {
         rootReference
             .child("ChatRooms")
             .child(chatId)
-            .child(message.id)
-            .child("message").setValue(GeneralStrings.keyText + ":" + message.text + ":" + senderId)
+            .child(messageId)
+            .setValue(message)
     }
 
-    fun sendPicture(message: MessageModel, chatId: String, senderId: String) { // check again
+    fun sendPicture(messageId: String, message: MessageModel, chatId: String) {
         rootReference
             .child("ChatRooms")
             .child(chatId)
-            .child(message.id)
-            .child("message").setValue(GeneralStrings.keyPic + ":" + message.text + ":" + senderId)
+            .child(messageId)
+            .setValue(message)
     }
 
     fun createOnlineStatus(uid: String, chatId: String) {

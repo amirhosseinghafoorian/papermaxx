@@ -76,27 +76,25 @@ class ChatViewModel @ViewModelInject constructor(
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val skipOnlineMessage = snapshot.key.toString()
                 if (!skipOnlineMessage.startsWith("online")) {
-                    val message = snapshot.child("message").value.toString()
-                    val messageSenderId = message.substringAfterLast(':')
-                    val messageRaw = message.substringBeforeLast(':')
-                    val messageType = messageRaw.substringBefore(':')
-                    val messageText = messageRaw.substringAfter(':')
+                    val messageSenderId = snapshot.child("id").value.toString()
+                    val messageType = snapshot.child("type").value.toString()
+                    val messageText = snapshot.child("text").value.toString()
                     val type: MessageType =
                         if (messageSenderId == currentUser()?.uid) {
-                            if (messageType == com.a.remotemodule.general.GeneralStrings.keyText) {
+                            if (messageType == "SENT_TEXT") {
                                 MessageType.SENT_TEXT
                             } else {
                                 MessageType.SENT_PIC
                             }
                         } else {
-                            if (messageType == com.a.remotemodule.general.GeneralStrings.keyText) {
+                            if (messageType == "SENT_TEXT") {
                                 MessageType.RECEIVED_TEXT
                             } else {
                                 MessageType.RECEIVED_PIC
                             }
                         }
 
-                    if (messageType == com.a.remotemodule.general.GeneralStrings.keyText){
+                    if (messageType == "SENT_TEXT") {
                         chatMessages.value?.add(
                             MessageModel(
                                 snapshot.key.toString(),
@@ -104,18 +102,18 @@ class ChatViewModel @ViewModelInject constructor(
                                 type
                             )
                         )
-                    }else{
-                        chatMessages.value?.add( // should add uri
+                    } else {
+                        chatMessages.value?.add(
                             MessageModel(
                                 snapshot.key.toString(),
                                 messageText,
-                                type
+                                type,
+                                snapshot.child("url").value.toString()
                             )
                         )
                     }
                     chatMessages.postValue(chatMessages.value)
                 }
-
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -134,20 +132,26 @@ class ChatViewModel @ViewModelInject constructor(
     }
 
     fun uploadImage(filePathUri: Uri, chatId: String, message: MessageModel, senderId: String) {
-        val filename = System.currentTimeMillis().toString() + "." + fileExtension.getFileExtension(
+        val id = System.currentTimeMillis().toString()
+        val filename = "$id." + fileExtension.getFileExtension(
             filePathUri
         )
         message.url = filename
         chatUseCase.uploadImage(filePathUri, chatId, filename).addOnSuccessListener {
-            sendPicture(message, chatId, senderId)
+            sendPicture(id, message, chatId, senderId)
         }
     }
 
     fun sendMessage(message: MessageModel, chatId: String, senderId: String) =
         chatUseCase.sendMessage(message, chatId, senderId)
 
-    private fun sendPicture(message: MessageModel, chatId: String, senderId: String) =
-        chatUseCase.sendPicture(message, chatId, senderId)
+    private fun sendPicture(
+        messageId: String,
+        message: MessageModel,
+        chatId: String,
+        senderId: String
+    ) =
+        chatUseCase.sendPicture(messageId, message, chatId, senderId)
 
     fun createOnlineStatus(uid: String, chatId: String) =
         chatUseCase.createOnlineStatus(uid, chatId)
