@@ -27,7 +27,7 @@ object MyModule {
 
     @Singleton
     @Provides
-    fun provideFileExtention(): FileExtension {
+    fun provideFileExtension(): FileExtension {
         return FileExtension()
     }
 
