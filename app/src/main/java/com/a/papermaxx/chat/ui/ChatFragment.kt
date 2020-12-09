@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 @AndroidEntryPoint
-class ChatFragment : Fragment() , ChatAdapter.OnPicClick {
+class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
     private lateinit var binding: FragmentChatBinding
     private lateinit var messageReceiver: String
@@ -125,7 +125,13 @@ class ChatFragment : Fragment() , ChatAdapter.OnPicClick {
                 messageReceiver
             )
 
-            myAdapter = chatViewModel.chatMessages.value?.let { ChatAdapter(it,this@ChatFragment) }!!
+            myAdapter = chatViewModel.chatMessages.value?.let {
+                ChatAdapter(
+                    it,
+                    chatId,
+                    this@ChatFragment
+                )
+            }!!
 
             chat_recycler.apply {
                 adapter = myAdapter
@@ -214,6 +220,12 @@ class ChatFragment : Fragment() , ChatAdapter.OnPicClick {
     }
 
     override fun onClick(filename: String) {
-        findNavController().navigate(ChatFragmentDirections.actionChatFragmentToShowPictureFragment(chatId , filename))
+        findNavController().navigate(
+            ChatFragmentDirections.actionChatFragmentToShowPictureFragment(
+                chatId,
+                filename,
+                messageReceiver
+            )
+        )
     }
 }

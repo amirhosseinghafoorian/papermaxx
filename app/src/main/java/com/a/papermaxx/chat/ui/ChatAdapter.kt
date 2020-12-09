@@ -15,8 +15,8 @@ import com.a.remotemodule.models.MessageType
 
 
 class ChatAdapter(
-
     var list: MutableList<MessageModel>,
+    var chatId: String,
     private val picClick: OnPicClick
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -25,36 +25,9 @@ class ChatAdapter(
 
     class MyViewHolder2(var binding: ReceivedItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-    inner class MyViewHolder3(var binding: SentImageBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder3(var binding: SentImageBinding) : RecyclerView.ViewHolder(binding.root)
 
-        init {
-
-            itemView.setOnClickListener {
-                try {
-                    picClick.onClick(list[position].url.toString())
-                } catch (E: Exception) {
-
-                }
-            }
-        }
-
-    }
-
-    inner class MyViewHolder4(var binding: ReceivedImageBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.click = picClick
-            itemView.setOnClickListener {
-                try {
-
-                } catch (E: Exception) {
-
-                }
-            }
-        }
-    }
+    class MyViewHolder4(var binding: ReceivedImageBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun getItemViewType(position: Int): Int {
         return when (list[position].type) {
@@ -94,6 +67,7 @@ class ChatAdapter(
                     LayoutInflater.from(parent.context),
                     R.layout.sent_image, parent, false
                 )
+
                 MyViewHolder3(binding)
             }
             else -> {
@@ -116,9 +90,14 @@ class ChatAdapter(
             }
             getItemViewType(position) == GeneralStrings.sentPicMessage -> {
                 (holder as MyViewHolder3).binding.data = list[position]
+                holder.binding.click = picClick
+                holder.binding.filename = list[position].url
+
             }
             getItemViewType(position) == GeneralStrings.receivedPicMessage -> {
                 (holder as MyViewHolder4).binding.data = list[position]
+                holder.binding.click = picClick
+                holder.binding.filename = list[position].url
             }
         }
     }

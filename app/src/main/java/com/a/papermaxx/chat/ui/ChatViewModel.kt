@@ -80,6 +80,7 @@ class ChatViewModel @ViewModelInject constructor(
                     val messageSenderId = snapshot.child("id").value.toString()
                     val messageType = snapshot.child("type").value.toString()
                     val messageText = snapshot.child("text").value.toString()
+                    val url = snapshot.child("url").value.toString()
                     val type: MessageType =
                         if (messageSenderId == currentUser()?.uid) {
                             if (messageType == "SENT_TEXT") {
@@ -109,7 +110,7 @@ class ChatViewModel @ViewModelInject constructor(
                                 snapshot.key.toString(),
                                 messageText,
                                 type,
-                                snapshot.child("url").value.toString()
+                                url
                             )
                         )
                     }
