@@ -35,5 +35,7 @@ class ChatUseCase @Inject constructor(
 
     fun checkSeen(uid: String, chatId: String) = chatRemote.checkSeen(uid, chatId)
 
+    fun downLoadPic(chatId: String, filename: String) = chatRemote.downLoadPic(chatId, filename)
+
 }
 

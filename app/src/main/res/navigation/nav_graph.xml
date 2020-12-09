@@ -73,12 +73,6 @@
             app:destination="@id/authentication"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_homeFragment_to_mediaUploadFragment"
-            app:destination="@id/mediaUploadFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_mediaUploadFragment2"
-            app:destination="@id/mediaUploadFragment2" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -101,14 +95,20 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/chatFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_chatFragment_to_showPictureFragment"
+            app:destination="@id/showPictureFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mediaUploadFragment"
-        android:name="com.a.papermaxx.general.MediaUploadFragment"
-        android:label="fragment_media_upload"
-        tools:layout="@layout/fragment_media_upload" />
-    <fragment
-        android:id="@+id/mediaUploadFragment2"
-        android:name="com.a.papermaxx.general.MediaUploadFragment2"
-        android:label="MediaUploadFragment2" />
+        android:id="@+id/showPictureFragment"
+        android:name="com.a.papermaxx.chat.ui.ShowPictureFragment"
+        android:label="fragment_show_picture"
+        tools:layout="@layout/fragment_show_picture">
+        <argument
+            android:name="chatId"
+            app:argType="string" />
+        <argument
+            android:name="fileName"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -28,6 +28,7 @@ class ChatViewModel @ViewModelInject constructor(
     var isInDirect = MutableLiveData<Boolean>()
     var chatMessages = MutableLiveData<MutableList<MessageModel>>()
     var onlineStatus = MutableLiveData<Boolean>()
+    var loadedPic = MutableLiveData<ByteArray>()
 
     init {
         chatMessages.value = mutableListOf()
@@ -173,6 +174,12 @@ class ChatViewModel @ViewModelInject constructor(
             override fun onCancelled(error: DatabaseError) {}
 
         })
+    }
+
+    fun downLoadPic(chatId: String, filename: String) {
+        chatUseCase.downLoadPic(chatId, filename).addOnSuccessListener {
+            loadedPic.postValue(it)
+        }
     }
 
 }

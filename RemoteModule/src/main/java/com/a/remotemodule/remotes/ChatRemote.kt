@@ -2,6 +2,7 @@ package com.a.remotemodule.remotes
 
 import android.net.Uri
 import com.a.remotemodule.models.MessageModel
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
@@ -74,4 +75,10 @@ class ChatRemote @Inject constructor(
         )
         return storageReference2.putFile(filePathUri)
     }
+
+    fun downLoadPic(chatId: String, filename: String): Task<ByteArray> {
+        val oneMegaByte: Long = 1024 * 1024
+        return storageReference.child(chatId).child(filename).getBytes(oneMegaByte)
+    }
+
 }

@@ -8,6 +8,14 @@
             name="data"
             type="com.a.remotemodule.models.MessageModel" />
 
+        <variable
+            name="click"
+            type="com.a.papermaxx.chat.ui.ChatAdapter.OnPicClick" />
+
+        <variable
+            name="filename"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +38,7 @@
             android:checkable="true"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{click.onClick()}"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
             app:layout_constraintLeft_toLeftOf="parent"
