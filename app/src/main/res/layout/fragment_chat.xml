@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/btn_logout"
+                android:id="@+id/chat_username_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
@@ -33,6 +33,15 @@
                 android:text="@{username}"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/chat_online_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/online"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 

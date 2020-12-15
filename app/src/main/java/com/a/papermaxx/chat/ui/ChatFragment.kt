@@ -85,9 +85,12 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
             chatViewModel.onlineStatus.observe(viewLifecycleOwner, { isOnline ->
                 if (isOnline != null && lastMessage.id != "not") {
                     if (isOnline) {
-                        if (lastMessage.type == MessageType.SENT_TEXT) {
-                            seen_icon.visibility = View.VISIBLE
-                        }
+                        chat_online_tv.visibility = View.VISIBLE
+//                        if (lastMessage.type == MessageType.SENT_TEXT) {
+//                            seen_icon.visibility = View.VISIBLE
+//                        }
+                    }else {
+                        chat_online_tv.visibility = View.GONE
                     }
                 }
             })
@@ -116,6 +119,7 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                     chatViewModel.setOnline(messageSender, chatId)
                     chatViewModel.openChat(chatId)
                     chatViewModel.monitorOnlineStatus(messageReceiver, chatId)
+                    chatViewModel.getFirstTimeOnlineStatus(messageReceiver, chatId)
                 }
             })
 
@@ -144,11 +148,11 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                         myAdapter.notifyItemInserted(list.size - 1)
                         chat_recycler.scrollToPosition(list.size - 1)
                         lastMessage = list[list.size - 1]
-                        if (lastMessage.type == MessageType.RECEIVED_TEXT) {
-                            seen_icon.visibility = View.GONE
-                        } else if (chatViewModel.onlineStatus.value == true) {
-                            seen_icon.visibility = View.VISIBLE
-                        }
+//                        if (lastMessage.type == MessageType.RECEIVED_TEXT) {
+//                            seen_icon.visibility = View.GONE
+//                        } else if (chatViewModel.onlineStatus.value == true) {
+//                            seen_icon.visibility = View.VISIBLE
+//                        }
                     }
                 }
             })
