@@ -8,6 +8,7 @@ import com.a.domainmodule.domain.AllUsersUseCase
 import com.a.domainmodule.domain.ChatUseCase
 import com.a.domainmodule.domain.SignUpUseCase
 import com.a.papermaxx.general.FileExtension
+import com.a.papermaxx.general.GeneralStrings
 import com.a.remotemodule.models.MessageModel
 import com.a.remotemodule.models.MessageType
 import com.google.firebase.auth.FirebaseUser
@@ -28,6 +29,7 @@ class ChatViewModel @ViewModelInject constructor(
     var isInDirect = MutableLiveData<Boolean>()
     var chatMessages = MutableLiveData<MutableList<MessageModel>>()
     var onlineStatus = MutableLiveData<Boolean>()
+    var seenStatus = MutableLiveData<Boolean>()
     var loadedPic = MutableLiveData<ByteArray>()
 
     init {
@@ -75,8 +77,8 @@ class ChatViewModel @ViewModelInject constructor(
         val chat = chatUseCase.getChatRoom(chatId)
         chat.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val skipOnlineMessage = snapshot.key.toString()
-                if (!skipOnlineMessage.startsWith("online")) {
+                val skipInvalidMessage = snapshot.key.toString()
+                if (!skipInvalidMessage.startsWith("online") && !skipInvalidMessage.startsWith("seen")) {
                     val messageSenderId = snapshot.child("id").value.toString()
                     val messageType = snapshot.child("type").value.toString()
                     val messageText = snapshot.child("text").value.toString()
@@ -160,14 +162,17 @@ class ChatViewModel @ViewModelInject constructor(
 
     fun setOnline(uid: String, chatId: String) = chatUseCase.setOnline(uid, chatId)
 
+    fun changeLastSeen(uid: String, chatId: String, value: String) =
+        chatUseCase.changeLastSeen(uid, chatId, value)
+
     fun setOffline(uid: String, chatId: String) = chatUseCase.setOffline(uid, chatId)
 
     fun monitorOnlineStatus(uid: String, chatId: String) {
-        chatUseCase.checkSeen(uid, chatId).addValueEventListener(object : ValueEventListener {
+        chatUseCase.checkOnline(uid, chatId).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.value.toString() == "online") {
+                if (snapshot.value.toString() == GeneralStrings.online) {
                     onlineStatus.postValue(true)
-                } else if (snapshot.value.toString() == "offline") {
+                } else if (snapshot.value.toString() == GeneralStrings.offline) {
                     onlineStatus.postValue(false)
                 }
             }
@@ -177,21 +182,20 @@ class ChatViewModel @ViewModelInject constructor(
         })
     }
 
-//    fun getFirstTimeOnlineStatus(uid: String, chatId: String) {
-//        chatUseCase.checkSeen(uid, chatId)
-//            .addListenerForSingleValueEvent(object : ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    if (snapshot.value.toString() == "online") {
-//                        onlineStatus.postValue(true)
-//                    } else if (snapshot.value.toString() == "offline") {
-//                        onlineStatus.postValue(false)
-//                    }
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {}
-//
-//            })
-//    }
+    fun monitorSeenStatus(uid: String, chatId: String) {
+        chatUseCase.checkSeen(uid, chatId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.value.toString() == GeneralStrings.seen) {
+                    seenStatus.postValue(true)
+                } else if (snapshot.value.toString() == GeneralStrings.notSeen) {
+                    seenStatus.postValue(false)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+    }
 
     fun downLoadPic(chatId: String, filename: String) {
         chatUseCase.downLoadPic(chatId, filename).addOnSuccessListener {

@@ -31,7 +31,11 @@ class ChatUseCase @Inject constructor(
 
     fun setOnline(uid: String, chatId: String) = chatRemote.setOnline(uid, chatId)
 
+    fun changeLastSeen(uid: String, chatId: String , value : String) = chatRemote.changeLastSeen(uid, chatId , value)
+
     fun setOffline(uid: String, chatId: String) = chatRemote.setOffline(uid, chatId)
+
+    fun checkOnline(uid: String, chatId: String) = chatRemote.checkOnline(uid, chatId)
 
     fun checkSeen(uid: String, chatId: String) = chatRemote.checkSeen(uid, chatId)
 

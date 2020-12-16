@@ -107,6 +107,8 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
             showMessages()
 
+            monitorSeenStatus()
+
             sendMessage()
 
             openImage()
@@ -126,16 +128,26 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
     //      monitor receivers online status
     private fun monitorOnlineStatus() {
         chatViewModel.onlineStatus.observe(viewLifecycleOwner, { isOnline ->
-            //                if (isOnline != null && lastMessage.id != "not") {
             if (isOnline) {
                 chat_online_tv.visibility = View.VISIBLE
-                //    if (lastMessage.type == MessageType.SENT_TEXT) {
-                //        seen_icon.visibility = View.VISIBLE
-                //    }
             } else {
                 chat_online_tv.visibility = View.GONE
             }
-            //                }
+        })
+    }
+
+    //      monitor receivers seen status
+    private fun monitorSeenStatus() {
+        chatViewModel.seenStatus.observe(viewLifecycleOwner, { seen ->
+            if (seen != null && lastMessage.id != "not") {
+                if (seen) {
+                    if (lastMessage.type == MessageType.SENT_TEXT) {
+                        seen_icon.visibility = View.VISIBLE
+                    }
+                } else {
+                    seen_icon.visibility = View.GONE
+                }
+            }
         })
     }
 
@@ -148,11 +160,18 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                     myAdapter.notifyItemInserted(list.size - 1)
                     chat_recycler.scrollToPosition(list.size - 1)
                     lastMessage = list[list.size - 1]
-                    //   if (lastMessage.type == MessageType.RECEIVED_TEXT) {
-                    //       seen_icon.visibility = View.GONE
-                    //   } else if (chatViewModel.onlineStatus.value == true) {
-                    //       seen_icon.visibility = View.VISIBLE
-                    //   }
+                    if (lastMessage.type == MessageType.RECEIVED_TEXT ||
+                        lastMessage.type == MessageType.RECEIVED_PIC
+                    ) {
+                        seen_icon.visibility = View.GONE
+                    } else if (
+                        lastMessage.type == MessageType.SENT_TEXT ||
+                        lastMessage.type == MessageType.SENT_PIC
+                    ) {
+                        if (chatViewModel.seenStatus.value == true) {
+                            seen_icon.visibility = View.VISIBLE
+                        }
+                    }
                 }
             }
         })
@@ -183,7 +202,13 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                     MessageType.SENT_TEXT
                 )
 
-                seen_icon.visibility = View.GONE
+                if (chatViewModel.onlineStatus.value == false) {
+                    chatViewModel.changeLastSeen(
+                        messageReceiver,
+                        chatId,
+                        GeneralStrings.notSeen
+                    )
+                }
                 if (readyMessage.id == "not") {
                     chatViewModel.sendMessage(message, chatId, messageSender)
                 } else if (readyMessage.id == "yep") {
@@ -220,9 +245,10 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                 }
 
                 chatViewModel.setOnline(messageSender, chatId)
+                chatViewModel.changeLastSeen(messageSender, chatId, GeneralStrings.seen)
                 chatViewModel.openChat(chatId)
                 chatViewModel.monitorOnlineStatus(messageReceiver, chatId)
-                //                    chatViewModel.getFirstTimeOnlineStatus(messageReceiver, chatId)
+                chatViewModel.monitorSeenStatus(messageReceiver, chatId)
             }
         })
     }
@@ -237,6 +263,7 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
         super.onResume()
         if (chatId != "") {
             chatViewModel.setOnline(messageSender, chatId)
+            chatViewModel.changeLastSeen(messageSender, chatId, GeneralStrings.seen)
         }
     }
 
