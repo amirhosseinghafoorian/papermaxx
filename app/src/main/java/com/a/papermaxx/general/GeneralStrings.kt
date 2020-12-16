@@ -12,4 +12,5 @@ object GeneralStrings {
     const val sentPicMessage = 103
     const val receivedPicMessage = 104
     const val imageRequestCode = 201
+    const val FOUR_MEGABYTE = 4096*4096
 }

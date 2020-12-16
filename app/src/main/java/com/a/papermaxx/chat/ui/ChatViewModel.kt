@@ -177,20 +177,21 @@ class ChatViewModel @ViewModelInject constructor(
         })
     }
 
-    fun getFirstTimeOnlineStatus(uid: String, chatId: String) {
-        chatUseCase.checkSeen(uid, chatId).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.value.toString() == "online") {
-                    onlineStatus.postValue(true)
-                } else if (snapshot.value.toString() == "offline") {
-                    onlineStatus.postValue(false)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {}
-
-        })
-    }
+//    fun getFirstTimeOnlineStatus(uid: String, chatId: String) {
+//        chatUseCase.checkSeen(uid, chatId)
+//            .addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    if (snapshot.value.toString() == "online") {
+//                        onlineStatus.postValue(true)
+//                    } else if (snapshot.value.toString() == "offline") {
+//                        onlineStatus.postValue(false)
+//                    }
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {}
+//
+//            })
+//    }
 
     fun downLoadPic(chatId: String, filename: String) {
         chatUseCase.downLoadPic(chatId, filename).addOnSuccessListener {

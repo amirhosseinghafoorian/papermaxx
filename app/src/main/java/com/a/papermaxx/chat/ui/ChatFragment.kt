@@ -83,7 +83,7 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
             })
 
             chatViewModel.onlineStatus.observe(viewLifecycleOwner, { isOnline ->
-                if (isOnline != null && lastMessage.id != "not") {
+//                if (isOnline != null && lastMessage.id != "not") {
                     if (isOnline) {
                         chat_online_tv.visibility = View.VISIBLE
 //                        if (lastMessage.type == MessageType.SENT_TEXT) {
@@ -92,7 +92,7 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                     }else {
                         chat_online_tv.visibility = View.GONE
                     }
-                }
+//                }
             })
 
             chatViewModel.isInDirect.observe(viewLifecycleOwner, { isInDirect ->
@@ -119,7 +119,7 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                     chatViewModel.setOnline(messageSender, chatId)
                     chatViewModel.openChat(chatId)
                     chatViewModel.monitorOnlineStatus(messageReceiver, chatId)
-                    chatViewModel.getFirstTimeOnlineStatus(messageReceiver, chatId)
+//                    chatViewModel.getFirstTimeOnlineStatus(messageReceiver, chatId)
                 }
             })
 
