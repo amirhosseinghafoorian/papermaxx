@@ -9,6 +9,7 @@ import com.a.domainmodule.domain.ChatUseCase
 import com.a.domainmodule.domain.SignUpUseCase
 import com.a.papermaxx.general.FileExtension
 import com.a.papermaxx.general.GeneralStrings
+import com.a.remotemodule.models.CallState
 import com.a.remotemodule.models.MessageModel
 import com.a.remotemodule.models.MessageType
 import com.google.firebase.auth.FirebaseUser
@@ -30,6 +31,7 @@ class ChatViewModel @ViewModelInject constructor(
     var chatMessages = MutableLiveData<MutableList<MessageModel>>()
     var onlineStatus = MutableLiveData<Boolean>()
     var seenStatus = MutableLiveData<Boolean>()
+    var callStatus = MutableLiveData<CallState>()
     var loadedPic = MutableLiveData<ByteArray>()
 
     init {
@@ -209,10 +211,16 @@ class ChatViewModel @ViewModelInject constructor(
     fun monitorCall(uid: String, chatId: String) {
         chatUseCase.checkCall(uid, chatId).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.value.toString() == GeneralStrings.seen) {
-                    seenStatus.postValue(true)
-                } else if (snapshot.value.toString() == GeneralStrings.notSeen) {
-                    seenStatus.postValue(false)
+                when {
+                    snapshot.value.toString() == "calling" -> {
+                        callStatus.postValue(CallState.CALLING)
+                    }
+                    snapshot.value.toString() == "talking" -> {
+                        callStatus.postValue(CallState.TALKING)
+                    }
+                    snapshot.value.toString() == "endCall" -> {
+                        callStatus.postValue(CallState.END_CALL)
+                    }
                 }
             }
 

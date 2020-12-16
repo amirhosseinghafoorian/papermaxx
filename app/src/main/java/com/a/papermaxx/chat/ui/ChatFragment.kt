@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
 import com.a.papermaxx.databinding.FragmentChatBinding
 import com.a.papermaxx.general.GeneralStrings
+import com.a.remotemodule.models.CallState
 import com.a.remotemodule.models.MessageModel
 import com.a.remotemodule.models.MessageType
 import dagger.hilt.android.AndroidEntryPoint
@@ -109,12 +111,25 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
             monitorSeenStatus()
 
+            monitorCallStatus()
+
             sendMessage()
 
             openImage()
 
+            makeCall()
+
         }
 
+    }
+
+    private fun makeCall() {
+        chat_call_ic.setOnClickListener {
+            if (chatViewModel.onlineStatus.value == true) {
+                chatViewModel.startCall(messageSender, chatId)
+                Toast.makeText(requireContext(), "calling ...", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun showMessageReceiverUsername() {
@@ -148,6 +163,20 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                     seen_icon.visibility = View.GONE
                 }
             }
+        })
+    }
+
+    private fun monitorCallStatus() {
+        chatViewModel.callStatus.observe(viewLifecycleOwner, { call ->
+
+            if (call == CallState.CALLING) {
+                Toast.makeText(
+                    requireContext(),
+                    "${binding.username} is calling you ...",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
         })
     }
 
@@ -249,6 +278,7 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                 chatViewModel.openChat(chatId)
                 chatViewModel.monitorOnlineStatus(messageReceiver, chatId)
                 chatViewModel.monitorSeenStatus(messageReceiver, chatId)
+                chatViewModel.monitorCall(messageReceiver, chatId)
             }
         })
     }

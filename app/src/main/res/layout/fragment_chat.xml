@@ -34,6 +34,18 @@
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
+            <ImageView
+                android:id="@+id/chat_call_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:src="@drawable/ic_baseline_call_24"
+                android:text="call"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
             <TextView
                 android:visibility="gone"
                 android:id="@+id/chat_online_tv"
