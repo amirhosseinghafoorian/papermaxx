@@ -107,12 +107,9 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
             showMessages()
 
-            send_cv.setOnClickListener {
-                sendMessage()
-            }
+            sendMessage()
 
             openImage()
-
 
         }
 
@@ -177,24 +174,26 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
     //      send a new message
     private fun sendMessage() {
-        if (chat_type_et.editText?.text?.isNotBlank() == true) {
+        send_cv.setOnClickListener {
+            if (chat_type_et.editText?.text?.isNotBlank() == true) {
 
-            val message = MessageModel(
-                "",
-                chat_type_et.editText?.text.toString(),
-                MessageType.SENT_TEXT
-            )
+                val message = MessageModel(
+                    "",
+                    chat_type_et.editText?.text.toString(),
+                    MessageType.SENT_TEXT
+                )
 
-            seen_icon.visibility = View.GONE
-            if (readyMessage.id == "not") {
-                chatViewModel.sendMessage(message, chatId, messageSender)
-            } else if (readyMessage.id == "yep") {
-                readyMessage.text = chat_type_et.editText?.text.toString()
-                uploadImage()
+                seen_icon.visibility = View.GONE
+                if (readyMessage.id == "not") {
+                    chatViewModel.sendMessage(message, chatId, messageSender)
+                } else if (readyMessage.id == "yep") {
+                    readyMessage.text = chat_type_et.editText?.text.toString()
+                    uploadImage()
+                }
+                chat_type_et.editText?.setText("")
+                filePathUri = null
+                readyMessage.id = "not"
             }
-            chat_type_et.editText?.setText("")
-            filePathUri = null
-            readyMessage.id = "not"
         }
     }
 
