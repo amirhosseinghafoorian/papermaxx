@@ -49,6 +49,11 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
         messageSender = chatViewModel.currentUser()?.uid.toString()
 
+        modifyOnBackPressed()
+
+    }
+
+    private fun modifyOnBackPressed() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -76,52 +81,11 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
         lifecycleScope.launch {
 
-            chatViewModel.receiverUsername.observe(viewLifecycleOwner, { name ->
-                if (name != null) {
-                    binding.username = name
-                }
-            })
+            showMessageReceiverUsername()
 
-            chatViewModel.onlineStatus.observe(viewLifecycleOwner, { isOnline ->
-//                if (isOnline != null && lastMessage.id != "not") {
-                    if (isOnline) {
-                        chat_online_tv.visibility = View.VISIBLE
-//                        if (lastMessage.type == MessageType.SENT_TEXT) {
-//                            seen_icon.visibility = View.VISIBLE
-//                        }
-                    }else {
-                        chat_online_tv.visibility = View.GONE
-                    }
-//                }
-            })
+            monitorOnlineStatus()
 
-            chatViewModel.isInDirect.observe(viewLifecycleOwner, { isInDirect ->
-                if (isInDirect != null) {
-                    chatId = chatViewModel.chatIdDecide(messageReceiver)
-
-                    if (!isInDirect) {
-                        chatViewModel.createChatRoom(chatId)
-                        chatViewModel.putChatInDirect(messageReceiver, messageSender)
-                        chatViewModel.putChatInDirect(messageSender, messageReceiver)
-                        chatViewModel.createOnlineStatus(messageSender, chatId)
-                    }
-
-                    if (adminFirst) {
-                        val message = MessageModel(
-                            "",
-                            GeneralStrings.welcomeMessage,
-                            MessageType.SENT_TEXT
-                        )
-
-                        chatViewModel.sendMessage(message, chatId, messageReceiver)
-                    }
-
-                    chatViewModel.setOnline(messageSender, chatId)
-                    chatViewModel.openChat(chatId)
-                    chatViewModel.monitorOnlineStatus(messageReceiver, chatId)
-//                    chatViewModel.getFirstTimeOnlineStatus(messageReceiver, chatId)
-                }
-            })
+            isInDirectObserve()
 
             chatViewModel.usernameFromUid(messageReceiver)
             chatViewModel.isUserInDirect(
@@ -141,62 +105,135 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                 adapter = myAdapter
             }
 
-            chatViewModel.chatMessages.observe(viewLifecycleOwner, { list ->
-                if (list != null) {
-                    if (list.size > 0) {
-                        myAdapter.list = list
-                        myAdapter.notifyItemInserted(list.size - 1)
-                        chat_recycler.scrollToPosition(list.size - 1)
-                        lastMessage = list[list.size - 1]
-//                        if (lastMessage.type == MessageType.RECEIVED_TEXT) {
-//                            seen_icon.visibility = View.GONE
-//                        } else if (chatViewModel.onlineStatus.value == true) {
-//                            seen_icon.visibility = View.VISIBLE
-//                        }
-                    }
-                }
-            })
+            showMessages()
 
             send_cv.setOnClickListener {
-                if (chat_type_et.editText?.text?.isNotBlank() == true) {
-
-                    val message = MessageModel(
-                        "",
-                        chat_type_et.editText?.text.toString(),
-                        MessageType.SENT_TEXT
-                    )
-
-                    seen_icon.visibility = View.GONE
-                    if (readyMessage.id == "not") {
-                        chatViewModel.sendMessage(message, chatId, messageSender)
-                    } else if (readyMessage.id == "yep") {
-                        readyMessage.text = chat_type_et.editText?.text.toString()
-                        uploadImage()
-                    }
-                    chat_type_et.editText?.setText("")
-                    filePathUri = null
-                    readyMessage.id = "not"
-                }
+                sendMessage()
             }
 
-            image_cv.setOnClickListener {
-                val intent = Intent()
-                intent.type = "image/*"
-                intent.action = Intent.ACTION_GET_CONTENT
-                startActivityForResult(
-                    Intent.createChooser(intent, "Select Image"),
-                    GeneralStrings.imageRequestCode
-                )
-            }
+            openImage()
+
 
         }
 
     }
 
+    private fun showMessageReceiverUsername() {
+        chatViewModel.receiverUsername.observe(viewLifecycleOwner, { name ->
+            if (name != null) {
+                binding.username = name
+            }
+        })
+    }
+
+    //      monitor receivers online status
+    private fun monitorOnlineStatus() {
+        chatViewModel.onlineStatus.observe(viewLifecycleOwner, { isOnline ->
+            //                if (isOnline != null && lastMessage.id != "not") {
+            if (isOnline) {
+                chat_online_tv.visibility = View.VISIBLE
+                //    if (lastMessage.type == MessageType.SENT_TEXT) {
+                //        seen_icon.visibility = View.VISIBLE
+                //    }
+            } else {
+                chat_online_tv.visibility = View.GONE
+            }
+            //                }
+        })
+    }
+
+    //      show chat messages
+    private fun showMessages() {
+        chatViewModel.chatMessages.observe(viewLifecycleOwner, { list ->
+            if (list != null) {
+                if (list.size > 0) {
+                    myAdapter.list = list
+                    myAdapter.notifyItemInserted(list.size - 1)
+                    chat_recycler.scrollToPosition(list.size - 1)
+                    lastMessage = list[list.size - 1]
+                    //   if (lastMessage.type == MessageType.RECEIVED_TEXT) {
+                    //       seen_icon.visibility = View.GONE
+                    //   } else if (chatViewModel.onlineStatus.value == true) {
+                    //       seen_icon.visibility = View.VISIBLE
+                    //   }
+                }
+            }
+        })
+    }
+
+    //      open an image from messages
+    private fun openImage() {
+        image_cv.setOnClickListener {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(
+                Intent.createChooser(intent, "Select Image"),
+                GeneralStrings.imageRequestCode
+            )
+        }
+
+    }
+
+    //      send a new message
+    private fun sendMessage() {
+        if (chat_type_et.editText?.text?.isNotBlank() == true) {
+
+            val message = MessageModel(
+                "",
+                chat_type_et.editText?.text.toString(),
+                MessageType.SENT_TEXT
+            )
+
+            seen_icon.visibility = View.GONE
+            if (readyMessage.id == "not") {
+                chatViewModel.sendMessage(message, chatId, messageSender)
+            } else if (readyMessage.id == "yep") {
+                readyMessage.text = chat_type_et.editText?.text.toString()
+                uploadImage()
+            }
+            chat_type_et.editText?.setText("")
+            filePathUri = null
+            readyMessage.id = "not"
+        }
+    }
+
+    private fun isInDirectObserve() {
+        chatViewModel.isInDirect.observe(viewLifecycleOwner, { isInDirect ->
+            if (isInDirect != null) {
+                chatId = chatViewModel.chatIdDecide(messageReceiver)
+
+                if (!isInDirect) {
+                    chatViewModel.createChatRoom(chatId)
+                    chatViewModel.putChatInDirect(messageReceiver, messageSender)
+                    chatViewModel.putChatInDirect(messageSender, messageReceiver)
+                    chatViewModel.createOnlineStatus(messageSender, chatId)
+                }
+
+                if (adminFirst) {
+                    val message = MessageModel(
+                        "",
+                        GeneralStrings.welcomeMessage,
+                        MessageType.SENT_TEXT
+                    )
+
+                    chatViewModel.sendMessage(message, chatId, messageReceiver)
+                }
+
+                chatViewModel.setOnline(messageSender, chatId)
+                chatViewModel.openChat(chatId)
+                chatViewModel.monitorOnlineStatus(messageReceiver, chatId)
+                //                    chatViewModel.getFirstTimeOnlineStatus(messageReceiver, chatId)
+            }
+        })
+    }
+
+    //      uploads the image into firebase storage
     private fun uploadImage() {
         chatViewModel.uploadImage(filePathUri!!, chatId, readyMessage, messageSender)
     }
 
+    //      set online
     override fun onResume() {
         super.onResume()
         if (chatId != "") {
@@ -204,13 +241,22 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
         }
     }
 
+    //      set offline
     override fun onPause() {
         super.onPause()
         chatViewModel.setOffline(messageSender, chatId)
     }
 
+    //      select image result from gallery
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        preparePictureUri(requestCode, resultCode, data)
+
+    }
+
+    //      fill picture uri with the selected picture from gallery
+    private fun preparePictureUri(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (requestCode == GeneralStrings.imageRequestCode && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             filePathUri = data.data!!
@@ -223,6 +269,7 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
         }
     }
 
+    //      chat item view on click
     override fun onClick(filename: String) {
         findNavController().navigate(
             ChatFragmentDirections.actionChatFragmentToShowPictureFragment(
@@ -232,4 +279,5 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
             )
         )
     }
+
 }
