@@ -78,7 +78,10 @@ class ChatViewModel @ViewModelInject constructor(
         chat.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val skipInvalidMessage = snapshot.key.toString()
-                if (!skipInvalidMessage.startsWith("online") && !skipInvalidMessage.startsWith("seen")) {
+                if (!skipInvalidMessage.startsWith("online") &&
+                    !skipInvalidMessage.startsWith("seen") &&
+                    !skipInvalidMessage.startsWith("call")
+                ) {
                     val messageSenderId = snapshot.child("id").value.toString()
                     val messageType = snapshot.child("type").value.toString()
                     val messageText = snapshot.child("text").value.toString()
@@ -167,6 +170,12 @@ class ChatViewModel @ViewModelInject constructor(
 
     fun setOffline(uid: String, chatId: String) = chatUseCase.setOffline(uid, chatId)
 
+    fun startCall(uid: String, chatId: String) = chatUseCase.startCall(uid, chatId)
+
+    fun establishCall(uid: String, chatId: String) = chatUseCase.establishCall(uid, chatId)
+
+    fun endCall(uid: String, chatId: String) = chatUseCase.endCall(uid, chatId)
+
     fun monitorOnlineStatus(uid: String, chatId: String) {
         chatUseCase.checkOnline(uid, chatId).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -184,6 +193,21 @@ class ChatViewModel @ViewModelInject constructor(
 
     fun monitorSeenStatus(uid: String, chatId: String) {
         chatUseCase.checkSeen(uid, chatId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.value.toString() == GeneralStrings.seen) {
+                    seenStatus.postValue(true)
+                } else if (snapshot.value.toString() == GeneralStrings.notSeen) {
+                    seenStatus.postValue(false)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+    }
+
+    fun monitorCall(uid: String, chatId: String) {
+        chatUseCase.checkCall(uid, chatId).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.value.toString() == GeneralStrings.seen) {
                     seenStatus.postValue(true)

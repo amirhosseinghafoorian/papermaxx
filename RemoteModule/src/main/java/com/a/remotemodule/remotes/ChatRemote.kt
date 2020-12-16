@@ -70,6 +70,27 @@ class ChatRemote @Inject constructor(
             .child("online:$uid").setValue("offline")
     }
 
+    fun startCall(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("call:$uid").setValue("calling")
+    }
+
+    fun establishCall(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("call:$uid").setValue("talking")
+    }
+
+    fun endCall(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("call:$uid").setValue("endCall")
+    }
+
     fun checkOnline(uid: String, chatId: String): DatabaseReference {
         return rootReference
             .child("ChatRooms")
@@ -82,6 +103,13 @@ class ChatRemote @Inject constructor(
             .child("ChatRooms")
             .child(chatId)
             .child("seen:$uid")
+    }
+
+    fun checkCall(uid: String, chatId: String): DatabaseReference {
+        return rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("call:$uid")
     }
 
     fun uploadImage(filePathUri: Uri, chatId: String, filename: String): UploadTask {

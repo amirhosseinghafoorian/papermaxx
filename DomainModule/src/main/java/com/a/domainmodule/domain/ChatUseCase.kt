@@ -35,9 +35,17 @@ class ChatUseCase @Inject constructor(
 
     fun setOffline(uid: String, chatId: String) = chatRemote.setOffline(uid, chatId)
 
+    fun startCall(uid: String, chatId: String) = chatRemote.startCall(uid, chatId)
+
+    fun establishCall(uid: String, chatId: String) = chatRemote.establishCall(uid, chatId)
+
+    fun endCall(uid: String, chatId: String) = chatRemote.endCall(uid, chatId)
+
     fun checkOnline(uid: String, chatId: String) = chatRemote.checkOnline(uid, chatId)
 
     fun checkSeen(uid: String, chatId: String) = chatRemote.checkSeen(uid, chatId)
+
+    fun checkCall(uid: String, chatId: String) = chatRemote.checkCall(uid, chatId)
 
     fun downLoadPic(chatId: String, filename: String) = chatRemote.downLoadPic(chatId, filename)
 
