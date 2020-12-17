@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -127,7 +126,16 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
         chat_call_ic.setOnClickListener {
             if (chatViewModel.onlineStatus.value == true) {
                 chatViewModel.startCall(messageSender, chatId)
-                Toast.makeText(requireContext(), "calling ...", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "calling ...", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(
+                    ChatFragmentDirections.actionChatFragmentToCallFragment(
+                        messageReceiver,
+                        messageSender,
+                        chatId,
+                        binding.username.toString(),
+                        "caller"
+                    )
+                )
             }
         }
     }
@@ -170,11 +178,15 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
         chatViewModel.callStatus.observe(viewLifecycleOwner, { call ->
 
             if (call == CallState.CALLING) {
-                Toast.makeText(
-                    requireContext(),
-                    "${binding.username} is calling you ...",
-                    Toast.LENGTH_SHORT
-                ).show()
+                findNavController().navigate(
+                    ChatFragmentDirections.actionChatFragmentToCallFragment(
+                        messageReceiver,
+                        messageSender,
+                        chatId,
+                        binding.username.toString(),
+                        "callReceiver"
+                    )
+                )
             }
 
         })

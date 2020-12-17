@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
 import com.a.papermaxx.databinding.FragmentCallBinding
+import com.a.remotemodule.models.CallState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_call.*
 import kotlinx.coroutines.launch
@@ -93,22 +94,45 @@ class CallFragment : Fragment() {
 
             monitorCallStatus()
 
+            call_btn_end_call.setOnClickListener {
+                if (binding.endOrReject.toString() == "Reject") {
+                    chatViewModel.endCall(messageReceiver, chatId)
+                } else if (binding.endOrReject.toString() == "End") {
+                    chatViewModel.endCall(messageSender, chatId)
+                }
+            }
+
+            call_btn_answer_call.setOnClickListener {
+                chatViewModel.establishCall(messageSender, chatId)
+                call_btn_answer_call.visibility = View.GONE
+                binding.endOrReject = "End"
+            }
+
         }
 
     }
 
     private fun monitorCallStatus() {
-//        chatViewModel.callStatus.observe(viewLifecycleOwner, { call ->
-//
-//            handleCall()
-//
-//        })
+        chatViewModel.callStatus.observe(viewLifecycleOwner, { call ->
+
+            if (call == CallState.TALKING) {
+                chatViewModel.establishCall(messageSender, chatId)
+            } else if (call == CallState.END_CALL) {
+                chatViewModel.endCall(messageSender, chatId)
+                findNavController().navigate(
+                    CallFragmentDirections.actionCallFragmentToChatFragment(
+                        messageReceiver,
+                        false
+                    )
+                )
+            }
+
+        })
     }
 
     private fun handleCall() {
         if (situation == "callReceiver") {
             call_btn_answer_call.visibility = View.VISIBLE
-            binding.endOrReject = "End"
             Toast.makeText(
                 requireContext(),
                 "$username is calling you ...",
