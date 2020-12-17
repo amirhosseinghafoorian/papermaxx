@@ -100,6 +100,11 @@
             app:destination="@id/showPictureFragment"
             app:popUpTo="@id/chatFragment"
             app:popUpToInclusive="true" />
+        <action
+            app:popUpTo="@id/chatFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_chatFragment_to_callFragment"
+            app:destination="@id/callFragment" />
     </fragment>
     <fragment
         android:id="@+id/showPictureFragment"
@@ -119,6 +124,31 @@
             app:popUpTo="@id/showPictureFragment"
             app:popUpToInclusive="true"
             android:id="@+id/action_showPictureFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/callFragment"
+        android:name="com.a.papermaxx.chat.ui.CallFragment"
+        android:label="CallFragment" >
+        <argument
+            android:name="messageReceiver"
+            app:argType="string" />
+        <argument
+            android:name="messageSender"
+            app:argType="string" />
+        <argument
+            android:name="chatId"
+            app:argType="string" />
+        <argument
+            android:name="username"
+            app:argType="string" />
+        <argument
+            android:name="situation"
+            app:argType="string" />
+        <action
+            app:popUpTo="@id/callFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_callFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
     </fragment>
 </navigation>
