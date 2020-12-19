@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
 import com.a.papermaxx.databinding.FragmentCallBinding
 import com.a.remotemodule.models.CallState
+import com.dropbox.core.v2.teamlog.ActorLogInfo.app
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_call.*
 import kotlinx.coroutines.launch

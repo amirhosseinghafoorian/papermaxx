@@ -101,10 +101,10 @@
             app:popUpTo="@id/chatFragment"
             app:popUpToInclusive="true" />
         <action
-            app:popUpTo="@id/chatFragment"
-            app:popUpToInclusive="true"
             android:id="@+id/action_chatFragment_to_callFragment"
-            app:destination="@id/callFragment" />
+            app:destination="@id/callFragment"
+            app:popUpTo="@id/chatFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/showPictureFragment"
@@ -121,15 +121,15 @@
             android:name="messageReceiver"
             app:argType="string" />
         <action
-            app:popUpTo="@id/showPictureFragment"
-            app:popUpToInclusive="true"
             android:id="@+id/action_showPictureFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:popUpTo="@id/showPictureFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/callFragment"
         android:name="com.a.papermaxx.chat.ui.CallFragment"
-        android:label="CallFragment" >
+        android:label="CallFragment">
         <argument
             android:name="messageReceiver"
             app:argType="string" />
@@ -146,9 +146,29 @@
             android:name="situation"
             app:argType="string" />
         <action
-            app:popUpTo="@id/callFragment"
-            app:popUpToInclusive="true"
             android:id="@+id/action_callFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:popUpTo="@id/callFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.a.papermaxx.general.FirstFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first">
+
+        <action
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SecondFragment"
+        android:name="com.a.papermaxx.general.SecondFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second">
+
+        <action
+            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
