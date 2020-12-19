@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -36,6 +37,7 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
     private var lastMessage = MessageModel("not", "", MessageType.RECEIVED_TEXT)
     private var readyMessage = MessageModel("not", "", MessageType.SENT_PIC)
     private var filePathUri: Uri? = null
+    private var onlineKeep: Boolean = false
 
     private val chatViewModel: ChatViewModel by viewModels()
 
@@ -125,8 +127,9 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
     private fun makeCall() {
         chat_call_ic.setOnClickListener {
             if (chatViewModel.onlineStatus.value == true) {
+                onlineKeep = true
                 chatViewModel.startCall(messageSender, chatId)
-//                Toast.makeText(requireContext(), "calling ...", Toast.LENGTH_SHORT).show()
+                chatViewModel.startRing(messageReceiver, chatId)
                 findNavController().navigate(
                     ChatFragmentDirections.actionChatFragmentToCallFragment(
                         messageReceiver,
@@ -136,6 +139,9 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                         "caller"
                     )
                 )
+            } else {
+                Toast.makeText(requireContext(), "receiver is not online", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -178,6 +184,7 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
         chatViewModel.callStatus.observe(viewLifecycleOwner, { call ->
 
             if (call == CallState.CALLING) {
+                onlineKeep = true
                 findNavController().navigate(
                     ChatFragmentDirections.actionChatFragmentToCallFragment(
                         messageReceiver,
@@ -300,21 +307,6 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
         chatViewModel.uploadImage(filePathUri!!, chatId, readyMessage, messageSender)
     }
 
-    //      set online
-    override fun onResume() {
-        super.onResume()
-        if (chatId != "") {
-            chatViewModel.setOnline(messageSender, chatId)
-            chatViewModel.changeLastSeen(messageSender, chatId, GeneralStrings.seen)
-        }
-    }
-
-    //      set offline
-    override fun onPause() {
-        super.onPause()
-        chatViewModel.setOffline(messageSender, chatId)
-    }
-
     //      select image result from gallery
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -346,6 +338,24 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                 messageReceiver
             )
         )
+    }
+
+    //      set online
+    override fun onResume() {
+        super.onResume()
+        onlineKeep = false
+        if (chatId != "") {
+            chatViewModel.setOnline(messageSender, chatId)
+            chatViewModel.changeLastSeen(messageSender, chatId, GeneralStrings.seen)
+        }
+    }
+
+    //      set offline
+    override fun onPause() {
+        super.onPause()
+        if (!onlineKeep) {
+            chatViewModel.setOffline(messageSender, chatId)
+        }
     }
 
 }

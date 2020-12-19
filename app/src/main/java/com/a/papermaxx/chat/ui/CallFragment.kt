@@ -27,6 +27,7 @@ class CallFragment : Fragment() {
     private lateinit var messageSender: String
     private lateinit var username: String
     private lateinit var situation: String
+    private var onlineKeep: Boolean = false
 
     private val chatViewModel: ChatViewModel by viewModels()
 

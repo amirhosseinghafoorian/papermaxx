@@ -37,6 +37,8 @@ class ChatUseCase @Inject constructor(
 
     fun startCall(uid: String, chatId: String) = chatRemote.startCall(uid, chatId)
 
+    fun startRing(uid: String, chatId: String) = chatRemote.startRing(uid, chatId)
+
     fun establishCall(uid: String, chatId: String) = chatRemote.establishCall(uid, chatId)
 
     fun endCall(uid: String, chatId: String) = chatRemote.endCall(uid, chatId)

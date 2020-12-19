@@ -174,6 +174,8 @@ class ChatViewModel @ViewModelInject constructor(
 
     fun startCall(uid: String, chatId: String) = chatUseCase.startCall(uid, chatId)
 
+    fun startRing(uid: String, chatId: String) = chatUseCase.startRing(uid, chatId)
+
     fun establishCall(uid: String, chatId: String) = chatUseCase.establishCall(uid, chatId)
 
     fun endCall(uid: String, chatId: String) = chatUseCase.endCall(uid, chatId)

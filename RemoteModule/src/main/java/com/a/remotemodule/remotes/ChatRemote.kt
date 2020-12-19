@@ -77,6 +77,13 @@ class ChatRemote @Inject constructor(
             .child("call:$uid").setValue("calling")
     }
 
+    fun startRing(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("call:$uid").setValue("ringing")
+    }
+
     fun establishCall(uid: String, chatId: String) {
         rootReference
             .child("ChatRooms")
