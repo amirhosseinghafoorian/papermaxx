@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.a.papermaxx">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".app.MyApp"
@@ -16,7 +16,7 @@
         <activity
             android:name=".general.CallActivity"
             android:label="@string/title_activity_call"
-            android:theme="@style/Theme.Papermaxx.NoActionBar"></activity>
+            android:theme="@style/Theme.Papermaxx.NoActionBar"/>
         <activity android:name=".general.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

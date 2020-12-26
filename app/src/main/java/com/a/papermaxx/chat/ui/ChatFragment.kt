@@ -16,9 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
 import com.a.papermaxx.databinding.FragmentChatBinding
-import com.a.papermaxx.general.CallActivity
 import com.a.papermaxx.general.GeneralStrings
-import com.a.papermaxx.general.MainActivity
 import com.a.remotemodule.models.CallState
 import com.a.remotemodule.models.MessageModel
 import com.a.remotemodule.models.MessageType
@@ -135,9 +133,9 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                 onlineKeep = true
                 chatViewModel.startCall(messageSender, chatId)
                 chatViewModel.startRing(messageReceiver, chatId)
-                var options = JitsiMeetConferenceOptions.Builder()
+                val options = JitsiMeetConferenceOptions.Builder()
                     .setServerURL(URL("https://meet.jit.si/"))
-                    .setRoom("ios")
+                    .setRoom(chatId)
                     .setAudioMuted(false)
                     .setVideoMuted(false)
                     .setAudioOnly(false)
@@ -201,9 +199,9 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
             if (call == CallState.CALLING) {
                 onlineKeep = true
-                var options = JitsiMeetConferenceOptions.Builder()
+                val options = JitsiMeetConferenceOptions.Builder()
                     .setServerURL(URL("https://meet.jit.si/"))
-                    .setRoom("ios")
+                    .setRoom(chatId)
                     .setAudioMuted(false)
                     .setVideoMuted(false)
                     .setAudioOnly(false)
