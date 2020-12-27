@@ -18,7 +18,7 @@
             android:label="@string/title_activity_call"
             android:theme="@style/Theme.Papermaxx.NoActionBar"/>
         <activity
-            android:name=".general.JitsiTest"
+            android:name=".general.CallActivity"
             android:theme="@style/Theme.Papermaxx.NoActionBar"/>
         <activity android:name=".general.MainActivity">
             <intent-filter>

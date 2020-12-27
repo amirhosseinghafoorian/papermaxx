@@ -16,15 +16,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
 import com.a.papermaxx.databinding.FragmentChatBinding
+import com.a.papermaxx.general.CallActivity
 import com.a.papermaxx.general.GeneralStrings
-import com.a.papermaxx.general.JitsiTest
 import com.a.remotemodule.models.CallState
 import com.a.remotemodule.models.MessageModel
 import com.a.remotemodule.models.MessageType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.coroutines.launch
-import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import java.io.IOException
 import java.net.URL
@@ -143,7 +142,9 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                     .setWelcomePageEnabled(false)
                     .build()
 //                JitsiMeetActivity.launch(requireContext(), options)
-                JitsiTest.launchTest(requireContext() , options)
+                val callActivity = CallActivity()
+                callActivity.fillCallValues(chatId, messageReceiver, messageSender)
+                callActivity.launchTest(requireContext(), options)
 //                val intent = Intent(requireContext(),CallActivity::class.java)
 //                startActivity(intent)
 //                findNavController().navigate(
@@ -199,30 +200,50 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
     private fun monitorCallStatus() {
         chatViewModel.callStatus.observe(viewLifecycleOwner, { call ->
 
-            if (call == CallState.CALLING) {
-                onlineKeep = true
-                val options = JitsiMeetConferenceOptions.Builder()
-                    .setServerURL(URL("https://meet.jit.si/"))
-                    .setRoom("ios123")
-                    .setAudioMuted(false)
-                    .setVideoMuted(false)
-                    .setAudioOnly(false)
-                    .setWelcomePageEnabled(false)
-                    .build()
-//                JitsiMeetActivity.launch(requireContext(), options)
-                JitsiTest.launchTest(requireContext() , options)
-//                findNavController().navigate(
-//                    ChatFragmentDirections.actionChatFragmentToCallFragment(
-//                        messageReceiver,
-//                        messageSender,
-//                        chatId,
-//                        binding.username.toString(),
-//                        "callReceiver"
-//                    )
-//                )
+            when (call) {
+                CallState.CALLING -> {
+                    showReceiverBottomSheet()
+                }
+                CallState.RINGING -> {
+                    showCallerBottomSheet()
+                }
+                CallState.TALKING -> {
+                    chatViewModel.establishCall(messageSender, chatId)
+                    establishOnlineCall()
+                }
+                CallState.END_CALL -> {
+                    chatViewModel.endCall(messageSender, chatId)
+                }
+                else -> {
+                }
             }
 
         })
+    }
+
+    private fun showCallerBottomSheet() {
+        //      show a bottom sheet for calling
+    }
+
+    private fun showReceiverBottomSheet() {
+
+        //      show a bottom sheet for receiving calls
+
+    }
+
+    //      start a Jitsi call
+    private fun establishOnlineCall() {
+        val options = JitsiMeetConferenceOptions.Builder()
+            .setServerURL(URL("https://meet.jit.si/"))
+            .setRoom("ios123")
+            .setAudioMuted(false)
+            .setVideoMuted(false)
+            .setAudioOnly(false)
+            .setWelcomePageEnabled(false)
+            .build()
+        val callActivity = CallActivity()
+        callActivity.fillCallValues(chatId, messageReceiver, messageSender)
+        callActivity.launchTest(requireContext(), options)
     }
 
     //      show chat messages

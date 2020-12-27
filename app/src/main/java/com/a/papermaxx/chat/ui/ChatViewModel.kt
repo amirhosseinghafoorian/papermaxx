@@ -223,6 +223,9 @@ class ChatViewModel @ViewModelInject constructor(
                     snapshot.value.toString() == "endCall" -> {
                         callStatus.postValue(CallState.END_CALL)
                     }
+                    snapshot.value.toString() == "ringing" -> {
+                        callStatus.postValue(CallState.RINGING)
+                    }
                 }
             }
 
