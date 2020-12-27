@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
 import com.a.papermaxx.databinding.FragmentChatBinding
 import com.a.papermaxx.general.GeneralStrings
+import com.a.papermaxx.general.JitsiTest
 import com.a.remotemodule.models.CallState
 import com.a.remotemodule.models.MessageModel
 import com.a.remotemodule.models.MessageType
@@ -135,13 +136,14 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                 chatViewModel.startRing(messageReceiver, chatId)
                 val options = JitsiMeetConferenceOptions.Builder()
                     .setServerURL(URL("https://meet.jit.si/"))
-                    .setRoom(chatId)
+                    .setRoom("ios123")
                     .setAudioMuted(false)
                     .setVideoMuted(false)
                     .setAudioOnly(false)
                     .setWelcomePageEnabled(false)
                     .build()
-                JitsiMeetActivity.launch(requireContext(),options)
+//                JitsiMeetActivity.launch(requireContext(), options)
+                JitsiTest.launchTest(requireContext() , options)
 //                val intent = Intent(requireContext(),CallActivity::class.java)
 //                startActivity(intent)
 //                findNavController().navigate(
@@ -201,13 +203,14 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                 onlineKeep = true
                 val options = JitsiMeetConferenceOptions.Builder()
                     .setServerURL(URL("https://meet.jit.si/"))
-                    .setRoom(chatId)
+                    .setRoom("ios123")
                     .setAudioMuted(false)
                     .setVideoMuted(false)
                     .setAudioOnly(false)
                     .setWelcomePageEnabled(false)
                     .build()
-                JitsiMeetActivity.launch(requireContext(),options)
+//                JitsiMeetActivity.launch(requireContext(), options)
+                JitsiTest.launchTest(requireContext() , options)
 //                findNavController().navigate(
 //                    ChatFragmentDirections.actionChatFragmentToCallFragment(
 //                        messageReceiver,
