@@ -12,6 +12,7 @@ class JitsiTest : JitsiMeetActivity() {
         super.onConferenceTerminated(data)
 
         Log.i("baby", "end call here")
+        // end call here
     }
 
     companion object {
