@@ -21,8 +21,12 @@ import com.a.papermaxx.general.GeneralStrings
 import com.a.remotemodule.models.CallState
 import com.a.remotemodule.models.MessageModel
 import com.a.remotemodule.models.MessageType
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
+import kotlinx.android.synthetic.main.receiver_bottom_sheet.*
 import kotlinx.coroutines.launch
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import java.io.IOException
@@ -99,6 +103,8 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                 messageReceiver
             )
 
+            chatViewModel.chatMessages.value = mutableListOf()
+
             myAdapter = chatViewModel.chatMessages.value?.let {
                 ChatAdapter(
                     it,
@@ -129,37 +135,27 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
     private fun makeCall() {
         chat_call_ic.setOnClickListener {
-            if (chatViewModel.onlineStatus.value == true) {
-                onlineKeep = true
-                chatViewModel.startCall(messageSender, chatId)
-                chatViewModel.startRing(messageReceiver, chatId)
-                val options = JitsiMeetConferenceOptions.Builder()
-                    .setServerURL(URL("https://meet.jit.si/"))
-                    .setRoom("ios123")
-                    .setAudioMuted(false)
-                    .setVideoMuted(false)
-                    .setAudioOnly(false)
-                    .setWelcomePageEnabled(false)
-                    .build()
-//                JitsiMeetActivity.launch(requireContext(), options)
-                val callActivity = CallActivity()
-                callActivity.fillCallValues(chatId, messageReceiver, messageSender)
-                callActivity.launchTest(requireContext(), options)
-//                val intent = Intent(requireContext(),CallActivity::class.java)
-//                startActivity(intent)
-//                findNavController().navigate(
-//                    ChatFragmentDirections.actionChatFragmentToCallFragment(
-//                        messageReceiver,
-//                        messageSender,
-//                        chatId,
-//                        binding.username.toString(),
-//                        "caller"
-//                    )
-//                )
-            } else {
-                Toast.makeText(requireContext(), "receiver is not online", Toast.LENGTH_SHORT)
-                    .show()
-            }
+            showReceiverBottomSheet()
+//            if (chatViewModel.onlineStatus.value == true) {
+//                onlineKeep = true
+//                chatViewModel.startCall(messageSender, chatId)
+//                chatViewModel.startRing(messageReceiver, chatId)
+//                val options = JitsiMeetConferenceOptions.Builder()
+//                    .setServerURL(URL("https://meet.jit.si/"))
+//                    .setRoom("ios123")
+//                    .setAudioMuted(false)
+//                    .setVideoMuted(false)
+//                    .setAudioOnly(false)
+//                    .setWelcomePageEnabled(false)
+//                    .build()
+//                val callActivity = CallActivity()
+//                callActivity.fillCallValues(chatId, messageReceiver, messageSender)
+//                callActivity.launchTest(requireContext(), options)
+////
+//            } else {
+//                Toast.makeText(requireContext(), "receiver is not online", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
         }
     }
 
@@ -226,7 +222,21 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
     }
 
     private fun showReceiverBottomSheet() {
+        val buttonSheetDialog = BottomSheetDialog(requireContext())
+        val view = layoutInflater.inflate(R.layout.receiver_bottom_sheet, null)
 
+        view.findViewById<MaterialCardView>(R.id.accept_call_cv).setOnClickListener {
+            Toast.makeText(requireContext(), "call accept sample", Toast.LENGTH_SHORT).show()
+        }
+        view.findViewById<MaterialCardView>(R.id.reject_call_cv).setOnClickListener {
+            Toast.makeText(requireContext(), "reject accept sample", Toast.LENGTH_SHORT).show()
+            buttonSheetDialog.dismiss()
+        }
+        val text = binding.username + " is calling you ..."
+        view.findViewById<MaterialTextView>(R.id.call_name_tv).text = text
+        buttonSheetDialog.setContentView(view)
+        buttonSheetDialog.setCancelable(false)
+        buttonSheetDialog.show()
         //      show a bottom sheet for receiving calls
 
     }
