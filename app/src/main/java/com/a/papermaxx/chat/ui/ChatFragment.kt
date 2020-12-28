@@ -190,7 +190,8 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
                     showCallerBottomSheet()
                 }
                 CallState.TALKING -> {
-
+                    chatViewModel.establishCall(messageSender, chatId)
+                    establishOnlineCall()
                 }
                 CallState.END_CALL -> {
                     chatViewModel.endCall(messageSender, chatId)
@@ -208,11 +209,8 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
         val view = layoutInflater.inflate(R.layout.caller_bottom_sheet, null)
 
         view.findViewById<MaterialCardView>(R.id.end_call_cv).setOnClickListener {
-//            Toast.makeText(requireContext(), "call end sample", Toast.LENGTH_SHORT).show()
-//            buttonSheetDialog.dismiss()
-            chatViewModel.establishCall(messageSender, chatId)
-            establishOnlineCall()
-            //TODO put reject call code here
+            buttonSheetDialog.dismiss()
+            chatViewModel.endCall(messageSender, chatId)
         }
         val text = "calling " + binding.username + " ... "
         view.findViewById<MaterialTextView>(R.id.receive_call_name_tv).text = text
@@ -228,12 +226,20 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
         view.findViewById<MaterialCardView>(R.id.accept_call_cv).setOnClickListener {
             Toast.makeText(requireContext(), "call accept sample", Toast.LENGTH_SHORT).show()
-            //TODO put accept call code here
+            if (chatViewModel.callStatus.value == CallState.CALLING) {
+                buttonSheetDialog.dismiss()
+                chatViewModel.establishCall(messageSender, chatId)
+                establishOnlineCall()
+            } else {
+                buttonSheetDialog.dismiss()
+                Toast.makeText(requireContext(), "caller canceled the call", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
         view.findViewById<MaterialCardView>(R.id.reject_call_cv).setOnClickListener {
             Toast.makeText(requireContext(), "call reject sample", Toast.LENGTH_SHORT).show()
             buttonSheetDialog.dismiss()
-            //TODO put reject call code here
+            chatViewModel.endCall(messageSender, chatId)
         }
         val text = binding.username + " is calling you ..."
         view.findViewById<MaterialTextView>(R.id.call_name_tv).text = text

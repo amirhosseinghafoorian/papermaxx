@@ -17,11 +17,11 @@ class CallActivity : JitsiMeetActivity() {
         super.onConferenceTerminated(data)
 
         chatViewModel.endCall(messageSender, chatId)
+        chatViewModel.endCall(messageReceiver, chatId)
 
     }
 
     companion object {
-
         var chatId: String = ""
         private lateinit var messageReceiver: String
         private lateinit var messageSender: String
