@@ -40,7 +40,6 @@
                 app:rippleColor="@android:color/white">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/accept_call_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
@@ -71,7 +70,6 @@
                 app:rippleColor="@android:color/white">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/users_list_username_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"

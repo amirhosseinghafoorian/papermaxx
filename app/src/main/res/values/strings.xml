@@ -26,4 +26,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="accept_call">Accept Call</string>
     <string name="reject_call">Reject Call</string>
+    <string name="end_call">End Call</string>
 </resources>
