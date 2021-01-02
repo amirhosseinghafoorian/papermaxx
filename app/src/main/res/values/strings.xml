@@ -27,4 +27,8 @@
     <string name="accept_call">Accept Call</string>
     <string name="reject_call">Reject Call</string>
     <string name="end_call">End Call</string>
+    <string name="subject">subject</string>
+    <string name="grade">grade</string>
+    <string name="change_password">change password</string>
+    <string name="update_profile">update profile</string>
 </resources>
