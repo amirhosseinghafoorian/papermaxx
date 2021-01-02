@@ -104,22 +104,42 @@ class ChatViewModel @ViewModelInject constructor(
                         }
 
                     if (messageType == "SENT_TEXT") {
-                        chatMessages.value?.add(
-                            MessageModel(
-                                snapshot.key.toString(),
-                                messageText,
-                                type
+                        if (chatMessages.value?.contains(
+                                MessageModel(
+                                    snapshot.key.toString(),
+                                    messageText,
+                                    type
+                                )
+                            ) == false
+                        ) {
+                            chatMessages.value?.add(
+                                MessageModel(
+                                    snapshot.key.toString(),
+                                    messageText,
+                                    type
+                                )
                             )
-                        )
+                        }
                     } else {
-                        chatMessages.value?.add(
-                            MessageModel(
-                                snapshot.key.toString(),
-                                messageText,
-                                type,
-                                url
+                        if (chatMessages.value?.contains(
+                                MessageModel(
+                                    snapshot.key.toString(),
+                                    messageText,
+                                    type,
+                                    url
+                                )
+                            ) == false
+                        ) {
+                            chatMessages.value?.add(
+                                MessageModel(
+                                    snapshot.key.toString(),
+                                    messageText,
+                                    type,
+                                    url
+                                )
                             )
-                        )
+                        }
+
                     }
                     chatMessages.postValue(chatMessages.value)
                 }

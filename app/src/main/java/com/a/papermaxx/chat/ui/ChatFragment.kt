@@ -4,11 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.collection.arrayMapOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -269,9 +271,10 @@ class ChatFragment : Fragment(), ChatAdapter.OnPicClick {
             if (list != null) {
                 if (list.size > 0) {
                     myAdapter.list = list
-                    myAdapter.notifyItemInserted(list.size - 1)
+//                    myAdapter.notifyDataSetChanged()
+                    myAdapter.notifyItemInserted(list.lastIndex)
                     chat_recycler.scrollToPosition(list.size - 1)
-                    lastMessage = list[list.size - 1]
+                    lastMessage = list[list.lastIndex]
                     if (lastMessage.type == MessageType.RECEIVED_TEXT ||
                         lastMessage.type == MessageType.RECEIVED_PIC
                     ) {

@@ -17,7 +17,9 @@
             android:name=".general.CallActivity"
             android:label="@string/title_activity_call"
             android:theme="@style/Theme.Papermaxx.NoActionBar"/>
-        <activity android:name=".general.MainActivity">
+        <activity android:name=".general.MainActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
