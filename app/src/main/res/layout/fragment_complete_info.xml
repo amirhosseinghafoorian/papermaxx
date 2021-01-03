@@ -41,23 +41,26 @@
         app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2" />
 
     <Spinner
+        app:layout_constraintHorizontal_weight="10"
         android:id="@+id/subject_sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
-        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2"
+        app:layout_constraintRight_toLeftOf="@id/confirm_pb_1"
         app:layout_constraintTop_toBottomOf="@id/complete_info_gl_3" />
 
     <ProgressBar
+        app:layout_constraintHorizontal_weight="1"
+        android:indeterminateTint="@color/blue_700"
         android:visibility="visible"
-        android:layout_marginTop="4dp"
-        android:id="@+id/confirm_pb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/grade_sp"
+        android:id="@+id/confirm_pb_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/subject_sp"
+        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2"
+        app:layout_constraintTop_toTopOf="@id/subject_sp"
+        app:layout_constraintBottom_toBottomOf="@id/subject_sp"
         />
 
     <com.google.android.material.textview.MaterialTextView
@@ -73,13 +76,27 @@
         app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2" />
 
     <Spinner
+        app:layout_constraintHorizontal_weight="10"
         android:id="@+id/grade_sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
-        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2"
+        app:layout_constraintRight_toLeftOf="@id/confirm_pb_2"
         app:layout_constraintTop_toBottomOf="@id/subject_sp" />
+
+    <ProgressBar
+        app:layout_constraintHorizontal_weight="1"
+        android:indeterminateTint="@color/blue_700"
+        android:visibility="visible"
+        android:id="@+id/confirm_pb_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/grade_sp"
+        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2"
+        app:layout_constraintTop_toTopOf="@id/grade_sp"
+        app:layout_constraintBottom_toBottomOf="@id/grade_sp"
+        />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_confirm_info"

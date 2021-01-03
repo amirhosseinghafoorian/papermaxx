@@ -46,17 +46,23 @@ class CompleteInfoFragment : Fragment() {
 
         homeView.gradeList.observe(viewLifecycleOwner, { list ->
             if (list != null) {
-                gradeAdapter.clear()
-                gradeAdapter.add("")
-                gradeAdapter.addAll(list)
+                if (list.size > 0) {
+                    gradeAdapter.clear()
+                    gradeAdapter.add("")
+                    gradeAdapter.addAll(list)
+                    confirm_pb_2.visibility = View.GONE
+                }
             }
         })
 
         homeView.subjectList.observe(viewLifecycleOwner, { list ->
             if (list != null) {
-                subjectAdapter.clear()
-                subjectAdapter.add("")
-                subjectAdapter.addAll(list)
+                if (list.size > 0) {
+                    subjectAdapter.clear()
+                    subjectAdapter.add("")
+                    subjectAdapter.addAll(list)
+                    confirm_pb_1.visibility = View.GONE
+                }
             }
         })
 
