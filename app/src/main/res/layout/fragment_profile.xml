@@ -28,7 +28,7 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/profile_username"
+        android:id="@+id/profile_username_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -40,52 +40,52 @@
         app:layout_constraintTop_toBottomOf="@id/profile_gl_3" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/profile_name"
+        android:id="@+id/profile_name_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="@string/full_name"
+        android:text="@string/not_defined"
         android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@id/profile_gl_1"
         app:layout_constraintRight_toLeftOf="@id/profile_gl_2"
-        app:layout_constraintTop_toBottomOf="@id/profile_username" />
+        app:layout_constraintTop_toBottomOf="@id/profile_username_tv" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/subject"
+        android:id="@+id/subject_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="@string/subject"
+        android:text="@string/not_defined"
         android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@id/profile_gl_1"
         app:layout_constraintRight_toLeftOf="@id/profile_gl_2"
-        app:layout_constraintTop_toBottomOf="@id/profile_name" />
+        app:layout_constraintTop_toBottomOf="@id/profile_name_tv" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/grade"
+        android:id="@+id/grade_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:elevation="3dp"
         android:gravity="center"
-        android:text="@string/grade"
+        android:text="@string/not_defined"
         android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@id/profile_gl_1"
         app:layout_constraintRight_toLeftOf="@id/profile_gl_2"
-        app:layout_constraintTop_toBottomOf="@id/subject" />
+        app:layout_constraintTop_toBottomOf="@id/subject_tv" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_update_profile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:backgroundTint="#FF5722"
         android:text="@string/update_profile"
         app:layout_constraintLeft_toRightOf="@id/profile_gl_1"
         app:layout_constraintRight_toLeftOf="@id/profile_gl_2"
-        app:layout_constraintTop_toBottomOf="@id/grade" />
+        app:layout_constraintTop_toBottomOf="@id/grade_tv" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_change_password"
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/blue_700"
-        android:text="@string/change_password"
+        android:text="@string/change_full_name"
         app:layout_constraintLeft_toRightOf="@id/profile_gl_1"
         app:layout_constraintRight_toLeftOf="@id/profile_gl_2"
         app:layout_constraintTop_toBottomOf="@id/btn_update_profile" />

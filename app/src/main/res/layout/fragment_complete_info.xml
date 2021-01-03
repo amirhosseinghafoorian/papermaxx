@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/black"
     tools:context=".home.ui.CompleteInfoFragment">
 
     <androidx.constraintlayout.widget.Guideline
@@ -27,20 +28,55 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="@string/select_your_subject"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/subject_sp"
+        app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2" />
+
     <Spinner
-        android:layout_marginTop="50dp"
         android:id="@+id/subject_sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
         app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2"
         app:layout_constraintTop_toBottomOf="@id/complete_info_gl_3" />
 
+    <ProgressBar
+        android:visibility="visible"
+        android:layout_marginTop="4dp"
+        android:id="@+id/confirm_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/grade_sp"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="@string/select_your_grade"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/grade_sp"
+        app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2" />
+
     <Spinner
-        android:layout_marginTop="50dp"
         android:id="@+id/grade_sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
         app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2"
         app:layout_constraintTop_toBottomOf="@id/subject_sp" />

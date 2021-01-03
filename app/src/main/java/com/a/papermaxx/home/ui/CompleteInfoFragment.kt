@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
-import com.a.papermaxx.general.GeneralStrings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_complete_info.*
 
@@ -29,11 +28,11 @@ class CompleteInfoFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_complete_info, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-        val gradeList = mutableListOf("N/A")
-        val subjectList = mutableListOf("N/A")
+        val gradeList = mutableListOf("")
+        val subjectList = mutableListOf("")
 
         val gradeAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
@@ -46,22 +45,31 @@ class CompleteInfoFragment : Fragment() {
         )
 
         homeView.gradeList.observe(viewLifecycleOwner, { list ->
-            gradeAdapter.clear()
-            gradeAdapter.addAll(list)
+            if (list != null) {
+                gradeAdapter.clear()
+                gradeAdapter.add("")
+                gradeAdapter.addAll(list)
+            }
         })
 
         homeView.subjectList.observe(viewLifecycleOwner, { list ->
-            subjectAdapter.clear()
-            subjectAdapter.addAll(list)
+            if (list != null) {
+                subjectAdapter.clear()
+                subjectAdapter.add("")
+                subjectAdapter.addAll(list)
+            }
         })
 
         grade_sp.adapter = gradeAdapter
         subject_sp.adapter = subjectAdapter
 
-        grade_sp.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        homeView.getGradeList()
+        homeView.getSubjectList()
+
+        grade_sp.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
@@ -71,10 +79,10 @@ class CompleteInfoFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        subject_sp.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        subject_sp.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
@@ -86,24 +94,26 @@ class CompleteInfoFragment : Fragment() {
 
         btn_confirm_info.setOnClickListener {
             if (validateInfo()) {
-                homeView.setGrade()
-                homeView.setSubject()
-                findNavController().navigate(
-                    CompleteInfoFragmentDirections.actionCompleteInfoFragmentToHomeFragment(
-                        GeneralStrings.keySignUp
-                    )
-                )
+                homeView.setGrade(grade)
+                homeView.setSubject(subject)
+                Toast.makeText(requireContext(), "navigated", Toast.LENGTH_SHORT).show()
+//                findNavController().navigate(
+//                    CompleteInfoFragmentDirections.actionCompleteInfoFragmentToHomeFragment(
+//                        GeneralStrings.keySignUp
+//                    )
+//                )
             }
         }
     }
 
+
     private fun validateInfo(): Boolean {
         return when {
-            grade == "N/A" -> {
+            grade == "" -> {
                 Toast.makeText(requireContext(), "set your grade", Toast.LENGTH_SHORT).show()
                 false
             }
-            subject == "N/A" -> {
+            subject == "" -> {
                 Toast.makeText(requireContext(), "set your subject", Toast.LENGTH_SHORT).show()
                 false
             }

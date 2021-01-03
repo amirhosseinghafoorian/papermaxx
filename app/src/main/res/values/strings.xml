@@ -29,8 +29,11 @@
     <string name="end_call">End Call</string>
     <string name="subject">subject</string>
     <string name="grade">grade</string>
-    <string name="change_password">change password</string>
+    <string name="change_full_name">Change full name</string>
     <string name="update_profile">update profile</string>
     <string name="check_if_you_are_a_tutor">Check if you are a tutor</string>
     <string name="confirm_info">Confirm Info</string>
+    <string name="not_defined">---</string>
+    <string name="select_your_grade">Select your grade</string>
+    <string name="select_your_subject">Select your subject</string>
 </resources>
