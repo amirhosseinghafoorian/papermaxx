@@ -19,6 +19,8 @@ class HomeViewModel
 
     var usersList = MutableLiveData<MutableList<UserModel>>()
     var chatsList = MutableLiveData<MutableList<UserModel>>()
+    var gradeList = MutableLiveData<MutableList<String>>()
+    var subjectList = MutableLiveData<MutableList<String>>()
     var adminId = MutableLiveData<String>()
 
     init {
@@ -90,6 +92,22 @@ class HomeViewModel
 
                 override fun onCancelled(databaseError: DatabaseError) {}
             })
+    }
+
+    fun getGradeList(){
+
+    }
+
+    fun getSubjectList(){
+
+    }
+
+    fun setGrade(){
+
+    }
+
+    fun setSubject(){
+
     }
 
     fun getAdminId(){

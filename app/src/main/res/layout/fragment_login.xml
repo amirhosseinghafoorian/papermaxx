@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@android:color/white"
-        android:hint="@string/email"
+        android:hint="@string/username"
         app:boxStrokeColor="@color/blue_700"
         app:hintTextColor="@color/blue_700"
         app:layout_constraintLeft_toRightOf="@id/login_gl_1"

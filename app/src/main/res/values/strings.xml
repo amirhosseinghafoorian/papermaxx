@@ -31,4 +31,6 @@
     <string name="grade">grade</string>
     <string name="change_password">change password</string>
     <string name="update_profile">update profile</string>
+    <string name="check_if_you_are_a_tutor">Check if you are a tutor</string>
+    <string name="confirm_info">Confirm Info</string>
 </resources>
