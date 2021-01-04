@@ -11,11 +11,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.a.papermaxx.R
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_complete_info.*
 
 @AndroidEntryPoint
-class CompleteInfoFragment : Fragment() {
+class CompleteInfoFragment : BottomSheetDialogFragment() {
 
     private val homeView: HomeViewModel by viewModels()
     private var grade = ""
@@ -71,6 +72,7 @@ class CompleteInfoFragment : Fragment() {
 
         homeView.getGradeList()
         homeView.getSubjectList()
+        homeView.getAdminId()
 
         grade_sp.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(

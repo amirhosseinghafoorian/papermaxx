@@ -83,6 +83,14 @@ class HomeRemote
             .setValue(subject)
     }
 
+    fun setFullName(uid: String, name: String) {
+        rootReference
+            .child("Users")
+            .child(uid)
+            .child("Name")
+            .setValue(name)
+    }
+
     fun getFullName(uid: String): DatabaseReference {
         return rootReference
             .child("Users")

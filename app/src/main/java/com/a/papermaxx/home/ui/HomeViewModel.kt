@@ -150,6 +150,8 @@ class HomeViewModel
     fun setSubject(subject: String) =
         allUsersUseCase.setSubject(currentUser()?.uid.toString(), subject)
 
+    fun setFullName(name: String) = allUsersUseCase.setFullName(currentUser()?.uid.toString(), name)
+
     fun getAdminId() {
         allUsersUseCase.getAdminId()
             .addListenerForSingleValueEvent(object : ValueEventListener {
