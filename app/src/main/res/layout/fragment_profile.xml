@@ -88,7 +88,7 @@
         app:layout_constraintTop_toBottomOf="@id/grade_tv" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_change_password"
+        android:id="@+id/btn_change_full_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
