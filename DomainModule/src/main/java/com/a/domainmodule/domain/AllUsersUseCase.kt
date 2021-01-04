@@ -34,10 +34,10 @@ class AllUsersUseCase @Inject constructor(
 
     fun setFullName(uid: String, name: String) = homeRemote.setFullName(uid, name)
 
-    fun getFullName(uid : String) = homeRemote.getFullName(uid)
+    fun getFullName(uid: String) = homeRemote.getFullName(uid)
 
-    fun getGrade(uid : String) = homeRemote.getGrade(uid)
+    fun getGrade(uid: String) = homeRemote.getGrade(uid)
 
-    fun getSubject(uid : String) = homeRemote.getSubject(uid)
+    fun getSubject(uid: String) = homeRemote.getSubject(uid)
 
 }

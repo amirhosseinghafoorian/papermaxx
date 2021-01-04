@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.a.papermaxx.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
