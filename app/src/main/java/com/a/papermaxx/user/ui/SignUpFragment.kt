@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
-import com.a.papermaxx.general.GeneralStrings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import java.util.*
@@ -43,11 +42,11 @@ class SignUpFragment : Fragment() {
                     signUp_et_4.editText?.text.toString(),
                     signUp_et_1.editText?.text.toString()
                 )
-                findNavController().navigate(
-                    SignUpFragmentDirections.actionGlobalHomeFragment(
-                        GeneralStrings.keySignUp
+                if (!cb_is_tutor.isChecked) {
+                    findNavController().navigate(
+                        SignUpFragmentDirections.actionGlobalCompleteInfoFragment()
                     )
-                )
+                }
             }
         })
 

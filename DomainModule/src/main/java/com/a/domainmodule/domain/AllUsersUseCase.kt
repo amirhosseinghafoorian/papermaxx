@@ -24,4 +24,18 @@ class AllUsersUseCase @Inject constructor(
 
     fun getUserInfo(uid: String) = homeRemote.getUserInfo(uid)
 
+    fun getGradeList() = homeRemote.getGradeList()
+
+    fun getSubjectList() = homeRemote.getSubjectList()
+
+    fun setGrade(uid: String, grade: String) = homeRemote.setGrade(uid, grade)
+
+    fun setSubject(uid: String, subject: String) = homeRemote.setSubject(uid, subject)
+
+    fun getFullName(uid : String) = homeRemote.getFullName(uid)
+
+    fun getGrade(uid : String) = homeRemote.getFullName(uid)
+
+    fun getSubject(uid : String) = homeRemote.getFullName(uid)
+
 }

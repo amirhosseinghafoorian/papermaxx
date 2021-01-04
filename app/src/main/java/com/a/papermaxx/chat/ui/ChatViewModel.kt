@@ -8,6 +8,8 @@ import com.a.domainmodule.domain.AllUsersUseCase
 import com.a.domainmodule.domain.ChatUseCase
 import com.a.domainmodule.domain.SignUpUseCase
 import com.a.papermaxx.general.FileExtension
+import com.a.papermaxx.general.GeneralStrings
+import com.a.remotemodule.models.CallState
 import com.a.remotemodule.models.MessageModel
 import com.a.remotemodule.models.MessageType
 import com.google.firebase.auth.FirebaseUser
@@ -28,6 +30,9 @@ class ChatViewModel @ViewModelInject constructor(
     var isInDirect = MutableLiveData<Boolean>()
     var chatMessages = MutableLiveData<MutableList<MessageModel>>()
     var onlineStatus = MutableLiveData<Boolean>()
+    var seenStatus = MutableLiveData<Boolean>()
+    var callStatus = MutableLiveData<CallState>()
+    var loadedPic = MutableLiveData<ByteArray>()
 
     init {
         chatMessages.value = mutableListOf()
@@ -74,48 +79,70 @@ class ChatViewModel @ViewModelInject constructor(
         val chat = chatUseCase.getChatRoom(chatId)
         chat.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val skipOnlineMessage = snapshot.key.toString()
-                if (!skipOnlineMessage.startsWith("online")) {
-                    val message = snapshot.child("message").value.toString()
-                    val messageSenderId = message.substringAfterLast(':')
-                    val messageRaw = message.substringBeforeLast(':')
-                    val messageType = messageRaw.substringBefore(':')
-                    val messageText = messageRaw.substringAfter(':')
+                val skipInvalidMessage = snapshot.key.toString()
+                if (!skipInvalidMessage.startsWith("online") &&
+                    !skipInvalidMessage.startsWith("seen") &&
+                    !skipInvalidMessage.startsWith("call")
+                ) {
+                    val messageSenderId = snapshot.child("id").value.toString()
+                    val messageType = snapshot.child("type").value.toString()
+                    val messageText = snapshot.child("text").value.toString()
+                    val url = snapshot.child("url").value.toString()
                     val type: MessageType =
                         if (messageSenderId == currentUser()?.uid) {
-                            if (messageType == com.a.remotemodule.general.GeneralStrings.keyText) {
+                            if (messageType == "SENT_TEXT") {
                                 MessageType.SENT_TEXT
                             } else {
                                 MessageType.SENT_PIC
                             }
                         } else {
-                            if (messageType == com.a.remotemodule.general.GeneralStrings.keyText) {
+                            if (messageType == "SENT_TEXT") {
                                 MessageType.RECEIVED_TEXT
                             } else {
                                 MessageType.RECEIVED_PIC
                             }
                         }
 
-                    if (messageType == com.a.remotemodule.general.GeneralStrings.keyText){
-                        chatMessages.value?.add(
-                            MessageModel(
-                                snapshot.key.toString(),
-                                messageText,
-                                type
+                    if (messageType == "SENT_TEXT") {
+                        if (chatMessages.value?.contains(
+                                MessageModel(
+                                    snapshot.key.toString(),
+                                    messageText,
+                                    type
+                                )
+                            ) == false
+                        ) {
+                            chatMessages.value?.add(
+                                MessageModel(
+                                    snapshot.key.toString(),
+                                    messageText,
+                                    type
+                                )
                             )
-                        )
-                    }else{
-                        chatMessages.value?.add( // should add uri
-                            MessageModel(
-                                snapshot.key.toString(),
-                                messageText,
-                                type
+                        }
+                    } else {
+                        if (chatMessages.value?.contains(
+                                MessageModel(
+                                    snapshot.key.toString(),
+                                    messageText,
+                                    type,
+                                    url
+                                )
+                            ) == false
+                        ) {
+                            chatMessages.value?.add(
+                                MessageModel(
+                                    snapshot.key.toString(),
+                                    messageText,
+                                    type,
+                                    url
+                                )
                             )
-                        )
+                        }
+
                     }
                     chatMessages.postValue(chatMessages.value)
                 }
-
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -134,34 +161,51 @@ class ChatViewModel @ViewModelInject constructor(
     }
 
     fun uploadImage(filePathUri: Uri, chatId: String, message: MessageModel, senderId: String) {
-        val filename = System.currentTimeMillis().toString() + "." + fileExtension.getFileExtension(
+        val id = System.currentTimeMillis().toString()
+        val filename = "$id." + fileExtension.getFileExtension(
             filePathUri
         )
         message.url = filename
         chatUseCase.uploadImage(filePathUri, chatId, filename).addOnSuccessListener {
-            sendPicture(message, chatId, senderId)
+            sendPicture(id, message, chatId, senderId)
         }
     }
 
     fun sendMessage(message: MessageModel, chatId: String, senderId: String) =
         chatUseCase.sendMessage(message, chatId, senderId)
 
-    private fun sendPicture(message: MessageModel, chatId: String, senderId: String) =
-        chatUseCase.sendPicture(message, chatId, senderId)
+    private fun sendPicture(
+        messageId: String,
+        message: MessageModel,
+        chatId: String,
+        senderId: String
+    ) =
+        chatUseCase.sendPicture(messageId, message, chatId, senderId)
 
     fun createOnlineStatus(uid: String, chatId: String) =
         chatUseCase.createOnlineStatus(uid, chatId)
 
     fun setOnline(uid: String, chatId: String) = chatUseCase.setOnline(uid, chatId)
 
+    fun changeLastSeen(uid: String, chatId: String, value: String) =
+        chatUseCase.changeLastSeen(uid, chatId, value)
+
     fun setOffline(uid: String, chatId: String) = chatUseCase.setOffline(uid, chatId)
 
+    fun startCall(uid: String, chatId: String) = chatUseCase.startCall(uid, chatId)
+
+    fun startRing(uid: String, chatId: String) = chatUseCase.startRing(uid, chatId)
+
+    fun establishCall(uid: String, chatId: String) = chatUseCase.establishCall(uid, chatId)
+
+    fun endCall(uid: String, chatId: String) = chatUseCase.endCall(uid, chatId)
+
     fun monitorOnlineStatus(uid: String, chatId: String) {
-        chatUseCase.checkSeen(uid, chatId).addValueEventListener(object : ValueEventListener {
+        chatUseCase.checkOnline(uid, chatId).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.value.toString() == "online") {
+                if (snapshot.value.toString() == GeneralStrings.online) {
                     onlineStatus.postValue(true)
-                } else if (snapshot.value.toString() == "offline") {
+                } else if (snapshot.value.toString() == GeneralStrings.offline) {
                     onlineStatus.postValue(false)
                 }
             }
@@ -169,6 +213,51 @@ class ChatViewModel @ViewModelInject constructor(
             override fun onCancelled(error: DatabaseError) {}
 
         })
+    }
+
+    fun monitorSeenStatus(uid: String, chatId: String) {
+        chatUseCase.checkSeen(uid, chatId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.value.toString() == GeneralStrings.seen) {
+                    seenStatus.postValue(true)
+                } else if (snapshot.value.toString() == GeneralStrings.notSeen) {
+                    seenStatus.postValue(false)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+    }
+
+    fun monitorCall(uid: String, chatId: String) {
+        chatUseCase.checkCall(uid, chatId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                when {
+                    snapshot.value.toString() == "calling" -> {
+                        callStatus.postValue(CallState.CALLING)
+                    }
+                    snapshot.value.toString() == "talking" -> {
+                        callStatus.postValue(CallState.TALKING)
+                    }
+                    snapshot.value.toString() == "endCall" -> {
+                        callStatus.postValue(CallState.END_CALL)
+                    }
+                    snapshot.value.toString() == "ringing" -> {
+                        callStatus.postValue(CallState.RINGING)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+    }
+
+    fun downLoadPic(chatId: String, filename: String) {
+        chatUseCase.downLoadPic(chatId, filename).addOnSuccessListener {
+            loadedPic.postValue(it)
+        }
     }
 
 }

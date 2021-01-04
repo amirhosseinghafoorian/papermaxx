@@ -3,6 +3,7 @@ package com.a.remotemodule.remotes
 import android.net.Uri
 import com.a.remotemodule.general.GeneralStrings
 import com.a.remotemodule.models.MessageModel
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
@@ -25,20 +26,20 @@ class ChatRemote @Inject constructor(
             .child(chatId)
     }
 
-    fun sendMessage(message: MessageModel, chatId: String, senderId: String) {
+    fun sendMessage(messageId: String, message: MessageModel, chatId: String) {
         rootReference
             .child("ChatRooms")
             .child(chatId)
-            .child(message.id)
-            .child("message").setValue(GeneralStrings.keyText + ":" + message.text + ":" + senderId)
+            .child(messageId)
+            .setValue(message)
     }
 
-    fun sendPicture(message: MessageModel, chatId: String, senderId: String) { // check again
+    fun sendPicture(messageId: String, message: MessageModel, chatId: String) {
         rootReference
             .child("ChatRooms")
             .child(chatId)
-            .child(message.id)
-            .child("message").setValue(GeneralStrings.keyPic + ":" + message.text + ":" + senderId)
+            .child(messageId)
+            .setValue(message)
     }
 
     fun createOnlineStatus(uid: String, chatId: String) {
@@ -55,6 +56,13 @@ class ChatRemote @Inject constructor(
             .child("online:$uid").setValue("online")
     }
 
+    fun changeLastSeen(uid: String, chatId: String, value: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("seen:$uid").setValue(value)
+    }
+
     fun setOffline(uid: String, chatId: String) {
         rootReference
             .child("ChatRooms")
@@ -62,11 +70,53 @@ class ChatRemote @Inject constructor(
             .child("online:$uid").setValue("offline")
     }
 
-    fun checkSeen(uid: String, chatId: String): DatabaseReference {
+    fun startCall(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("call:$uid").setValue("calling")
+    }
+
+    fun startRing(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("call:$uid").setValue("ringing")
+    }
+
+    fun establishCall(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("call:$uid").setValue("talking")
+    }
+
+    fun endCall(uid: String, chatId: String) {
+        rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("call:$uid").setValue("endCall")
+    }
+
+    fun checkOnline(uid: String, chatId: String): DatabaseReference {
         return rootReference
             .child("ChatRooms")
             .child(chatId)
             .child("online:$uid")
+    }
+
+    fun checkSeen(uid: String, chatId: String): DatabaseReference {
+        return rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("seen:$uid")
+    }
+
+    fun checkCall(uid: String, chatId: String): DatabaseReference {
+        return rootReference
+            .child("ChatRooms")
+            .child(chatId)
+            .child("call:$uid")
     }
 
     fun uploadImage(filePathUri: Uri, chatId: String, filename: String): UploadTask {
@@ -75,4 +125,10 @@ class ChatRemote @Inject constructor(
         )
         return storageReference2.putFile(filePathUri)
     }
+
+    fun downLoadPic(chatId: String, filename: String): Task<ByteArray> {
+        val oneMegaByte: Long = GeneralStrings.FOUR_MEGABYTE
+        return storageReference.child(chatId).child(filename).getBytes(oneMegaByte)
+    }
+
 }

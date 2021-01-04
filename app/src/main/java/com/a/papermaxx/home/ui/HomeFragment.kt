@@ -61,12 +61,6 @@ class HomeFragment : Fragment() {
         btn_logout.setOnClickListener {
             showLogoutDialog()
         }
-
-        btn_profile.setOnClickListener {
-            findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToMediaUploadFragment2()
-            )
-        }
     }
 
     private fun homeViewPagerInit() {

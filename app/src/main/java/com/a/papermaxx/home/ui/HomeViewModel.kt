@@ -7,6 +7,7 @@ import com.a.domainmodule.domain.AllUsersUseCase
 import com.a.domainmodule.domain.SignUpUseCase
 import com.a.papermaxx.model.UserModel
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -19,11 +20,18 @@ class HomeViewModel
 
     var usersList = MutableLiveData<MutableList<UserModel>>()
     var chatsList = MutableLiveData<MutableList<UserModel>>()
+    var gradeList = MutableLiveData<MutableList<String>>()
+    var subjectList = MutableLiveData<MutableList<String>>()
     var adminId = MutableLiveData<String>()
+    var fullName = MutableLiveData<String>()
+    var grade = MutableLiveData<String>()
+    var subject = MutableLiveData<String>()
 
     init {
         usersList.value = mutableListOf()
         chatsList.value = mutableListOf()
+        gradeList.value = mutableListOf()
+        subjectList.value = mutableListOf()
     }
 
     fun currentUser(): FirebaseUser? = signUpUseCase.currentUser()
@@ -92,11 +100,94 @@ class HomeViewModel
             })
     }
 
-    fun getAdminId(){
+    fun getGradeList() {
+        allUsersUseCase.getGradeList()
+            .addChildEventListener(object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    gradeList.value?.add(snapshot.value.toString())
+                    gradeList.postValue(gradeList.value)
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+                override fun onCancelled(error: DatabaseError) {}
+
+            })
+    }
+
+    fun getSubjectList() {
+        allUsersUseCase.getSubjectList()
+            .addChildEventListener(object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    val sub = snapshot.value.toString()
+                    subjectList.value?.add(sub)
+                    subjectList.postValue(subjectList.value)
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+                override fun onCancelled(error: DatabaseError) {}
+
+            })
+    }
+
+    fun setGrade(grade: String) = allUsersUseCase.setGrade(currentUser()?.uid.toString(), grade)
+
+    fun setSubject(subject: String) =
+        allUsersUseCase.setSubject(currentUser()?.uid.toString(), subject)
+
+    fun getAdminId() {
         allUsersUseCase.getAdminId()
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     adminId.postValue(dataSnapshot.value.toString())
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+    }
+
+    fun getFullName() {
+        allUsersUseCase.getFullName(currentUser()?.uid.toString())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    fullName.postValue(dataSnapshot.value.toString())
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+    }
+
+    fun getGrade() {
+        allUsersUseCase.getGrade(currentUser()?.uid.toString())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    grade.postValue(dataSnapshot.value.toString())
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+    }
+
+    fun getSubject() {
+        allUsersUseCase.getSubject(currentUser()?.uid.toString())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    subject.postValue(dataSnapshot.value.toString())
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {}

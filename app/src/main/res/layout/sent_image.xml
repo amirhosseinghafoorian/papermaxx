@@ -8,6 +8,14 @@
             name="data"
             type="com.a.remotemodule.models.MessageModel" />
 
+        <variable
+            name="click"
+            type="com.a.papermaxx.chat.ui.ChatAdapter.OnPicClick" />
+
+        <variable
+            name="filename"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +36,7 @@
             android:layout_marginTop="1dp"
             android:layout_marginBottom="1dp"
             android:backgroundTint="@color/blue_500"
+            android:onClick="@{()->click.onClick(filename)}"
             android:checkable="true"
             android:clickable="true"
             android:focusable="true"

@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/btn_logout"
+                android:id="@+id/chat_username_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
@@ -33,6 +33,27 @@
                 android:text="@{username}"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/chat_call_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:src="@drawable/ic_baseline_call_24"
+                android:text="call"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/chat_online_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/online"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -58,18 +79,17 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
+        <TextView
+            android:text="@string/seen"
             android:id="@+id/seen_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/ic_baseline_remove_red_eye_24"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/send_cv"
             app:layout_constraintRight_toRightOf="parent"
-            app:tint="@color/black" />
+            />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/image_cv"

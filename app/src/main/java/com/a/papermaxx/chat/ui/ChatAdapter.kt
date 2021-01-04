@@ -15,8 +15,9 @@ import com.a.remotemodule.models.MessageType
 
 
 class ChatAdapter(
-
-    var list: MutableList<MessageModel>
+    var list: MutableList<MessageModel>,
+    var chatId: String,
+    private val picClick: OnPicClick
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -66,6 +67,7 @@ class ChatAdapter(
                     LayoutInflater.from(parent.context),
                     R.layout.sent_image, parent, false
                 )
+
                 MyViewHolder3(binding)
             }
             else -> {
@@ -88,13 +90,22 @@ class ChatAdapter(
             }
             getItemViewType(position) == GeneralStrings.sentPicMessage -> {
                 (holder as MyViewHolder3).binding.data = list[position]
+                holder.binding.click = picClick
+                holder.binding.filename = list[position].url
+
             }
             getItemViewType(position) == GeneralStrings.receivedPicMessage -> {
                 (holder as MyViewHolder4).binding.data = list[position]
+                holder.binding.click = picClick
+                holder.binding.filename = list[position].url
             }
         }
     }
 
     override fun getItemCount() = list.size
+
+    interface OnPicClick {
+        fun onClick(filename: String)
+    }
 
 }

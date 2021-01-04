@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/completeInfoFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -51,6 +51,9 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/authentication"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_global_completeInfoFragment"
+            app:destination="@id/completeInfoFragment" />
     </navigation>
     <fragment
         android:id="@+id/homeFragment"
@@ -73,12 +76,6 @@
             app:destination="@id/authentication"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_homeFragment_to_mediaUploadFragment"
-            app:destination="@id/mediaUploadFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_mediaUploadFragment2"
-            app:destination="@id/mediaUploadFragment2" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -101,14 +98,39 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/chatFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_chatFragment_to_showPictureFragment"
+            app:destination="@id/showPictureFragment"
+            app:popUpTo="@id/chatFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/mediaUploadFragment"
-        android:name="com.a.papermaxx.general.MediaUploadFragment"
-        android:label="fragment_media_upload"
-        tools:layout="@layout/fragment_media_upload" />
+        android:id="@+id/showPictureFragment"
+        android:name="com.a.papermaxx.chat.ui.ShowPictureFragment"
+        android:label="fragment_show_picture"
+        tools:layout="@layout/fragment_show_picture">
+        <argument
+            android:name="chatId"
+            app:argType="string" />
+        <argument
+            android:name="fileName"
+            app:argType="string" />
+        <argument
+            android:name="messageReceiver"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_showPictureFragment_to_chatFragment"
+            app:destination="@id/chatFragment"
+            app:popUpTo="@id/showPictureFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
-        android:id="@+id/mediaUploadFragment2"
-        android:name="com.a.papermaxx.general.MediaUploadFragment2"
-        android:label="MediaUploadFragment2" />
+        android:id="@+id/completeInfoFragment"
+        android:name="com.a.papermaxx.home.ui.CompleteInfoFragment"
+        android:label="fragment_complete_info"
+        tools:layout="@layout/fragment_complete_info">
+        <action
+            android:id="@+id/action_completeInfoFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

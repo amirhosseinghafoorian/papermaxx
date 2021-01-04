@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@android:color/white"
-        android:hint="@string/email"
+        android:hint="@string/username"
         app:boxStrokeColor="@color/blue_700"
         app:hintTextColor="@color/blue_700"
         app:layout_constraintLeft_toRightOf="@id/signUp_gl_1"
@@ -126,5 +126,15 @@
         app:layout_constraintLeft_toRightOf="@id/signUp_gl_1"
         app:layout_constraintRight_toLeftOf="@id/signUp_gl_2"
         app:layout_constraintTop_toBottomOf="@id/signUp_et_3" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:text="@string/check_if_you_are_a_tutor"
+        android:id="@+id/cb_is_tutor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/signUp_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/signUp_gl_2"
+        app:layout_constraintTop_toBottomOf="@id/btn_sign_up" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

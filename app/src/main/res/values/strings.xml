@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Paper Maxx</string>
+    <string name="app_name">AYC</string>
     <string name="hello_blank_fragment">Welcome </string>
     <string name="todo">TODO</string>
     <string name="login">Login</string>
     <string name="create_account">Create Account</string>
     <string name="password">Password</string>
-    <string name="email">Email</string>
+    <string name="username">Username</string>
     <string name="full_name">Full Name</string>
     <string name="log_out">Log out</string>
     <string name="repeat_password">Repeat password</string>
@@ -13,4 +13,27 @@
     <string name="search_users">search users</string>
     <string name="time">time</string>
     <string name="sign_up">Sign Up</string>
+    <string name="online">Online</string>
+    <string name="seen">seen</string>
+    <string name="title_activity_call">CallActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="accept_call">Accept Call</string>
+    <string name="reject_call">Reject Call</string>
+    <string name="end_call">End Call</string>
+    <string name="subject">subject</string>
+    <string name="grade">grade</string>
+    <string name="change_full_name">Change full name</string>
+    <string name="update_profile">update profile</string>
+    <string name="check_if_you_are_a_tutor">Check if you are a tutor</string>
+    <string name="confirm_info">Confirm Info</string>
+    <string name="not_defined">---</string>
+    <string name="select_your_grade">Select your grade</string>
+    <string name="select_your_subject">Select your subject</string>
 </resources>

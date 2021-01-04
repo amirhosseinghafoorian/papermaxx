@@ -55,4 +55,53 @@ class HomeRemote
             .child("adminId")
     }
 
+    fun getGradeList(): DatabaseReference {
+        return rootReference
+            .child("Dynamic")
+            .child("gradeList")
+    }
+
+    fun getSubjectList(): DatabaseReference {
+        return rootReference
+            .child("Dynamic")
+            .child("subjectList")
+    }
+
+    fun setGrade(uid: String, grade: String) {
+        rootReference
+            .child("Users")
+            .child(uid)
+            .child("Grade")
+            .setValue(grade)
+    }
+
+    fun setSubject(uid: String, subject: String) {
+        rootReference
+            .child("Users")
+            .child(uid)
+            .child("Subject")
+            .setValue(subject)
+    }
+
+    fun getFullName(uid: String): DatabaseReference {
+        return rootReference
+            .child("Users")
+            .child(uid)
+            .child("Name")
+    }
+
+    fun getGrade(uid: String): DatabaseReference {
+        return rootReference
+            .child("Users")
+            .child(uid)
+            .child("Grade")
+    }
+
+    fun getSubject(uid: String): DatabaseReference {
+        return rootReference
+            .child("Users")
+            .child(uid)
+            .child("Subject")
+    }
+
 }

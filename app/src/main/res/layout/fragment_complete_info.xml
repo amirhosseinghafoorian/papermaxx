@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/black"
+    tools:context=".home.ui.CompleteInfoFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/complete_info_gl_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/complete_info_gl_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/complete_info_gl_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="@string/select_your_subject"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/subject_sp"
+        app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2" />
+
+    <Spinner
+        app:layout_constraintHorizontal_weight="10"
+        android:id="@+id/subject_sp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/confirm_pb_1"
+        app:layout_constraintTop_toBottomOf="@id/complete_info_gl_3" />
+
+    <ProgressBar
+        app:layout_constraintHorizontal_weight="1"
+        android:indeterminateTint="@color/blue_700"
+        android:visibility="visible"
+        android:id="@+id/confirm_pb_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/subject_sp"
+        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2"
+        app:layout_constraintTop_toTopOf="@id/subject_sp"
+        app:layout_constraintBottom_toBottomOf="@id/subject_sp"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="@string/select_your_grade"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/grade_sp"
+        app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2" />
+
+    <Spinner
+        app:layout_constraintHorizontal_weight="10"
+        android:id="@+id/grade_sp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/confirm_pb_2"
+        app:layout_constraintTop_toBottomOf="@id/subject_sp" />
+
+    <ProgressBar
+        app:layout_constraintHorizontal_weight="1"
+        android:indeterminateTint="@color/blue_700"
+        android:visibility="visible"
+        android:id="@+id/confirm_pb_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/grade_sp"
+        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2"
+        app:layout_constraintTop_toTopOf="@id/grade_sp"
+        app:layout_constraintBottom_toBottomOf="@id/grade_sp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_confirm_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="@color/blue_500"
+        android:text="@string/confirm_info"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toRightOf="@id/complete_info_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/complete_info_gl_2"
+        app:layout_constraintTop_toBottomOf="@id/grade_sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
