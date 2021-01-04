@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/tutorVerifyFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -52,8 +52,13 @@
             app:popUpTo="@id/authentication"
             app:popUpToInclusive="true" />
         <action
+            app:popUpTo="@id/authentication"
+            app:popUpToInclusive="true"
             android:id="@+id/action_global_completeInfoFragment"
             app:destination="@id/completeInfoFragment" />
+        <action
+            android:id="@+id/action_global_tutorVerifyFragment"
+            app:destination="@id/tutorVerifyFragment" />
     </navigation>
     <fragment
         android:id="@+id/homeFragment"
@@ -133,4 +138,9 @@
             android:id="@+id/action_completeInfoFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/tutorVerifyFragment"
+        android:name="com.a.papermaxx.home.ui.TutorVerifyFragment"
+        android:label="fragment_tutor_verify"
+        tools:layout="@layout/fragment_tutor_verify" />
 </navigation>
