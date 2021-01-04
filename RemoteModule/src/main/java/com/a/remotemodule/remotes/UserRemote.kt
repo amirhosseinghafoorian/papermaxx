@@ -33,7 +33,13 @@ class UserRemote
         rootReference
             .child("Users")
             .child(auth.currentUser?.uid.toString())
-            .child("Directs").setValue("")
+            .child("Directs")
+            .setValue("")
+        rootReference
+            .child("Users")
+            .child(auth.currentUser?.uid.toString())
+            .child("Type")
+            .setValue("student")
     }
 
 }
