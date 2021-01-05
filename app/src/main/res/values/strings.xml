@@ -40,4 +40,6 @@
     <string name="verify_message">Your verify request has been sent and you will be able to work as soon as you were verified</string>
     <string name="enter_your_subject_here">Enter your subject here</string>
     <string name="enter_your_education_place_here">Enter your education place here</string>
+    <string name="select_your_question_subject">Select your question subject</string>
+    <string name="search_for_tutor">Search for tutor</string>
 </resources>

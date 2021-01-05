@@ -1,11 +1,13 @@
 package com.a.papermaxx.home.ui
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.a.papermaxx.R
@@ -27,35 +29,49 @@ class HomeFragmentTab2 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val myAdapter = homeViewModel.usersList.value?.let { UserListAdapter(it) }
+        val subjectList = mutableListOf("")
 
-        home_page_user_list_recycler.apply {
-            adapter = myAdapter
-        }
+        val subjectAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_spinner_item, subjectList
+        )
 
-        homeViewModel.usersList.observe(viewLifecycleOwner, { list ->
+        homeViewModel.subjectList.observe(viewLifecycleOwner, { list ->
             if (list != null) {
-                users_progress_bar.visibility = View.GONE
-                myAdapter?.list = list
-                myAdapter?.notifyDataSetChanged()
+                if (list.size > 0) {
+                    subjectAdapter.clear()
+                    subjectAdapter.add("")
+                    subjectAdapter.addAll(list)
+                }
             }
         })
 
-        home_page_search_user.editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                // Todo here should be uncommented for the release
-//                if (s.toString() != "") {
-                users_progress_bar.visibility = View.VISIBLE
-                homeViewModel.getUsersList(s.toString())
-//                }
-            }
+        search_tutor_subject_sp.adapter = subjectAdapter
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+        homeViewModel.getSubjectList()
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        search_tutor_subject_sp.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                @SuppressLint("ResourceAsColor")
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (parent.selectedItem.toString() != "") {
+                        btn_search_tutor.isEnabled = true
+                        btn_search_tutor.setBackgroundColor(R.color.blue_500)
+                        btn_search_tutor.text = "Search for tutor"
+                    } else {
+                        btn_search_tutor.isEnabled = false
+                        btn_search_tutor.setBackgroundColor(Color.GRAY)
+                        btn_search_tutor.text = "Disabled until subject is set"
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        })
 
     }
 
