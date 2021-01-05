@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class TutorHomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels()
     private var base: String = ""
@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_tutor_home, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
