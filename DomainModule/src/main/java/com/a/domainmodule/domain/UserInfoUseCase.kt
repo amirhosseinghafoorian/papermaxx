@@ -13,4 +13,9 @@ class UserInfoUseCase @Inject constructor(
         username.toLowerCase(Locale.ROOT)
     )
 
+    fun setTutorInfo(name: String, username: String) = userRemote.setTutorInfo(
+        name,
+        username.toLowerCase(Locale.ROOT)
+    )
+
 }

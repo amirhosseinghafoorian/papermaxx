@@ -43,4 +43,6 @@ class SignUpViewModel
 
     fun setUserInfo(name: String, username: String) = userInfoUseCase.setUserInfo(name, username)
 
+    fun setTutorInfo(name: String, username: String) = userInfoUseCase.setTutorInfo(name, username)
+
 }

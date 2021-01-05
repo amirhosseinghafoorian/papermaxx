@@ -27,6 +27,8 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // use get user type here
+
         val handler = Handler()
         handler.postDelayed({
             if (homeViewModel.currentUser() == null) findNavController().navigate(

@@ -40,4 +40,6 @@ class AllUsersUseCase @Inject constructor(
 
     fun getSubject(uid: String) = homeRemote.getSubject(uid)
 
+    fun getUserType(uid: String) = homeRemote.getUserType(uid)
+
 }

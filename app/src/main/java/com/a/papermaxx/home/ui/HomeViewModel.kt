@@ -26,6 +26,7 @@ class HomeViewModel
     var fullName = MutableLiveData<String>()
     var grade = MutableLiveData<String>()
     var subject = MutableLiveData<String>()
+    var userType = MutableLiveData<String>()
 
     init {
         usersList.value = mutableListOf()
@@ -190,6 +191,17 @@ class HomeViewModel
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     subject.postValue(dataSnapshot.value.toString())
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+    }
+
+    fun getUserType() {
+        allUsersUseCase.getUserType(currentUser()?.uid.toString())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    userType.postValue(dataSnapshot.value.toString())
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {}

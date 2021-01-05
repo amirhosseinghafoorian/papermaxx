@@ -112,4 +112,12 @@ class HomeRemote
             .child("Subject")
     }
 
+    fun getUserType(uid: String): DatabaseReference {
+        return rootReference
+            .child("Users")
+            .child(uid)
+            .child("Subject")
+    }
+
+
 }

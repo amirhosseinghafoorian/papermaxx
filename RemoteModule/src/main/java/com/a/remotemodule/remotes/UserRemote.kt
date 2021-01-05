@@ -42,4 +42,35 @@ class UserRemote
             .setValue("student")
     }
 
+    fun setTutorInfo(name: String, username: String) {
+        rootReference
+            .child("Users")
+            .child(auth.currentUser?.uid.toString())
+            .child("Name").setValue(name)
+        rootReference
+            .child("Users")
+            .child(auth.currentUser?.uid.toString())
+            .child("Username").setValue(username)
+        rootReference
+            .child("Users")
+            .child(auth.currentUser?.uid.toString())
+            .child("Directs")
+            .setValue("")
+        rootReference
+            .child("Users")
+            .child(auth.currentUser?.uid.toString())
+            .child("Type")
+            .setValue("tutor")
+        createTutorState()
+
+    }
+
+    private fun createTutorState() {
+        rootReference
+            .child("Tutors")
+            .child("Status")
+            .child(auth.currentUser?.uid.toString())
+            .setValue("not applied")
+    }
+
 }
