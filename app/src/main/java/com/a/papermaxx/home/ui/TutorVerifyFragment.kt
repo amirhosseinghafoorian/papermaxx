@@ -33,6 +33,10 @@ class TutorVerifyFragment : Fragment() {
                     verify_subject_et.visibility = View.GONE
                     verify_education_place_et.visibility = View.GONE
                     verify_message_tv.visibility = View.VISIBLE
+                } else if (it == "not applied") {
+                    btn_verify_tutor.visibility = View.VISIBLE
+                    verify_subject_et.visibility = View.VISIBLE
+                    verify_education_place_et.visibility = View.VISIBLE
                 }
             }
         })
@@ -41,6 +45,7 @@ class TutorVerifyFragment : Fragment() {
 
         btn_verify_tutor.setOnClickListener {
             if (validate()) {
+                homeViewModel.getTutorVerifyRequest()
                 homeViewModel.sendVerifyRequest()
             }
         }

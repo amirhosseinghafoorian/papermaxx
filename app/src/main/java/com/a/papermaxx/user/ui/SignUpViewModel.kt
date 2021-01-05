@@ -45,4 +45,6 @@ class SignUpViewModel
 
     fun setTutorInfo(name: String, username: String) = userInfoUseCase.setTutorInfo(name, username)
 
+    // add tutor verify here
+
 }

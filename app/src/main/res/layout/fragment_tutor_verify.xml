@@ -52,6 +52,7 @@
         />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:visibility="gone"
         android:id="@+id/verify_subject_et"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
@@ -73,6 +74,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:visibility="gone"
         android:id="@+id/verify_education_place_et"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
@@ -94,6 +96,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
         android:id="@+id/btn_verify_tutor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
