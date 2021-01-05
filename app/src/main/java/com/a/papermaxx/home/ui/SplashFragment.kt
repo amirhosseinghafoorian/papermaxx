@@ -1,7 +1,6 @@
 package com.a.papermaxx.home.ui
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,18 +26,46 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // use get user type here
+        homeViewModel.userType.observe(viewLifecycleOwner, {
+            if (it != null) {
+                if (it == "student") {
+                    homeViewModel.getGrade()
+                } else if (it == "tutor") {
+                    homeViewModel.getTutorVerifyRequest()
+                }
+            }
+        })
 
-        val handler = Handler()
-        handler.postDelayed({
-            if (homeViewModel.currentUser() == null) findNavController().navigate(
-                SplashFragmentDirections.actionSplashFragmentToNavigation()
-            )
-            else findNavController().navigate(
-                SplashFragmentDirections.actionSplashFragmentToHomeFragment(
-                    GeneralStrings.keySplash
-                )
-            )
-        }, 1000)
+        homeViewModel.grade.observe(viewLifecycleOwner, {
+            if (it != null) {
+                if (it == "null") {
+                    findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToCompleteInfoFragment())
+                } else {
+                    findNavController().navigate(
+                        SplashFragmentDirections.actionSplashFragmentToHomeFragment(
+                            GeneralStrings.keySplash
+                        )
+                    )
+                }
+            }
+        })
+
+        homeViewModel.tutorVerifyRequest.observe(viewLifecycleOwner, {
+            if (it != null) {
+                if (it == "pending" || it == "not applied") {
+                    findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToTutorVerifyFragment())
+                } else if (it == "verified") {
+                    //      navigate to tutor home
+                }
+            }
+        })
+
+        if (homeViewModel.currentUser() == null) findNavController().navigate(
+            SplashFragmentDirections.actionSplashFragmentToNavigation()
+        )
+        else {
+            homeViewModel.getUserType()
+        }
+
     }
 }

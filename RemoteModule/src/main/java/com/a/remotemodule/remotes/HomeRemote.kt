@@ -75,6 +75,16 @@ class HomeRemote
             .setValue(grade)
     }
 
+
+
+    fun sendVerifyRequest(uid: String) {
+        rootReference
+            .child("Tutors")
+            .child("Status")
+            .child(uid)
+            .setValue("pending")
+    }
+
     fun setSubject(uid: String, subject: String) {
         rootReference
             .child("Users")
@@ -116,8 +126,14 @@ class HomeRemote
         return rootReference
             .child("Users")
             .child(uid)
-            .child("Subject")
+            .child("Type")
     }
 
+    fun getTutorVerifyRequest(uid: String): DatabaseReference {
+        return rootReference
+            .child("Tutors")
+            .child("Status")
+            .child(uid)
+    }
 
 }

@@ -27,6 +27,7 @@ class HomeViewModel
     var grade = MutableLiveData<String>()
     var subject = MutableLiveData<String>()
     var userType = MutableLiveData<String>()
+    var tutorVerifyRequest = MutableLiveData<String>()
 
     init {
         usersList.value = mutableListOf()
@@ -148,6 +149,8 @@ class HomeViewModel
 
     fun setGrade(grade: String) = allUsersUseCase.setGrade(currentUser()?.uid.toString(), grade)
 
+    fun sendVerifyRequest() = allUsersUseCase.sendVerifyRequest(currentUser()?.uid.toString())
+
     fun setSubject(subject: String) =
         allUsersUseCase.setSubject(currentUser()?.uid.toString(), subject)
 
@@ -202,6 +205,17 @@ class HomeViewModel
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     userType.postValue(dataSnapshot.value.toString())
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+    }
+
+    fun getTutorVerifyRequest() {
+        allUsersUseCase.getTutorVerifyRequest(currentUser()?.uid.toString())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    tutorVerifyRequest.postValue(dataSnapshot.value.toString())
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {}

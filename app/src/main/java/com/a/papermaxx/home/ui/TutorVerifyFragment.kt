@@ -6,10 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.a.papermaxx.R
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_tutor_verify.*
 
+@AndroidEntryPoint
 class TutorVerifyFragment : Fragment() {
+
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,19 +26,22 @@ class TutorVerifyFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if (false){ // if request has been sent set true
-            btn_verify_tutor.visibility = View.GONE
-            verify_subject_et.visibility = View.GONE
-            verify_education_place_et.visibility = View.GONE
-            verify_message_tv.visibility = View.VISIBLE
-        }
+        homeViewModel.tutorVerifyRequest.observe(viewLifecycleOwner, {
+            if (it != null) {
+                if (it == "pending") {
+                    btn_verify_tutor.visibility = View.GONE
+                    verify_subject_et.visibility = View.GONE
+                    verify_education_place_et.visibility = View.GONE
+                    verify_message_tv.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        homeViewModel.getTutorVerifyRequest()
 
         btn_verify_tutor.setOnClickListener {
             if (validate()) {
-                btn_verify_tutor.visibility = View.GONE
-                verify_subject_et.visibility = View.GONE
-                verify_education_place_et.visibility = View.GONE
-                verify_message_tv.visibility = View.VISIBLE
+                homeViewModel.sendVerifyRequest()
             }
         }
     }

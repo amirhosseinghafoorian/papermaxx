@@ -30,6 +30,8 @@ class AllUsersUseCase @Inject constructor(
 
     fun setGrade(uid: String, grade: String) = homeRemote.setGrade(uid, grade)
 
+    fun sendVerifyRequest(uid: String) = homeRemote.sendVerifyRequest(uid)
+
     fun setSubject(uid: String, subject: String) = homeRemote.setSubject(uid, subject)
 
     fun setFullName(uid: String, name: String) = homeRemote.setFullName(uid, name)
@@ -41,5 +43,7 @@ class AllUsersUseCase @Inject constructor(
     fun getSubject(uid: String) = homeRemote.getSubject(uid)
 
     fun getUserType(uid: String) = homeRemote.getUserType(uid)
+
+    fun getTutorVerifyRequest(uid: String) = homeRemote.getTutorVerifyRequest(uid)
 
 }

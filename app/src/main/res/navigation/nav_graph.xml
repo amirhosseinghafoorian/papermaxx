@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/tutorVerifyFragment">
+    app:startDestination="@id/profileFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -20,6 +20,12 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_tutorVerifyFragment"
+            app:destination="@id/tutorVerifyFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_completeInfoFragment"
+            app:destination="@id/completeInfoFragment" />
     </fragment>
     <navigation
         android:id="@+id/authentication"
