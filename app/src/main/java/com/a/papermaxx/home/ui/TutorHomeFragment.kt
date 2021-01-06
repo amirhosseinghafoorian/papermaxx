@@ -49,9 +49,8 @@ class TutorHomeFragment : Fragment() {
 
         homeViewModel.adminId.observe(viewLifecycleOwner, { id ->
             if (id != null) {
-                // ***
                 findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToChatFragment(
+                    TutorHomeFragmentDirections.actionTutorHomeFragmentToTutorChatFragment(
                         id,
                         true
                     )
