@@ -42,4 +42,6 @@
     <string name="enter_your_education_place_here">Enter your education place here</string>
     <string name="select_your_question_subject">Select your question subject</string>
     <string name="search_for_tutor">Search for tutor</string>
+    <string name="status">Status</string>
+    <string name="ready">Ready</string>
 </resources>

@@ -28,12 +28,14 @@ class TutorHomeFragmentTab1 : Fragment() {
 
         myAdapter = homeViewModel.chatsList.value?.let { ChatListAdapter(it) }!!
 
+        //      create a new one for this
         home_page_chat_list_recycler.apply {
             adapter = myAdapter
         }
 
         homeViewModel.chatsList.observe(viewLifecycleOwner, { list ->
             if (list != null) {
+                //      create a new one for this
                 directs_progress_bar.visibility = View.GONE
                 myAdapter.list = list
                 myAdapter.notifyDataSetChanged()
@@ -44,6 +46,7 @@ class TutorHomeFragmentTab1 : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        //      create a new one for this
         directs_progress_bar.visibility = View.VISIBLE
         homeViewModel.getChatsList(homeViewModel.currentUser()?.uid.toString())
     }
