@@ -39,7 +39,10 @@ class SplashFragment : Fragment() {
         homeViewModel.grade.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it == "null") {
-                    findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToCompleteInfoFragment())
+                    findNavController().navigate(
+                        SplashFragmentDirections
+                            .actionSplashFragmentToCompleteInfoFragment()
+                    )
                 } else {
                     findNavController().navigate(
                         SplashFragmentDirections.actionSplashFragmentToHomeFragment(
@@ -52,10 +55,17 @@ class SplashFragment : Fragment() {
 
         homeViewModel.tutorVerifyRequest.observe(viewLifecycleOwner, {
             if (it != null) {
-                if (it == "pending" || it == "not applied") {
-                    findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToTutorVerifyFragment())
-                } else if (it == "verified") {
-                    //      navigate to tutor home
+                if (it == "pending" || it == "not applied" || it == "verified") {
+                    findNavController().navigate(
+                        SplashFragmentDirections
+                            .actionSplashFragmentToTutorVerifyFragment()
+                    )
+                } else if (it == "working") {
+                    findNavController().navigate(
+                        SplashFragmentDirections.actionSplashFragmentToTutorHomeFragment(
+                            GeneralStrings.keySplash
+                        )
+                    )
                 }
             }
         })

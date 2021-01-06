@@ -32,6 +32,8 @@ class AllUsersUseCase @Inject constructor(
 
     fun sendVerifyRequest(uid: String) = homeRemote.sendVerifyRequest(uid)
 
+    fun setVerifyRequestWorking(uid: String) = homeRemote.setVerifyRequestWorking(uid)
+
     fun setSubject(uid: String, subject: String) = homeRemote.setSubject(uid, subject)
 
     fun setFullName(uid: String, name: String) = homeRemote.setFullName(uid, name)

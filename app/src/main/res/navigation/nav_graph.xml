@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_splashFragment_to_completeInfoFragment"
             app:destination="@id/completeInfoFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_tutorHomeFragment"
+            app:destination="@id/tutorHomeFragment" />
     </fragment>
     <navigation
         android:id="@+id/authentication"
@@ -148,5 +151,18 @@
         android:id="@+id/tutorVerifyFragment"
         android:name="com.a.papermaxx.home.ui.TutorVerifyFragment"
         android:label="fragment_tutor_verify"
-        tools:layout="@layout/fragment_tutor_verify" />
+        tools:layout="@layout/fragment_tutor_verify" >
+        <action
+            android:id="@+id/action_tutorVerifyFragment_to_tutorHomeFragment"
+            app:destination="@id/tutorHomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutorHomeFragment"
+        android:name="com.a.papermaxx.home.ui.TutorHomeFragment"
+        android:label="fragment_tutor_home"
+        tools:layout="@layout/fragment_tutor_home" >
+        <argument
+            android:name="base"
+            app:argType="string" />
+    </fragment>
 </navigation>

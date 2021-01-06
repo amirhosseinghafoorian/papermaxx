@@ -83,6 +83,14 @@ class HomeRemote
             .setValue("pending")
     }
 
+    fun setVerifyRequestWorking(uid: String) {
+        rootReference
+            .child("Tutors")
+            .child("Status")
+            .child(uid)
+            .setValue("working")
+    }
+
     fun setSubject(uid: String, subject: String) {
         rootReference
             .child("Users")

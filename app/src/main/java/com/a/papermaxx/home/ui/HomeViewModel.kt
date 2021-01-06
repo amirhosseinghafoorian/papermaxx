@@ -152,6 +152,8 @@ class HomeViewModel
 
     fun sendVerifyRequest() = allUsersUseCase.sendVerifyRequest(currentUser()?.uid.toString())
 
+    fun setVerifyRequestWorking() = allUsersUseCase.setVerifyRequestWorking(currentUser()?.uid.toString())
+
     fun setSubject(subject: String) =
         allUsersUseCase.setSubject(currentUser()?.uid.toString(), subject)
 

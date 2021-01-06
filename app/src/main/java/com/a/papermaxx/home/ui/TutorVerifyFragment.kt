@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
+import com.a.papermaxx.general.GeneralStrings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_tutor_verify.*
 
@@ -28,15 +30,24 @@ class TutorVerifyFragment : Fragment() {
 
         homeViewModel.tutorVerifyRequest.observe(viewLifecycleOwner, {
             if (it != null) {
-                if (it == "pending") {
-                    btn_verify_tutor.visibility = View.GONE
-                    verify_subject_et.visibility = View.GONE
-                    verify_education_place_et.visibility = View.GONE
-                    verify_message_tv.visibility = View.VISIBLE
-                } else if (it == "not applied") {
-                    btn_verify_tutor.visibility = View.VISIBLE
-                    verify_subject_et.visibility = View.VISIBLE
-                    verify_education_place_et.visibility = View.VISIBLE
+                when (it) {
+                    "pending" -> {
+                        btn_verify_tutor.visibility = View.GONE
+                        verify_subject_et.visibility = View.GONE
+                        verify_education_place_et.visibility = View.GONE
+                        verify_message_tv.visibility = View.VISIBLE
+                    }
+                    "not applied" -> {
+                        btn_verify_tutor.visibility = View.VISIBLE
+                        verify_subject_et.visibility = View.VISIBLE
+                        verify_education_place_et.visibility = View.VISIBLE
+                    }
+                    "verified" -> {
+                        verify_message_tv.visibility = View.VISIBLE
+                        btn_verify_tutor.visibility = View.VISIBLE
+                        btn_verify_tutor.text = "work now"
+                        verify_message_tv.text = "You are verified and you can work now"
+                    }
                 }
             }
         })
@@ -44,9 +55,17 @@ class TutorVerifyFragment : Fragment() {
         homeViewModel.getTutorVerifyRequest()
 
         btn_verify_tutor.setOnClickListener {
-            if (validate()) {
-                homeViewModel.getTutorVerifyRequest()
-                homeViewModel.sendVerifyRequest()
+            if (btn_verify_tutor.text == "work now") {
+                findNavController().navigate(
+                    TutorVerifyFragmentDirections
+                        .actionTutorVerifyFragmentToTutorHomeFragment(GeneralStrings.keySignUp)
+                )
+                homeViewModel.setVerifyRequestWorking()
+            } else {
+                if (validate()) {
+                    homeViewModel.getTutorVerifyRequest()
+                    homeViewModel.sendVerifyRequest()
+                }
             }
         }
     }
