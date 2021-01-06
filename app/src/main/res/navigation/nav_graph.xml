@@ -61,10 +61,10 @@
             app:popUpTo="@id/authentication"
             app:popUpToInclusive="true" />
         <action
-            app:popUpTo="@id/authentication"
-            app:popUpToInclusive="true"
             android:id="@+id/action_global_completeInfoFragment"
-            app:destination="@id/completeInfoFragment" />
+            app:destination="@id/completeInfoFragment"
+            app:popUpTo="@id/authentication"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_global_tutorVerifyFragment"
             app:destination="@id/tutorVerifyFragment" />
@@ -154,7 +154,7 @@
         android:id="@+id/tutorVerifyFragment"
         android:name="com.a.papermaxx.home.ui.TutorVerifyFragment"
         android:label="fragment_tutor_verify"
-        tools:layout="@layout/fragment_tutor_verify" >
+        tools:layout="@layout/fragment_tutor_verify">
         <action
             android:id="@+id/action_tutorVerifyFragment_to_tutorHomeFragment"
             app:destination="@id/tutorHomeFragment" />
@@ -163,12 +163,30 @@
         android:id="@+id/tutorHomeFragment"
         android:name="com.a.papermaxx.home.ui.TutorHomeFragment"
         android:label="fragment_tutor_home"
-        tools:layout="@layout/fragment_tutor_home" >
+        tools:layout="@layout/fragment_tutor_home">
         <argument
             android:name="base"
             app:argType="string" />
         <action
             android:id="@+id/action_tutorHomeFragment_to_authentication"
             app:destination="@id/authentication" />
+        <action
+            android:id="@+id/action_tutorHomeFragment_to_tutorChatFragment"
+            app:destination="@id/tutorChatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutorChatFragment"
+        android:name="com.a.papermaxx.chat.ui.TutorChatFragment"
+        android:label="TutorChatFragment"
+        tools:layout="@layout/fragment_tutor_chat">
+        <argument
+            android:name="message_receiver"
+            app:argType="string" />
+        <argument
+            android:name="adminFirst"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_tutorChatFragment_to_tutorHomeFragment"
+            app:destination="@id/tutorHomeFragment" />
     </fragment>
 </navigation>
