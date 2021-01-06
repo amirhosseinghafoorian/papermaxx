@@ -28,6 +28,7 @@ class HomeViewModel
     var subject = MutableLiveData<String>()
     var userType = MutableLiveData<String>()
     var tutorVerifyRequest = MutableLiveData<String>()
+    var tutorReadyStatus = MutableLiveData<String>()
 
     init {
         usersList.value = mutableListOf()
@@ -199,6 +200,23 @@ class HomeViewModel
                 override fun onCancelled(databaseError: DatabaseError) {}
             })
     }
+
+    fun getReadyStatus(subject: String) {
+        allUsersUseCase.getReadyStatus(currentUser()?.uid.toString(), subject)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    tutorReadyStatus.postValue(dataSnapshot.value.toString())
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+    }
+
+    fun setTheStatusReady(subject: String) =
+        allUsersUseCase.setTheStatusReady(currentUser()?.uid.toString(), subject)
+
+    fun setTheStatusNotReady(subject: String) =
+        allUsersUseCase.setTheStatusNotReady(currentUser()?.uid.toString(), subject)
 
     fun getUserType() {
         allUsersUseCase.getUserType(currentUser()?.uid.toString())

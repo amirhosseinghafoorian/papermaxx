@@ -75,8 +75,6 @@ class HomeRemote
             .setValue(grade)
     }
 
-
-
     fun sendVerifyRequest(uid: String) {
         rootReference
             .child("Tutors")
@@ -120,6 +118,30 @@ class HomeRemote
             .child("Users")
             .child(uid)
             .child("Subject")
+    }
+
+    fun getReadyStatus(uid: String , subject: String): DatabaseReference {
+        return rootReference
+            .child("Tutors")
+            .child("subjectTutors")
+            .child(subject)
+            .child(uid)
+    }
+
+    fun setTheStatusNotReady(uid: String , subject: String): DatabaseReference {
+        return rootReference
+            .child("Tutors")
+            .child("subjectTutors")
+            .child(subject)
+            .child(uid)
+    }
+
+    fun setTheStatusReady(uid: String , subject: String): DatabaseReference {
+        return rootReference
+            .child("Tutors")
+            .child("subjectTutors")
+            .child(subject)
+            .child(uid)
     }
 
     fun getUserType(uid: String): DatabaseReference {

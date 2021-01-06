@@ -42,6 +42,12 @@ class AllUsersUseCase @Inject constructor(
 
     fun getSubject(uid: String) = homeRemote.getSubject(uid)
 
+    fun getReadyStatus(uid: String, subject: String) = homeRemote.getReadyStatus(uid, subject)
+
+    fun setTheStatusReady(uid: String, subject: String) = homeRemote.setTheStatusReady(uid,subject)
+
+    fun setTheStatusNotReady(uid: String, subject: String) = homeRemote.setTheStatusNotReady(uid, subject)
+
     fun getUserType(uid: String) = homeRemote.getUserType(uid)
 
     fun getTutorVerifyRequest(uid: String) = homeRemote.getTutorVerifyRequest(uid)
