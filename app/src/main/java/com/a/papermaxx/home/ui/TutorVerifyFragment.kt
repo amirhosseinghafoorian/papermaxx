@@ -1,5 +1,6 @@
 package com.a.papermaxx.home.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,7 @@ class TutorVerifyFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_tutor_verify, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

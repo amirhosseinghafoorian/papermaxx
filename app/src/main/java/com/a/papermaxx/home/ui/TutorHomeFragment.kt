@@ -14,6 +14,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.btn_logout
+import kotlinx.android.synthetic.main.fragment_tutor_home.*
 
 @AndroidEntryPoint
 class TutorHomeFragment : Fragment() {
@@ -25,7 +27,7 @@ class TutorHomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         base =
-            arguments?.let { HomeFragmentArgs.fromBundle(it).base }.toString()
+            arguments?.let { TutorHomeFragmentArgs.fromBundle(it).base }.toString()
     }
 
     override fun onCreateView(
@@ -49,6 +51,7 @@ class TutorHomeFragment : Fragment() {
 
         homeViewModel.adminId.observe(viewLifecycleOwner, { id ->
             if (id != null) {
+                // ***
                 findNavController().navigate(
                     HomeFragmentDirections.actionHomeFragmentToChatFragment(
                         id,
@@ -58,20 +61,20 @@ class TutorHomeFragment : Fragment() {
             }
         })
 
-        btn_logout.setOnClickListener {
+        tutor_btn_logout.setOnClickListener {
             showLogoutDialog()
         }
     }
 
     private fun homeViewPagerInit() {
         val viewPagerAdapter = HomeViewPagerAdapter(childFragmentManager, lifecycle)
-        viewPagerAdapter.addFragment(HomeFragmentTab1(), "Messages")
-        viewPagerAdapter.addFragment(HomeFragmentTab2(), "Users")
-        home_view_pager.adapter = viewPagerAdapter
-        home_view_pager.isUserInputEnabled = false
+        viewPagerAdapter.addFragment(TutorHomeFragmentTab1(), "Messages")
+        viewPagerAdapter.addFragment(TutorHomeFragmentTab2(), "work")
+        tutor_home_view_pager.adapter = viewPagerAdapter
+        tutor_home_view_pager.isUserInputEnabled = false
         TabLayoutMediator(
-            (home_page_TL as TabLayout),
-            (home_view_pager as ViewPager2)
+            (tutor_home_page_TL as TabLayout),
+            (tutor_home_view_pager as ViewPager2)
         ) { tab, position ->
             tab.text = viewPagerAdapter.getName(position)
         }.attach()
@@ -82,6 +85,7 @@ class TutorHomeFragment : Fragment() {
         builder.setMessage("Are you sure you want to logout ? ")
             .setPositiveButton("Yes") { _, _ ->
                 homeViewModel.logout()
+                // ***
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAuthentication())
             }
             .setNegativeButton("No") { dialog, _ -> // User cancelled the dialog

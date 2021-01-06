@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
     private fun homeViewPagerInit() {
         val viewPagerAdapter = HomeViewPagerAdapter(childFragmentManager, lifecycle)
         viewPagerAdapter.addFragment(HomeFragmentTab1(), "Messages")
-        viewPagerAdapter.addFragment(HomeFragmentTab2(), "Users")
+        viewPagerAdapter.addFragment(HomeFragmentTab2(), "ask")
         home_view_pager.adapter = viewPagerAdapter
         home_view_pager.isUserInputEnabled = false
         TabLayoutMediator(
