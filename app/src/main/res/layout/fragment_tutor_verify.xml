@@ -45,20 +45,19 @@
         android:textSize="20sp"
         android:textStyle="italic"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/verify_gl_4"
         app:layout_constraintLeft_toRightOf="@id/verify_gl_1"
         app:layout_constraintRight_toLeftOf="@id/verify_gl_2"
-        app:layout_constraintTop_toTopOf="@id/verify_gl_3"
-        app:layout_constraintBottom_toTopOf="@id/verify_gl_4"
-        />
+        app:layout_constraintTop_toTopOf="@id/verify_gl_3" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:visibility="gone"
         android:id="@+id/verify_subject_et"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:hint="@string/enter_your_subject_here"
+        android:visibility="gone"
         app:boxStrokeColor="@color/blue_500"
         app:hintTextColor="@color/blue_500"
         app:layout_constraintLeft_toRightOf="@id/verify_gl_1"
@@ -74,13 +73,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:visibility="gone"
         android:id="@+id/verify_education_place_et"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:hint="@string/enter_your_education_place_here"
+        android:visibility="gone"
         app:boxStrokeColor="@color/blue_500"
         app:hintTextColor="@color/blue_500"
         app:layout_constraintLeft_toRightOf="@id/verify_gl_1"
@@ -96,17 +95,19 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:visibility="gone"
         android:id="@+id/btn_verify_tutor"
         android:layout_width="0dp"
+
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="50dp"
         android:backgroundTint="@color/blue_500"
         android:text="@string/submit"
         android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/verify_gl_4"
+        app:layout_constraintTop_toBottomOf="@id/verify_education_place_et"
         app:layout_constraintLeft_toRightOf="@id/verify_gl_1"
         app:layout_constraintRight_toLeftOf="@id/verify_gl_2"
-        app:layout_constraintTop_toBottomOf="@id/verify_education_place_et"
 
         />
 
