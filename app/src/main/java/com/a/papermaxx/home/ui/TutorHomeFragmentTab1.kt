@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.a.papermaxx.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_home_tab1.*
+import kotlinx.android.synthetic.main.fragment_tutor_home_tab1.*
 
 @AndroidEntryPoint
 class TutorHomeFragmentTab1 : Fragment() {
@@ -29,14 +29,14 @@ class TutorHomeFragmentTab1 : Fragment() {
         myAdapter = homeViewModel.chatsList.value?.let { ChatListAdapter(it) }!!
 
         //      create a new one for this
-        home_page_chat_list_recycler.apply {
+        tutor_home_page_chat_list_recycler.apply {
             adapter = myAdapter
         }
 
         homeViewModel.chatsList.observe(viewLifecycleOwner, { list ->
             if (list != null) {
                 //      create a new one for this
-                directs_progress_bar.visibility = View.GONE
+                tutor_directs_progress_bar.visibility = View.GONE
                 myAdapter.list = list
                 myAdapter.notifyDataSetChanged()
             }
@@ -47,7 +47,7 @@ class TutorHomeFragmentTab1 : Fragment() {
     override fun onResume() {
         super.onResume()
         //      create a new one for this
-        directs_progress_bar.visibility = View.VISIBLE
+        tutor_directs_progress_bar.visibility = View.VISIBLE
         homeViewModel.getChatsList(homeViewModel.currentUser()?.uid.toString())
     }
 }

@@ -29,6 +29,36 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        signUpViewModel.userType.observe(viewLifecycleOwner, {
+            if (it != null) {
+                if (it == "student") {
+                    findNavController().navigate(
+                        LoginFragmentDirections.actionGlobalHomeFragment(
+                            GeneralStrings.keyLogin
+                        )
+                    )
+                } else if (it == "tutor") {
+                    signUpViewModel.getTutorVerifyRequest()
+                }
+            }
+        })
+
+        signUpViewModel.tutorVerifyRequest.observe(viewLifecycleOwner, {
+            if (it != null) {
+                if (it == "pending" || it == "not applied" || it == "verified") {
+                    findNavController().navigate(
+                        LoginFragmentDirections.actionGlobalTutorVerifyFragment()
+                    )
+                } else if (it == "working") {
+                    findNavController().navigate(
+                        LoginFragmentDirections.actionGlobalTutorHomeFragment(
+                            GeneralStrings.keyLogin
+                        )
+                    )
+                }
+            }
+        })
+
         signUpViewModel.currentUser.observe(viewLifecycleOwner, { result ->
             if (result == null || result.exception?.message != null) {
                 Toast.makeText(
@@ -37,11 +67,7 @@ class LoginFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                findNavController().navigate(
-                    LoginFragmentDirections.actionGlobalHomeFragment(
-                        GeneralStrings.keyLogin
-                    )
-                )
+                signUpViewModel.getUserType()
             }
         })
 

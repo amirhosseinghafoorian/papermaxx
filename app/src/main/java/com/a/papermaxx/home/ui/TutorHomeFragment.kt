@@ -13,8 +13,6 @@ import com.a.papermaxx.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.btn_logout
 import kotlinx.android.synthetic.main.fragment_tutor_home.*
 
 @AndroidEntryPoint
@@ -85,8 +83,7 @@ class TutorHomeFragment : Fragment() {
         builder.setMessage("Are you sure you want to logout ? ")
             .setPositiveButton("Yes") { _, _ ->
                 homeViewModel.logout()
-                // ***
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAuthentication())
+                findNavController().navigate(TutorHomeFragmentDirections.actionTutorHomeFragmentToAuthentication())
             }
             .setNegativeButton("No") { dialog, _ -> // User cancelled the dialog
                 dialog.dismiss()

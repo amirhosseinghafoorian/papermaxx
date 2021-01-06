@@ -29,7 +29,7 @@ class SplashFragment : Fragment() {
         homeViewModel.userType.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it == "student") {
-                    homeViewModel.getGrade()
+                    homeViewModel.getGrade() // check if student has completed his info
                 } else if (it == "tutor") {
                     homeViewModel.getTutorVerifyRequest()
                 }

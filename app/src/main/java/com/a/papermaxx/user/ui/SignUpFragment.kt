@@ -52,7 +52,6 @@ class SignUpFragment : Fragment() {
                     findNavController().navigate(
                         SignUpFragmentDirections.actionGlobalTutorVerifyFragment()
                     )
-                    //      navigate to verify
                 }
             }
         })

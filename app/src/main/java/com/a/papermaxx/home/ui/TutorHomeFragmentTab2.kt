@@ -25,8 +25,6 @@ class TutorHomeFragmentTab2 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //      THIS UI SHOULD TOTALLY CHANGE
-
         homeViewModel.subject.observe(viewLifecycleOwner, { sub ->
             if (sub != null) {
                 homeViewModel.getReadyStatus(sub)
