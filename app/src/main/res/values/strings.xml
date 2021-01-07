@@ -44,4 +44,7 @@
     <string name="search_for_tutor">Search for tutor</string>
     <string name="status">Status</string>
     <string name="ready">Ready</string>
+    <string name="request_subject_change">Request subject change</string>
+    <string name="request_for_subject_change">Request for subject change</string>
+    <string name="write_your_message_here">write your message here</string>
 </resources>

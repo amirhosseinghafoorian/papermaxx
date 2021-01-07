@@ -173,6 +173,9 @@
         <action
             android:id="@+id/action_tutorHomeFragment_to_tutorChatFragment"
             app:destination="@id/tutorChatFragment" />
+        <action
+            android:id="@+id/action_tutorHomeFragment_to_tutorProfileFragment"
+            app:destination="@id/tutorProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/tutorChatFragment"
@@ -189,4 +192,9 @@
             android:id="@+id/action_tutorChatFragment_to_tutorHomeFragment"
             app:destination="@id/tutorHomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/tutorProfileFragment"
+        android:name="com.a.papermaxx.user.ui.TutorProfileFragment"
+        android:label="fragment_tutor_profile"
+        tools:layout="@layout/fragment_tutor_profile" />
 </navigation>

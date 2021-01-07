@@ -61,6 +61,13 @@ class TutorHomeFragment : Fragment() {
         tutor_btn_logout.setOnClickListener {
             showLogoutDialog()
         }
+
+        tutor_btn_profile.setOnClickListener {
+            findNavController().navigate(
+                TutorHomeFragmentDirections
+                    .actionTutorHomeFragmentToTutorProfileFragment()
+            )
+        }
     }
 
     private fun homeViewPagerInit() {
