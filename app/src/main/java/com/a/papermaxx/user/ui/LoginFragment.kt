@@ -32,11 +32,7 @@ class LoginFragment : Fragment() {
         signUpViewModel.userType.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it == "student") {
-                    findNavController().navigate(
-                        LoginFragmentDirections.actionGlobalHomeFragment(
-                            GeneralStrings.keyLogin
-                        )
-                    )
+                    signUpViewModel.getSubject()
                 } else if (it == "tutor") {
                     signUpViewModel.getTutorVerifyRequest()
                 }
@@ -68,6 +64,22 @@ class LoginFragment : Fragment() {
                 ).show()
             } else {
                 signUpViewModel.getUserType()
+            }
+        })
+
+        signUpViewModel.subject.observe(viewLifecycleOwner, {
+            if (it != null) {
+                if (it == "null") {
+                    findNavController().navigate(
+                        LoginFragmentDirections.actionGlobalCompleteInfoFragment()
+                    )
+                } else {
+                    findNavController().navigate(
+                        LoginFragmentDirections.actionGlobalHomeFragment(
+                            GeneralStrings.keyLogin
+                        )
+                    )
+                }
             }
         })
 

@@ -20,6 +20,7 @@ class SignUpViewModel
     private val allUsersUseCase: AllUsersUseCase
 ) : ViewModel() {
 
+    var subject = MutableLiveData<String>()
     val currentUser = MutableLiveData<Task<AuthResult>>()
     var userType = MutableLiveData<String>()
     var tutorVerifyRequest = MutableLiveData<String>()
@@ -71,6 +72,17 @@ class SignUpViewModel
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     tutorVerifyRequest.postValue(dataSnapshot.value.toString())
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+    }
+
+    fun getSubject() {
+        allUsersUseCase.getSubject(currentUser()?.uid.toString())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    subject.postValue(dataSnapshot.value.toString())
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {}

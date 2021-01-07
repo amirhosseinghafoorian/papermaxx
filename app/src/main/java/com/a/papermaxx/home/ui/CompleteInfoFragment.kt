@@ -9,7 +9,9 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
+import com.a.papermaxx.general.GeneralStrings
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_complete_info.*
@@ -66,6 +68,20 @@ class CompleteInfoFragment : BottomSheetDialogFragment() {
             }
         })
 
+        homeView.subject.observe(viewLifecycleOwner, {
+            if (it != null) {
+                if (it == "null") {
+                    findNavController().navigate(
+                        CompleteInfoFragmentDirections.actionCompleteInfoFragmentToHomeFragment(
+                            GeneralStrings.keySignUp
+                        )
+                    )
+                }
+                homeView.setGrade(grade)
+                homeView.setSubject(subject)
+            }
+        })
+
         grade_sp.adapter = gradeAdapter
         subject_sp.adapter = subjectAdapter
 
@@ -101,18 +117,11 @@ class CompleteInfoFragment : BottomSheetDialogFragment() {
 
         btn_confirm_info.setOnClickListener {
             if (validateInfo()) {
-                homeView.setGrade(grade)
-                homeView.setSubject(subject)
+                homeView.getSubject()
                 Toast.makeText(requireContext(), "navigated", Toast.LENGTH_SHORT).show()
-//                findNavController().navigate(
-//                    CompleteInfoFragmentDirections.actionCompleteInfoFragmentToHomeFragment(
-//                        GeneralStrings.keySignUp
-//                    )
-//                )
             }
         }
     }
-
 
     private fun validateInfo(): Boolean {
         return when {
