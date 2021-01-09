@@ -61,6 +61,8 @@ class HomeFragment : Fragment() {
         btn_logout.setOnClickListener {
             showLogoutDialog()
         }
+
+
     }
 
     private fun homeViewPagerInit() {

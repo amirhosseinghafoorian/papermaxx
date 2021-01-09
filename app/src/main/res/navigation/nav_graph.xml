@@ -191,10 +191,31 @@
         <action
             android:id="@+id/action_tutorChatFragment_to_tutorHomeFragment"
             app:destination="@id/tutorHomeFragment" />
+        <action
+            android:id="@+id/action_tutorChatFragment_to_tutorShowPictureFragment"
+            app:destination="@id/tutorShowPictureFragment" />
     </fragment>
     <fragment
         android:id="@+id/tutorProfileFragment"
         android:name="com.a.papermaxx.user.ui.TutorProfileFragment"
         android:label="fragment_tutor_profile"
         tools:layout="@layout/fragment_tutor_profile" />
+    <fragment
+        android:id="@+id/tutorShowPictureFragment"
+        android:name="com.a.papermaxx.chat.ui.TutorShowPictureFragment"
+        android:label="fragment_tutor_show_picture"
+        tools:layout="@layout/fragment_tutor_show_picture">
+        <argument
+            android:name="chatId"
+            app:argType="string" />
+        <argument
+            android:name="fileName"
+            app:argType="string" />
+        <argument
+            android:name="messageReceiver"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_tutorShowPictureFragment_to_tutorChatFragment"
+            app:destination="@id/tutorChatFragment" />
+    </fragment>
 </navigation>

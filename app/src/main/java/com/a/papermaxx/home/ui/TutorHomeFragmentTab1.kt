@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_tutor_home_tab1.*
 class TutorHomeFragmentTab1 : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels()
-    private lateinit var myAdapter: ChatListAdapter
+    private lateinit var myAdapter: TutorChatListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +26,7 @@ class TutorHomeFragmentTab1 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        myAdapter = homeViewModel.chatsList.value?.let { ChatListAdapter(it) }!!
+        myAdapter = homeViewModel.chatsList.value?.let { TutorChatListAdapter(it) }!!
 
         //      create a new one for this
         tutor_home_page_chat_list_recycler.apply {

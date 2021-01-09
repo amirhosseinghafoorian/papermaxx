@@ -400,9 +400,8 @@ class TutorChatFragment : Fragment(), ChatAdapter.OnPicClick {
 
     //      chat item view on click
     override fun onClick(filename: String) {
-        // TODO here should change
         findNavController().navigate(
-            ChatFragmentDirections.actionChatFragmentToShowPictureFragment(
+            TutorChatFragmentDirections.actionTutorChatFragmentToTutorShowPictureFragment(
                 chatId,
                 filename,
                 messageReceiver
