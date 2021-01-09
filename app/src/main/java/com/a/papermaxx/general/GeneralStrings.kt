@@ -7,7 +7,7 @@ object GeneralStrings {
     const val keySplash = "splash"
     const val keyProfile = "profile"
     const val newImage = "new image"
-    const val welcomeMessage = "Welcome to AYC"
+    const val welcomeMessage = "Welcome to PaperMaxx"
     const val sentTextMessage = 101
     const val receivedTextMessage = 102
     const val sentPicMessage = 103
