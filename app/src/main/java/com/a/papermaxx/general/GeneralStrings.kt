@@ -5,6 +5,7 @@ object GeneralStrings {
     const val keyLogin = "login"
     const val keySignUp = "signUp"
     const val keySplash = "splash"
+    const val keyProfile = "profile"
     const val newImage = "new image"
     const val welcomeMessage = "Welcome to AYC"
     const val sentTextMessage = 101

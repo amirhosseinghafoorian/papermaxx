@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
+import com.a.papermaxx.general.GeneralStrings
 import com.a.papermaxx.home.ui.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -19,6 +22,12 @@ import kotlinx.android.synthetic.main.fragment_tutor_profile.*
 class TutorProfileFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        modifyOnBackPressed()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,6 +101,20 @@ class TutorProfileFragment : Fragment() {
         }
         buttonSheetDialog.setContentView(view)
         buttonSheetDialog.show()
+    }
+
+    private fun modifyOnBackPressed() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(
+                        TutorProfileFragmentDirections.actionTutorProfileFragmentToTutorHomeFragment(
+                            GeneralStrings.keyProfile
+                        )
+                    )
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
 }

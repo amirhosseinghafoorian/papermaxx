@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
+import com.a.papermaxx.general.GeneralStrings
 import com.a.papermaxx.home.ui.CompleteInfoFragment
 import com.a.papermaxx.home.ui.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -26,6 +29,13 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        modifyOnBackPressed()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -86,6 +96,20 @@ class ProfileFragment : Fragment() {
     private fun showUpdateProfileBottomSheet() {
         val buttonSheetDialog = CompleteInfoFragment()
         buttonSheetDialog.show(requireActivity().supportFragmentManager, "")
+    }
+
+    private fun modifyOnBackPressed() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(
+                        ProfileFragmentDirections.actionProfileFragmentToHomeFragment(
+                            GeneralStrings.keyProfile
+                        )
+                    )
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
 }
