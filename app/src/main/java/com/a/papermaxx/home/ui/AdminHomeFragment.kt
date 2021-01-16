@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
 import kotlinx.android.synthetic.main.fragment_admin_home.*
 
@@ -21,20 +21,24 @@ class AdminHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_add_subject.setOnClickListener {
-            Toast.makeText(requireContext(), "navigated to add subject", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(
+                AdminHomeFragmentDirections
+                    .actionAdminHomeFragmentToAdminAddSubjectFragment()
+            )
         }
 
         btn_admin_verify_tutor.setOnClickListener {
-            Toast.makeText(requireContext(), "navigated to admin verify tutor", Toast.LENGTH_SHORT)
-                .show()
+            findNavController().navigate(
+                AdminHomeFragmentDirections
+                    .actionAdminHomeFragmentToAdminVerifyTutorFragment()
+            )
         }
 
         btn_change_tutor_subject.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "navigated to change tutor subject",
-                Toast.LENGTH_SHORT
-            ).show()
+            findNavController().navigate(
+                AdminHomeFragmentDirections
+                    .actionAdminHomeFragmentToAdminChangeTutorSubjectFragment()
+            )
         }
 
     }

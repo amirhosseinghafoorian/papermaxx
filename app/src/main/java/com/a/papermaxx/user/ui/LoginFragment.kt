@@ -31,10 +31,17 @@ class LoginFragment : Fragment() {
 
         signUpViewModel.userType.observe(viewLifecycleOwner, {
             if (it != null) {
-                if (it == "student") {
-                    signUpViewModel.getSubject()
-                } else if (it == "tutor") {
-                    signUpViewModel.getTutorVerifyRequest()
+                when (it) {
+                    "student" -> {
+                        signUpViewModel.getSubject()
+                    }
+                    "tutor" -> {
+                        signUpViewModel.getTutorVerifyRequest()
+                    }
+                    "admin" -> {
+                        findNavController()
+                            .navigate(LoginFragmentDirections.actionGlobalAdminHomeFragment())
+                    }
                 }
             }
         })

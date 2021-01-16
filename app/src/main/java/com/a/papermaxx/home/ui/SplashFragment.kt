@@ -28,10 +28,17 @@ class SplashFragment : Fragment() {
 
         homeViewModel.userType.observe(viewLifecycleOwner, {
             if (it != null) {
-                if (it == "student") {
-                    homeViewModel.getGrade() // check if student has completed his info
-                } else if (it == "tutor") {
-                    homeViewModel.getTutorVerifyRequest()
+                when (it) {
+                    "student" -> {
+                        homeViewModel.getGrade() // check if student has completed his info
+                    }
+                    "tutor" -> {
+                        homeViewModel.getTutorVerifyRequest()
+                    }
+                    "admin" -> {
+                        findNavController()
+                            .navigate(SplashFragmentDirections.actionSplashFragmentToAdminHomeFragment())
+                    }
                 }
             }
         })
