@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_splashFragment_to_tutorHomeFragment"
             app:destination="@id/tutorHomeFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
     </fragment>
     <navigation
         android:id="@+id/authentication"
@@ -71,6 +74,9 @@
         <action
             android:id="@+id/action_global_tutorHomeFragment"
             app:destination="@id/tutorHomeFragment" />
+        <action
+            android:id="@+id/action_global_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
     </navigation>
     <fragment
         android:id="@+id/homeFragment"
@@ -225,5 +231,14 @@
         <action
             android:id="@+id/action_tutorShowPictureFragment_to_tutorChatFragment"
             app:destination="@id/tutorChatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminHomeFragment"
+        android:name="com.a.papermaxx.home.ui.AdminHomeFragment"
+        android:label="fragment_admin_home"
+        tools:layout="@layout/fragment_admin_home">
+        <action
+            android:id="@+id/action_adminHomeFragment_to_authentication"
+            app:destination="@id/authentication" />
     </fragment>
 </navigation>

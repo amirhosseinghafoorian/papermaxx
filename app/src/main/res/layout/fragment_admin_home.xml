@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.ui.AdminHomeFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/admin_home_gl_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/admin_home_gl_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/admin_home_gl_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/admin_home_gl_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/admin_tool_bar_home"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="2dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/admin_btn_logout"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_baseline_power_settings_new_24" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/admin_page"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_admin_verify_tutor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue_700"
+        android:text="@string/verify_tutors"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/btn_add_subject"
+        app:layout_constraintLeft_toRightOf="@id/admin_home_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/admin_home_gl_2"
+        app:layout_constraintTop_toBottomOf="@id/admin_home_gl_3"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue_700"
+        android:text="@string/add_subject_or_grade"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/btn_change_tutor_subject"
+        app:layout_constraintLeft_toRightOf="@id/admin_home_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/admin_home_gl_2"
+        app:layout_constraintTop_toBottomOf="@id/btn_admin_verify_tutor" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_change_tutor_subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue_700"
+        android:text="@string/tutors_subject_change"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/admin_home_gl_4"
+        app:layout_constraintLeft_toRightOf="@id/admin_home_gl_1"
+        app:layout_constraintRight_toLeftOf="@id/admin_home_gl_2"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_subject" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

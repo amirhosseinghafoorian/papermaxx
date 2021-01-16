@@ -9,7 +9,6 @@
     <string name="full_name">Full Name</string>
     <string name="log_out">Log out</string>
     <string name="repeat_password">Repeat password</string>
-    <string name="ay_chat">AY Chat</string>
     <string name="search_users">search users</string>
     <string name="time">time</string>
     <string name="sign_up">Sign Up</string>
@@ -47,4 +46,8 @@
     <string name="request_subject_change">Request subject change</string>
     <string name="request_for_subject_change">Request for subject change</string>
     <string name="write_your_message_here">write your message here</string>
+    <string name="admin_page">Admin Page</string>
+    <string name="verify_tutors">Verify tutors</string>
+    <string name="add_subject_or_grade">Add subject or grade</string>
+    <string name="tutors_subject_change">Tutors subject change</string>
 </resources>

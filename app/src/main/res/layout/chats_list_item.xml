@@ -35,7 +35,7 @@
                 android:text="@{data.username}"
                 android:textColor="@android:color/white"
                 android:textSize="30sp"
-                android:textStyle="italic"
+                android:textStyle="normal"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
