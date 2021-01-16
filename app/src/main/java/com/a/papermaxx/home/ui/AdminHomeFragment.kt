@@ -41,6 +41,13 @@ class AdminHomeFragment : Fragment() {
             )
         }
 
+        admin_btn_logout.setOnClickListener {
+            findNavController().navigate(
+                AdminHomeFragmentDirections
+                    .actionAdminHomeFragmentToAuthentication()
+            )
+        }
+
     }
 
 }
