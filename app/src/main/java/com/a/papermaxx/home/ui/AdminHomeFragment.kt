@@ -1,15 +1,20 @@
 package com.a.papermaxx.home.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
 import kotlinx.android.synthetic.main.fragment_admin_home.*
 
 class AdminHomeFragment : Fragment() {
+
+    private val homeViewModel: HomeViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,11 +47,26 @@ class AdminHomeFragment : Fragment() {
         }
 
         admin_btn_logout.setOnClickListener {
-            findNavController().navigate(
-                AdminHomeFragmentDirections
-                    .actionAdminHomeFragmentToAuthentication()
-            )
+            showLogoutDialog()
         }
+
+    }
+
+    private fun showLogoutDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Are you sure you want to logout ? ")
+            .setPositiveButton("Yes") { _, _ ->
+                homeViewModel.logout()
+                findNavController().navigate(
+                    AdminHomeFragmentDirections
+                        .actionAdminHomeFragmentToAuthentication()
+                )
+            }
+            .setNegativeButton("No") { dialog, _ -> // User cancelled the dialog
+                dialog.dismiss()
+            }
+        val alertDialog = builder.create()
+        alertDialog.show()
 
     }
 
