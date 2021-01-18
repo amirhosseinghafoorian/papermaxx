@@ -254,7 +254,7 @@ class TutorChatFragment : Fragment(), ChatAdapter.OnPicClick {
     private fun establishOnlineCall() {
         val options = JitsiMeetConferenceOptions.Builder()
             .setServerURL(URL("https://meet.jit.si/"))
-            .setRoom("ios1234567890123456789") //TODO should change
+            .setRoom(chatViewModel.roomIdDecide(chatId))
             .setAudioMuted(false)
             .setVideoMuted(false)
             .setAudioOnly(false)

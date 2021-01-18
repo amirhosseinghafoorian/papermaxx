@@ -70,6 +70,9 @@ class ChatViewModel @ViewModelInject constructor(
     fun chatIdDecide(receiverId: String) =
         allUsersUseCase.chatIdDecide(currentUser()?.uid.toString(), receiverId)
 
+    fun roomIdDecide(chatId: String) =
+        allUsersUseCase.roomIdDecide(chatId)
+
     fun createChatRoom(name: String) = chatUseCase.createChatRoom(name)
 
     fun putChatInDirect(base: String, target: String) =

@@ -20,4 +20,12 @@ class ChatIdDecider {
     private fun scoreSingleChar(char: Char): Int {
         return char.toInt()
     }
+
+    fun decideVideoCallRoom(chatId: String): String {
+        var firstPart = chatId.substringBefore(':')
+        var secondPart = chatId.substringAfter(':')
+        firstPart = firstPart.substring(0..4)
+        secondPart = secondPart.substring(0..4)
+        return firstPart + "_" + secondPart
+    }
 }

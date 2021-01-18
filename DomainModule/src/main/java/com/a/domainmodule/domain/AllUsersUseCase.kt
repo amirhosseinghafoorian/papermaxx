@@ -18,6 +18,9 @@ class AllUsersUseCase @Inject constructor(
     fun chatIdDecide(senderId: String, receiverId: String) =
         chatIdDecider.decideChatIdFormat(senderId, receiverId)
 
+    fun roomIdDecide(chatId: String) =
+        chatIdDecider.decideVideoCallRoom(chatId)
+
     fun getAdminId() = homeRemote.getAdminId()
 
     fun putChatInDirect(base: String, target: String) = homeRemote.putChatInDirect(base, target)

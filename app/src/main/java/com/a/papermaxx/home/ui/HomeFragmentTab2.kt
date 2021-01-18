@@ -1,7 +1,6 @@
 package com.a.papermaxx.home.ui
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +49,10 @@ class HomeFragmentTab2 : Fragment() {
 
         homeViewModel.getSubjectList()
 
+        btn_search_tutor.setOnClickListener {
+            //TODO search for tutors
+        }
+
         search_tutor_subject_sp.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 @SuppressLint("ResourceAsColor")
@@ -61,11 +64,11 @@ class HomeFragmentTab2 : Fragment() {
                 ) {
                     if (parent.selectedItem.toString() != "") {
                         btn_search_tutor.isEnabled = true
-                        btn_search_tutor.setBackgroundColor(R.color.blue_500)
+//                        btn_search_tutor.setBackgroundColor(R.color.blue_500)
                         btn_search_tutor.text = "Search for tutor"
                     } else {
                         btn_search_tutor.isEnabled = false
-                        btn_search_tutor.setBackgroundColor(Color.GRAY)
+//                        btn_search_tutor.setBackgroundColor(Color.GRAY)
                         btn_search_tutor.text = "Disabled until subject is set"
                     }
                 }
