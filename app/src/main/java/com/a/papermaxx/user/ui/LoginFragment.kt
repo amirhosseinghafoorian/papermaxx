@@ -38,10 +38,6 @@ class LoginFragment : Fragment() {
                     "tutor" -> {
                         signUpViewModel.getTutorVerifyRequest()
                     }
-                    "admin" -> {
-                        findNavController()
-                            .navigate(LoginFragmentDirections.actionGlobalAdminHomeFragment())
-                    }
                 }
             }
         })

@@ -50,4 +50,6 @@
     <string name="verify_tutors">Verify tutors</string>
     <string name="add_subject_or_grade">Add subject or grade</string>
     <string name="tutors_subject_change">Tutors subject change</string>
+    <string name="reject">Reject</string>
+    <string name="accept">accept</string>
 </resources>

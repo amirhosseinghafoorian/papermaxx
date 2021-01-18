@@ -32,6 +32,9 @@ class AllUsersUseCase @Inject constructor(
 
     fun sendVerifyRequest(uid: String) = homeRemote.sendVerifyRequest(uid)
 
+    fun sendVerifyRequestDetails(uid: String, subject: String, place: String) =
+        homeRemote.sendVerifyRequestDetails(uid, subject, place)
+
     fun setVerifyRequestWorking(uid: String) = homeRemote.setVerifyRequestWorking(uid)
 
     fun setSubject(uid: String, subject: String) = homeRemote.setSubject(uid, subject)
@@ -46,9 +49,10 @@ class AllUsersUseCase @Inject constructor(
 
     fun getReadyStatus(uid: String, subject: String) = homeRemote.getReadyStatus(uid, subject)
 
-    fun setTheStatusReady(uid: String, subject: String) = homeRemote.setTheStatusReady(uid,subject)
+    fun setTheStatusReady(uid: String, subject: String) = homeRemote.setTheStatusReady(uid, subject)
 
-    fun setTheStatusNotReady(uid: String, subject: String) = homeRemote.setTheStatusNotReady(uid, subject)
+    fun setTheStatusNotReady(uid: String, subject: String) =
+        homeRemote.setTheStatusNotReady(uid, subject)
 
     fun getUserType(uid: String) = homeRemote.getUserType(uid)
 

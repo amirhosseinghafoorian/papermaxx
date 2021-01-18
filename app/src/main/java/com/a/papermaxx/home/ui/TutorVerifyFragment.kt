@@ -65,8 +65,12 @@ class TutorVerifyFragment : Fragment() {
                 homeViewModel.setVerifyRequestWorking()
             } else {
                 if (validate()) {
-                    homeViewModel.getTutorVerifyRequest()
                     homeViewModel.sendVerifyRequest()
+                    homeViewModel.sendVerifyRequestDetails(
+                        verify_subject_et.editText?.text.toString(),
+                        verify_education_place_et.editText?.text.toString()
+                    )
+                    homeViewModel.getTutorVerifyRequest()
                 }
             }
         }

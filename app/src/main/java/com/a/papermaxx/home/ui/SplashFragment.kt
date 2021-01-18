@@ -35,10 +35,6 @@ class SplashFragment : Fragment() {
                     "tutor" -> {
                         homeViewModel.getTutorVerifyRequest()
                     }
-                    "admin" -> {
-                        findNavController()
-                            .navigate(SplashFragmentDirections.actionSplashFragmentToAdminHomeFragment())
-                    }
                 }
             }
         })

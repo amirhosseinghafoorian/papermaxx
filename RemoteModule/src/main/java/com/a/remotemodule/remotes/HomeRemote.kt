@@ -83,6 +83,19 @@ class HomeRemote
             .setValue("pending")
     }
 
+    fun sendVerifyRequestDetails(uid: String, subject: String, place: String) {
+        rootReference
+            .child("Users")
+            .child(uid)
+            .child("Subject")
+            .setValue(subject)
+        rootReference
+            .child("Users")
+            .child(uid)
+            .child("Education")
+            .setValue(place)
+    }
+
     fun setVerifyRequestWorking(uid: String) {
         rootReference
             .child("Tutors")
@@ -128,7 +141,7 @@ class HomeRemote
             .child("Subject")
     }
 
-    fun getReadyStatus(uid: String , subject: String): DatabaseReference {
+    fun getReadyStatus(uid: String, subject: String): DatabaseReference {
         return rootReference
             .child("Tutors")
             .child("subjectTutors")
@@ -136,7 +149,7 @@ class HomeRemote
             .child(uid)
     }
 
-    fun setTheStatusNotReady(uid: String , subject: String): DatabaseReference {
+    fun setTheStatusNotReady(uid: String, subject: String): DatabaseReference {
         return rootReference
             .child("Tutors")
             .child("subjectTutors")
@@ -144,7 +157,7 @@ class HomeRemote
             .child(uid)
     }
 
-    fun setTheStatusReady(uid: String , subject: String): DatabaseReference {
+    fun setTheStatusReady(uid: String, subject: String): DatabaseReference {
         return rootReference
             .child("Tutors")
             .child("subjectTutors")
