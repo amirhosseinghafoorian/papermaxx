@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home_tab2.*
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_home_tab2.*
 class HomeFragmentTab2 : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels()
+    private var subject = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,12 +47,29 @@ class HomeFragmentTab2 : Fragment() {
             }
         })
 
+        homeViewModel.foundTutor.observe(viewLifecycleOwner, {
+            if (it != null) {
+                homeViewModel.bringTutorToChat(
+                    subject,
+                    it,
+                    homeViewModel.currentUser()?.uid.toString()
+                )
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToChatFragment(
+                        it,
+                        false
+                    )
+                )
+            }
+        })
+
         search_tutor_subject_sp.adapter = subjectAdapter
 
         homeViewModel.getSubjectList()
 
         btn_search_tutor.setOnClickListener {
-            //TODO search for tutors
+            homeViewModel.getChatsList(homeViewModel.currentUser()?.uid.toString())
+            homeViewModel.searchForTutors(subject)
         }
 
         search_tutor_subject_sp.onItemSelectedListener =
@@ -63,12 +82,11 @@ class HomeFragmentTab2 : Fragment() {
                     id: Long
                 ) {
                     if (parent.selectedItem.toString() != "") {
+                        subject = parent.selectedItem.toString()
                         btn_search_tutor.isEnabled = true
-//                        btn_search_tutor.setBackgroundColor(R.color.blue_500)
                         btn_search_tutor.text = "Search for tutor"
                     } else {
                         btn_search_tutor.isEnabled = false
-//                        btn_search_tutor.setBackgroundColor(Color.GRAY)
                         btn_search_tutor.text = "Disabled until subject is set"
                     }
                 }

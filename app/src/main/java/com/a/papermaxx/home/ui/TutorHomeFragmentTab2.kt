@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.a.papermaxx.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_tutor_home_tab2.*
@@ -47,8 +48,28 @@ class TutorHomeFragmentTab2 : Fragment() {
                 homeViewModel.setTheStatusReady(homeViewModel.subject.value.toString())
                 btn_ready_tutor.text = "not ready"
             }
-
         }
+
+        homeViewModel.foundStudent.observe(viewLifecycleOwner, {
+            if (it != null) {
+                homeViewModel.bringTutorToChat(
+                    homeViewModel.subject.value.toString(),
+                    homeViewModel.currentUser()?.uid.toString(),
+                    "not ready"
+                )
+                findNavController().navigate(
+                    TutorHomeFragmentDirections.actionTutorHomeFragmentToTutorChatFragment(
+                        it,
+                        false
+                    )
+                )
+            }
+        })
+
+        homeViewModel.monitorFoundStudent(
+            homeViewModel.subject.value.toString(),
+            homeViewModel.currentUser()?.uid.toString()
+        )
 
     }
 

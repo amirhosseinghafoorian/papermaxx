@@ -179,4 +179,28 @@ class HomeRemote
             .child(uid)
     }
 
+    fun searchForTutors(subject: String): DatabaseReference {
+        return rootReference
+            .child("Tutors")
+            .child("subjectTutors")
+            .child(subject)
+    }
+
+    fun bringTutorToChat(subject: String, tutorId: String, uid: String) {
+        rootReference
+            .child("Tutors")
+            .child("subjectTutors")
+            .child(subject)
+            .child(tutorId)
+            .setValue(uid)
+    }
+
+    fun monitorFoundStudent(subject: String, uid: String): DatabaseReference {
+        return rootReference
+            .child("Tutors")
+            .child("subjectTutors")
+            .child(subject)
+            .child(uid)
+    }
+
 }

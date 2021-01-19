@@ -29,6 +29,8 @@ class HomeViewModel
     var userType = MutableLiveData<String>()
     var tutorVerifyRequest = MutableLiveData<String>()
     var tutorReadyStatus = MutableLiveData<String>()
+    var foundTutor = MutableLiveData<String>()
+    var foundStudent = MutableLiveData<String>()
 
     init {
         usersList.value = mutableListOf()
@@ -249,4 +251,54 @@ class HomeViewModel
     fun getChatsListHelper(list: MutableList<UserModel>) {
         chatsList.postValue(list)
     }
+
+    fun searchForTutors(subject: String) {
+        allUsersUseCase.searchForTutors(subject)
+            .addChildEventListener(object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                    if (snapshot.value.toString() == "ready") {
+                        var found = true
+                        for (i in 0 until chatsList.value?.size!!) {
+                            if (chatsList.value!![i].id == snapshot.key.toString()) {
+                                found = false
+                            }
+                        }
+                        if (found) {
+                            foundTutor.postValue(snapshot.key.toString())
+                        }
+
+                    }
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                    // if message delete added
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+                override fun onCancelled(error: DatabaseError) {}
+
+            })
+    }
+
+    fun bringTutorToChat(subject: String, tutorId: String, uid: String) =
+        allUsersUseCase.bringTutorToChat(subject, tutorId, uid)
+
+    fun monitorFoundStudent(subject: String, uid: String) {
+        allUsersUseCase.monitorFoundStudent(subject, uid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.value.toString() != "not ready" && dataSnapshot.value.toString() != "ready") {
+                        foundStudent.postValue(dataSnapshot.value.toString())
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+    }
+
 }

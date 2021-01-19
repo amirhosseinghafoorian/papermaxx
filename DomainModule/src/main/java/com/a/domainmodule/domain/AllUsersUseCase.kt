@@ -61,4 +61,12 @@ class AllUsersUseCase @Inject constructor(
 
     fun getTutorVerifyRequest(uid: String) = homeRemote.getTutorVerifyRequest(uid)
 
+    fun searchForTutors(subject: String) = homeRemote.searchForTutors(subject)
+
+    fun bringTutorToChat(subject: String, tutorId: String, uid: String) =
+        homeRemote.bringTutorToChat(subject, tutorId, uid)
+
+    fun monitorFoundStudent(subject: String, uid: String) =
+        homeRemote.monitorFoundStudent(subject, uid)
+
 }
