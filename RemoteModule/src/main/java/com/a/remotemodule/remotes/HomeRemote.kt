@@ -205,4 +205,13 @@ class HomeRemote
             .child(uid)
     }
 
+    fun sendChangeSubjectRequest(message: String, uid: String) {
+        rootReference
+            .child("Users")
+            .child(uid)
+            .child("change_subject_message")
+            .setValue(message)
+
+    }
+
 }

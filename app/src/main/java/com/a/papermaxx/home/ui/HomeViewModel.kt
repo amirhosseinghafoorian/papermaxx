@@ -30,7 +30,6 @@ class HomeViewModel
     var tutorVerifyRequest = MutableLiveData<String>()
     var tutorReadyStatus = MutableLiveData<String>()
     var foundTutor = MutableLiveData<String>()
-    var foundStudent = MutableLiveData<String>()
 
     init {
         usersList.value = mutableListOf()
@@ -288,17 +287,7 @@ class HomeViewModel
     fun bringTutorToChat(subject: String, tutorId: String, uid: String) =
         allUsersUseCase.bringTutorToChat(subject, tutorId, uid)
 
-    fun monitorFoundStudent(subject: String, uid: String) {
-        allUsersUseCase.monitorFoundStudent(subject, uid)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if (dataSnapshot.value.toString() != "not ready" && dataSnapshot.value.toString() != "ready") {
-                        foundStudent.postValue(dataSnapshot.value.toString())
-                    }
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
-    }
+    fun sendChangeSubjectRequest(message: String) =
+        allUsersUseCase.sendChangeSubjectRequest(message, currentUser()?.uid.toString())
 
 }

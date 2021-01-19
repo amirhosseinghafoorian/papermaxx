@@ -93,7 +93,7 @@ class TutorProfileFragment : Fragment() {
             val message =
                 view.findViewById<TextInputLayout>(R.id.change_subject_et).editText?.text.toString()
             if (message.isNotBlank() && message.isNotEmpty()) {
-//                homeViewModel.sendChangeSubjectRequest(newName)
+                homeViewModel.sendChangeSubjectRequest(message)
                 buttonSheetDialog.dismiss()
             } else {
                 Toast.makeText(requireContext(), "Invalid Format", Toast.LENGTH_SHORT).show()

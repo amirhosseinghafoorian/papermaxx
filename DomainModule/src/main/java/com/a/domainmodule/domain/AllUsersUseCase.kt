@@ -69,4 +69,7 @@ class AllUsersUseCase @Inject constructor(
     fun monitorFoundStudent(subject: String, uid: String) =
         homeRemote.monitorFoundStudent(subject, uid)
 
+    fun sendChangeSubjectRequest(message: String, uid: String) =
+        homeRemote.sendChangeSubjectRequest(message, uid)
+
 }
