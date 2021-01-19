@@ -118,7 +118,6 @@ class CompleteInfoFragment : BottomSheetDialogFragment() {
         btn_confirm_info.setOnClickListener {
             if (validateInfo()) {
                 homeView.getSubject()
-                Toast.makeText(requireContext(), "navigated", Toast.LENGTH_SHORT).show()
             }
         }
     }
