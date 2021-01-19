@@ -149,20 +149,22 @@ class HomeRemote
             .child(uid)
     }
 
-    fun setTheStatusNotReady(uid: String, subject: String): DatabaseReference {
-        return rootReference
+    fun setTheStatusNotReady(uid: String, subject: String) {
+        rootReference
             .child("Tutors")
             .child("subjectTutors")
             .child(subject)
             .child(uid)
+            .setValue("not ready")
     }
 
-    fun setTheStatusReady(uid: String, subject: String): DatabaseReference {
-        return rootReference
+    fun setTheStatusReady(uid: String, subject: String) {
+        rootReference
             .child("Tutors")
             .child("subjectTutors")
             .child(subject)
             .child(uid)
+            .setValue("ready")
     }
 
     fun getUserType(uid: String): DatabaseReference {
