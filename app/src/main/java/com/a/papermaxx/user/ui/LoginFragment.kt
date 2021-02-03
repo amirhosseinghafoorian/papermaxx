@@ -66,6 +66,7 @@ class LoginFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                login_progress_bar.visibility = View.GONE
                 signUpViewModel.getUserType()
             }
         })
@@ -90,6 +91,7 @@ class LoginFragment : Fragment() {
             val email = login_et_1.editText?.text.toString()
             val password = login_et_2.editText?.text.toString()
             if (validateInputs(email.toLowerCase(Locale.ROOT), password)) {
+                login_progress_bar.visibility = View.VISIBLE
                 signUpViewModel.logout()
                 signUpViewModel.login(email.toLowerCase(Locale.ROOT), password)
             }

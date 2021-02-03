@@ -60,4 +60,17 @@
         app:layout_constraintRight_toLeftOf="@id/search_tutor_gl_2"
         app:layout_constraintTop_toBottomOf="@id/search_tutor_subject_sp" />
 
+    <ProgressBar
+        android:id="@+id/search_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/blue_700"
+        android:indeterminateTintMode="multiply"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@id/btn_search_tutor"
+        app:layout_constraintRight_toRightOf="@id/btn_search_tutor"
+        app:layout_constraintTop_toBottomOf="@id/btn_search_tutor" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

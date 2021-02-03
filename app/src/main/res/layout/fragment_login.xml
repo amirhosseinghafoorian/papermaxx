@@ -83,4 +83,17 @@
         app:layout_constraintRight_toLeftOf="@id/login_gl_2"
         app:layout_constraintTop_toBottomOf="@id/login_et_2" />
 
+    <ProgressBar
+        android:id="@+id/login_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/blue_700"
+        android:indeterminateTintMode="multiply"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@id/btn_login"
+        app:layout_constraintRight_toRightOf="@id/btn_login"
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

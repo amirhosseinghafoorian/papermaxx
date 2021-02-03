@@ -29,6 +29,7 @@ class HomeFragmentTab2 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        search_progress_bar.visibility = View.GONE
 
         val subjectList = mutableListOf("")
 
@@ -68,6 +69,7 @@ class HomeFragmentTab2 : Fragment() {
         homeViewModel.getSubjectList()
 
         btn_search_tutor.setOnClickListener {
+            search_progress_bar.visibility = View.VISIBLE
             homeViewModel.getChatsList(homeViewModel.currentUser()?.uid.toString())
             homeViewModel.searchForTutors(subject)
         }
