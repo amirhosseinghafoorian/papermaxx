@@ -65,7 +65,6 @@ class TutorHomeFragmentTab2 : Fragment() {
             }
         }
 
-
     }
 
 }
